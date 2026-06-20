@@ -77,33 +77,32 @@ jobs:
             EXT="mp4"
           fi
 
-          # Daftar lengkap semua 20 komposisi
+          # Daftar lengkap semua 20 komposisi Batch 2
           COMPOSITIONS=(
-            # Module 1 — Social Engagement Pop-ups
-            "SE-HeartBurst"
-            "SE-CommentBubble"
-            "SE-FollowNotif"
-            "SE-ShareRipple"
-            # Module 2 — Subscribe Button States
-            "SB-Idle"
-            "SB-HoverGlow"
-            "SB-ClickRipple"
-            "SB-CounterRise"
-            "SB-SubscribedCheck"
-            # Module 3 — Story & Post Frame Overlay
-            "SF-StoryUI"
-            "SF-PostUI"
-            "SF-ReelUI"
-            # Module 4 — Phone Screen Mockup
-            "PM-FeedScroll"
-            "PM-ChatUI"
-            "PM-CheckoutPage"
-            # Module 5 — Loading, Progress & Badge Pack
-            "LB-Spinner"
-            "LB-ProgressBar"
-            "LB-BadgeReveal"
-            "LB-CheckmarkStamp"
-            "LB-SkeletonLoad"
+            # Module 1 — Terminal UI & Hacker
+            "TU-BootSequence"
+            "TU-NeuralNetwork"
+            "TU-DataTransfer"
+            "TU-FatalCrash"
+            "TU-PasswordCracker"
+            # Module 2 — News Tickers & Peringatan Siaran
+            "NT-BreakingNews"
+            "NT-EmergencyAlert"
+            "NT-TopSecretWipe"
+            "NT-CyberLockdown"
+            "NT-CrimeScene"
+            # Module 3 — Retro Kamera & Efek VHS
+            "RV-Camcorder90s"
+            "RV-LowBattery"
+            "RV-GlitchNoSignal"
+            "RV-VCRFastForward"
+            "RV-SecurityCCTV"
+            # Module 4 — Hamparan Siaran Olahraga
+            "SO-MatchTimer"
+            "SO-VARScreen"
+            "SO-InjuryTime"
+            "SO-MsStopwatch"
+            "SO-MatchBanners"
           )
 
           TOTAL=${#COMPOSITIONS[@]}
@@ -152,7 +151,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: ui-social-mockup-4k-${{ github.event.inputs.codec }}
+          name: overlays-batch2-4k-${{ github.event.inputs.codec }}
           path: out/
           retention-days: 30
           if-no-files-found: warn

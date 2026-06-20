@@ -1,238 +1,82 @@
 import "./index.css";
+import React from "react";
 import { Composition } from "remotion";
+import { W4K, H4K, FPS } from "./UIElements/utils";
 
-// ─── Module 1: Social Engagement Pop-ups ─────────────────────────────────────
+// ─── M1: Terminal UI ──────────────────────────────────────────────────────────
 import {
-  HeartBurst,
-  CommentBubble,
-  FollowNotif,
-  ShareRipple,
-} from "./UIElements/SocialEngagement";
+  BootSequenceTerminal,
+  NeuralNetworkProcessing,
+  CyberDataTransfer,
+  FatalSystemCrash,
+  SecurityPasswordCracker,
+} from "./UIElements/TerminalUI";
 
-// ─── Module 2: Subscribe & Follow Button States ───────────────────────────────
+// ─── M2: News Tickers ─────────────────────────────────────────────────────────
 import {
-  SubscribeIdle,
-  SubscribeHover,
-  SubscribeClick,
-  SubscribeCounter,
-  SubscribeConfirmed,
-} from "./UIElements/SubscribeButton";
+  BreakingNewsTicker,
+  EmergencyAlertSystem,
+  TopSecretWipe,
+  CyberLockdown,
+  CrimeSceneLine,
+} from "./UIElements/NewsTickers";
 
-// ─── Module 3: Story & Post Frame Overlay ────────────────────────────────────
+// ─── M3: Retro VHS ────────────────────────────────────────────────────────────
 import {
-  StoryUI,
-  PostUI,
-  ReelUI,
-} from "./UIElements/StoryFrameOverlay";
+  Camcorder90s,
+  LowBatteryWarning,
+  GlitchyNoSignal,
+  VCRFastForward,
+  SecurityCCTV,
+} from "./UIElements/RetroVHS";
 
-// ─── Module 4: Phone Screen UI Mockup Scene ──────────────────────────────────
+// ─── M4: Sports Overlays ──────────────────────────────────────────────────────
 import {
-  PhoneFeedScroll,
-  PhoneChatUI,
-  PhoneCheckout,
-} from "./UIElements/PhoneMockup";
-
-// ─── Module 5: Loading, Progress & Badge Reveal Pack ─────────────────────────
-import {
-  LoadingSpinner,
-  ProgressBar,
-  BadgeReveal,
-  CheckmarkStamp,
-  SkeletonLoad,
-} from "./UIElements/LoadingBadgePack";
-
-// ─── Canvas constants ─────────────────────────────────────────────────────────
-const W4K = 3840;
-const H4K = 2160;
-const FPS = 30;
+  MatchTimer45Mins,
+  VARReviewScreen,
+  InjuryTimeBoard,
+  MsRaceStopwatch,
+  MatchStatusBanners,
+} from "./UIElements/SportsOverlays";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 1 — Social Engagement Pop-ups
-          Background: #000000 | Blend mode: Screen
+          MODULE 1 — Terminal UI & Hacker
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition
-        id="SE-HeartBurst"
-        component={HeartBurst}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SE-CommentBubble"
-        component={CommentBubble}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SE-FollowNotif"
-        component={FollowNotif}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SE-ShareRipple"
-        component={ShareRipple}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
+      <Composition id="TU-BootSequence" component={BootSequenceTerminal} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="TU-NeuralNetwork" component={NeuralNetworkProcessing} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="TU-DataTransfer" component={CyberDataTransfer} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="TU-FatalCrash" component={FatalSystemCrash} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="TU-PasswordCracker" component={SecurityPasswordCracker} durationInFrames={240} fps={FPS} width={W4K} height={H4K} />
 
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 2 — Subscribe & Follow Button States
-          Background: #000000 | Blend mode: Screen
+          MODULE 2 — News Tickers & Peringatan
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition
-        id="SB-Idle"
-        component={SubscribeIdle}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SB-HoverGlow"
-        component={SubscribeHover}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SB-ClickRipple"
-        component={SubscribeClick}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SB-CounterRise"
-        component={SubscribeCounter}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SB-SubscribedCheck"
-        component={SubscribeConfirmed}
-        durationInFrames={240}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
+      <Composition id="NT-BreakingNews" component={BreakingNewsTicker} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="NT-EmergencyAlert" component={EmergencyAlertSystem} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="NT-TopSecretWipe" component={TopSecretWipe} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="NT-CyberLockdown" component={CyberLockdown} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="NT-CrimeScene" component={CrimeSceneLine} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
 
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 3 — Story & Post Frame Overlay
-          Background: #000000 | Center zone = placeholder (black = transparent on Screen)
+          MODULE 3 — Retro Kamera & Efek VHS
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition
-        id="SF-StoryUI"
-        component={StoryUI}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SF-PostUI"
-        component={PostUI}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="SF-ReelUI"
-        component={ReelUI}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
+      <Composition id="RV-Camcorder90s" component={Camcorder90s} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="RV-LowBattery" component={LowBatteryWarning} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="RV-GlitchNoSignal" component={GlitchyNoSignal} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="RV-VCRFastForward" component={VCRFastForward} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="RV-SecurityCCTV" component={SecurityCCTV} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
 
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 4 — Phone Screen UI Mockup Scene
-          Background: #000000 | Flat render, no alpha needed
+          MODULE 4 — Hamparan Siaran Olahraga
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition
-        id="PM-FeedScroll"
-        component={PhoneFeedScroll}
-        durationInFrames={300}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="PM-ChatUI"
-        component={PhoneChatUI}
-        durationInFrames={240}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="PM-CheckoutPage"
-        component={PhoneCheckout}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-
-      {/* ═══════════════════════════════════════════════════════════════
-          MODULE 5 — Loading, Progress & Badge Reveal Pack
-          Background: #000000 | Blend mode: Screen
-          ═══════════════════════════════════════════════════════════════ */}
-      <Composition
-        id="LB-Spinner"
-        component={LoadingSpinner}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="LB-ProgressBar"
-        component={ProgressBar}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="LB-BadgeReveal"
-        component={BadgeReveal}
-        durationInFrames={210}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="LB-CheckmarkStamp"
-        component={CheckmarkStamp}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
-      <Composition
-        id="LB-SkeletonLoad"
-        component={SkeletonLoad}
-        durationInFrames={180}
-        fps={FPS}
-        width={W4K}
-        height={H4K}
-      />
+      <Composition id="SO-MatchTimer" component={MatchTimer45Mins} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="SO-VARScreen" component={VARReviewScreen} durationInFrames={240} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="SO-InjuryTime" component={InjuryTimeBoard} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="SO-MsStopwatch" component={MsRaceStopwatch} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="SO-MatchBanners" component={MatchStatusBanners} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
     </>
   );
 };
