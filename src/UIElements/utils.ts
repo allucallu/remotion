@@ -13,27 +13,17 @@ export const C = {
   white: "#FFFFFF",
   gray: "#A0A0A0",
   
-  // Terminal UI
-  termGreen: "#00FF41",
-  termGreenGlow: "rgba(0,255,65,0.4)",
-  termRed: "#FF003C",
-  termRedGlow: "rgba(255,0,60,0.5)",
-  termCyan: "#00F0FF",
-  termCyanGlow: "rgba(0,240,255,0.5)",
-  termBg: "#0A0A0A",
-  
-  // News Tickers
-  newsRed: "#E60000",
-  alertYellow: "#FFCC00",
-  
-  // Retro VHS
-  vhsWhite: "#E2E2E2",
-  vhsStatic: "rgba(255,255,255,0.15)",
-  
-  // Sports Overlays
-  sportBlue: "#001D4A",
-  sportBlueGlow: "rgba(0,29,74,0.6)",
-  sportNeonGreen: "#CCFF00",
+  // Neon Cyberpunk / Idle Game HUD Palette
+  neonCyan: "#00FFFF",
+  neonCyanGlow: "rgba(0, 255, 255, 0.5)",
+  neonPink: "#FF00FF",
+  neonPinkGlow: "rgba(255, 0, 255, 0.5)",
+  neonGold: "#FFD700",
+  neonGoldGlow: "rgba(255, 215, 0, 0.5)",
+  neonRed: "#FF3333",
+  neonRedGlow: "rgba(255, 51, 51, 0.5)",
+  neonGreen: "#39FF14",
+  neonGreenGlow: "rgba(57, 255, 20, 0.5)",
 };
 
 // ─── EASING & INTERPOLATION HELPERS ──────────────────────────────────────────

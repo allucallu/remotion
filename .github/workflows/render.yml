@@ -77,32 +77,26 @@ jobs:
             EXT="mp4"
           fi
 
-          # Daftar lengkap semua 20 komposisi Batch 2
+          # Daftar lengkap 15 komposisi Idle Game HUD
           COMPOSITIONS=(
-            # Module 1 — Terminal UI & Hacker
-            "TU-BootSequence"
-            "TU-NeuralNetwork"
-            "TU-DataTransfer"
-            "TU-FatalCrash"
-            "TU-PasswordCracker"
-            # Module 2 — News Tickers & Peringatan Siaran
-            "NT-BreakingNews"
-            "NT-EmergencyAlert"
-            "NT-TopSecretWipe"
-            "NT-CyberLockdown"
-            "NT-CrimeScene"
-            # Module 3 — Retro Kamera & Efek VHS
-            "RV-Camcorder90s"
-            "RV-LowBattery"
-            "RV-GlitchNoSignal"
-            "RV-VCRFastForward"
-            "RV-SecurityCCTV"
-            # Module 4 — Hamparan Siaran Olahraga
-            "SO-MatchTimer"
-            "SO-VARScreen"
-            "SO-InjuryTime"
-            "SO-MsStopwatch"
-            "SO-MatchBanners"
+            # Module 1 — Tactical HUD
+            "TH-HexagonGrid"
+            "TH-AutoTurret"
+            "TH-TechTree"
+            "TH-SpawnRadar"
+            "TH-ShieldBar"
+            # Module 2 — Progression HUD
+            "PH-EndlessWave"
+            "PH-IdleResource"
+            "PH-DamageNumbers"
+            "PH-UpgradePanel"
+            "PH-IdleMultiplier"
+            # Module 3 — System Events
+            "SE-PrestigeRebirth"
+            "SE-BossWarning"
+            "SE-OfflineEarnings"
+            "SE-CoreOverclock"
+            "SE-ParticleLoot"
           )
 
           TOTAL=${#COMPOSITIONS[@]}
@@ -151,7 +145,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: overlays-batch2-4k-${{ github.event.inputs.codec }}
+          name: idle-game-hud-4k-${{ github.event.inputs.codec }}
           path: out/
           retention-days: 30
           if-no-files-found: warn
