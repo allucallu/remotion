@@ -4,62 +4,155 @@ on:
   workflow_dispatch:
     inputs:
       composition_id:
-        description: 'ID komposisi (atau "ALL" untuk render semua loading)'
+        description: 'ID komposisi (contoh: SE-HeartBurst) atau "ALL" untuk render semua'
         required: true
         default: 'ALL'
+      codec:
+        description: 'Format output'
+        required: false
+        default: 'h264'
+        type: choice
+        options:
+          - h264
+          - prores-4444
 
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
+    timeout-minutes: 120
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
 
-      - run: npm ci
+      - name: Install Node dependencies
+        run: npm ci
 
-      - name: Install system dependencies
+      - name: Install Chromium system dependencies
         run: |
-          sudo apt-get update
+          sudo apt-get update -qq
           sudo apt-get install -y \
-            libnss3 libatk1.0-0 libatk-bridge2.0-0 \
-            libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
-            libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64
+            libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 \
+            libcups2t64 libdrm2 libxkbcommon0 libxcomposite1 \
+            libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64 \
+            libxshmfence1 libgles2 fonts-liberation
 
+      # ─── RENDER SATU KOMPOSISI ──────────────────────────────────────
       - name: Render single composition
         if: github.event.inputs.composition_id != 'ALL'
         run: |
-          npx remotion render \
-            ${{ github.event.inputs.composition_id }} \
-            out/${{ github.event.inputs.composition_id }}.mp4
+          mkdir -p out
+          CODEC="${{ github.event.inputs.codec }}"
+          ID="${{ github.event.inputs.composition_id }}"
 
+          if [ "$CODEC" = "prores-4444" ]; then
+            EXT="mov"
+          else
+            EXT="mp4"
+          fi
+
+          echo "▶ Rendering: $ID.$EXT"
+          npx remotion render \
+            --codec="$CODEC" \
+            --log=verbose \
+            "$ID" \
+            "out/${ID}.${EXT}"
+
+      # ─── RENDER SEMUA KOMPOSISI ─────────────────────────────────────
       - name: Render ALL compositions
         if: github.event.inputs.composition_id == 'ALL'
         run: |
           mkdir -p out
-          for id in \
-            SG-TriForce-White SG-TriForce-Gold \
-            SG-Metatron-White SG-Metatron-Cyan \
-            SG-StarTetra-White SG-StarTetra-Gold \
-            SG-Vesica-White SG-Vesica-Purple \
-            SG-Golden-White SG-Golden-Gold \
-            NH-DoubleHelix-White NH-DoubleHelix-Cyan \
-            NH-AtomBohr-White NH-AtomBohr-Gold \
-            NH-Crystal-White NH-Crystal-Cyan \
-            NH-Nebula-White NH-Nebula-Purple \
-            NH-Torus-White NH-Torus-Gold
-          do
-            echo "Rendering $id..."
-            npx remotion render $id out/$id.mp4
+
+          CODEC="${{ github.event.inputs.codec }}"
+          if [ "$CODEC" = "prores-4444" ]; then
+            EXT="mov"
+          else
+            EXT="mp4"
+          fi
+
+          # Daftar lengkap semua 20 komposisi
+          COMPOSITIONS=(
+            # Module 1 — Social Engagement Pop-ups
+            "SE-HeartBurst"
+            "SE-CommentBubble"
+            "SE-FollowNotif"
+            "SE-ShareRipple"
+            # Module 2 — Subscribe Button States
+            "SB-Idle"
+            "SB-HoverGlow"
+            "SB-ClickRipple"
+            "SB-CounterRise"
+            "SB-SubscribedCheck"
+            # Module 3 — Story & Post Frame Overlay
+            "SF-StoryUI"
+            "SF-PostUI"
+            "SF-ReelUI"
+            # Module 4 — Phone Screen Mockup
+            "PM-FeedScroll"
+            "PM-ChatUI"
+            "PM-CheckoutPage"
+            # Module 5 — Loading, Progress & Badge Pack
+            "LB-Spinner"
+            "LB-ProgressBar"
+            "LB-BadgeReveal"
+            "LB-CheckmarkStamp"
+            "LB-SkeletonLoad"
+          )
+
+          TOTAL=${#COMPOSITIONS[@]}
+          CURRENT=0
+          FAILED=()
+
+          for ID in "${COMPOSITIONS[@]}"; do
+            CURRENT=$((CURRENT + 1))
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "▶ [$CURRENT/$TOTAL] Rendering: $ID.$EXT"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+            npx remotion render \
+              --codec="$CODEC" \
+              "$ID" \
+              "out/${ID}.${EXT}" \
+            || {
+              echo "❌ GAGAL: $ID"
+              FAILED+=("$ID")
+            }
+
+            echo "✅ Selesai: $ID"
           done
 
-      - name: Upload artifacts
+          echo ""
+          echo "══════════════════════════════════════════"
+          echo "RENDER SELESAI: $TOTAL komposisi"
+          if [ ${#FAILED[@]} -gt 0 ]; then
+            echo "❌ Yang gagal:"
+            for F in "${FAILED[@]}"; do echo "   - $F"; done
+            exit 1
+          else
+            echo "✅ Semua berhasil!"
+          fi
+
+      # ─── TAMPILKAN DAFTAR FILE OUTPUT ───────────────────────────────
+      - name: List output files
+        if: always()
+        run: |
+          echo "📁 File hasil render:"
+          ls -lh out/ 2>/dev/null || echo "(tidak ada output)"
+
+      # ─── UPLOAD KE GITHUB ARTIFACTS ─────────────────────────────────
+      - name: Upload render artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: loading-animations
+          name: ui-social-mockup-4k-${{ github.event.inputs.codec }}
           path: out/
-          retention-days: 7
+          retention-days: 30
+          if-no-files-found: warn
