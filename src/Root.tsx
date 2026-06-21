@@ -3,62 +3,62 @@ import React from "react";
 import { Composition } from "remotion";
 import { W4K, H4K, FPS } from "./UIElements/utils";
 
-// ─── M1: Tactical HUD ─────────────────────────────────────────────────────────
+// ─── PART 1: Odds & Probabilitas ───────────────────────────────────
 import {
-  HexagonGridExpansion,
-  AutoTurretRange,
-  TechTreeNode,
-  GeometrySpawnRadar,
-  EnergyShieldBar,
-} from "./UIElements/TacticalHUD";
+  LiveOddsFluctuator,
+  SafeParlayBuilder,
+  HeadToHeadMomentum,
+  OverUnderTracker,
+  MatchWinProbability,
+} from "./UIElements/BettingPart1";
 
-// ─── M2: Progression HUD ──────────────────────────────────────────────────────
+// ─── PART 2: Taktis & Tracker ──────────────────────────────────────
 import {
-  EndlessWaveProgress,
-  IdleResourceGenerator,
-  FloatingDamageNumbers,
-  MinimalistUpgradePanel,
-  IdleMultiplierMeter,
-} from "./UIElements/ProgressionHUD";
+  ExpectedGoalsDynamics,
+  AsianHandicapIndicator,
+  FormGuideTracker,
+  SharpMoneyAlert,
+  CleanSheetProbability,
+} from "./UIElements/BettingPart2";
 
-// ─── M3: System Events ────────────────────────────────────────────────────────
+// ─── PART 3: Live Action & Emosi ───────────────────────────────────
 import {
-  SystemPrestigeRebirth,
-  BossEncounterWarning,
-  OfflineEarningsPopup,
-  CoreOverclock,
-  NeonParticleLootDrop,
-} from "./UIElements/SystemEvents";
+  LiveCashOutPulsar,
+  InPlayPossession,
+  BTTSRadar,
+  InjuryTimeDrama,
+  BankrollROITracker,
+} from "./UIElements/BettingPart3";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 1 — Tactical HUD (Geometry & Range)
+          PART 1 (01-05)
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition id="TH-HexagonGrid" component={HexagonGridExpansion} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="TH-AutoTurret" component={AutoTurretRange} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="TH-TechTree" component={TechTreeNode} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="TH-SpawnRadar" component={GeometrySpawnRadar} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="TH-ShieldBar" component={EnergyShieldBar} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="LiveOddsFluctuator" component={LiveOddsFluctuator} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="SafeParlayBuilder" component={SafeParlayBuilder} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="HeadToHeadMomentum" component={HeadToHeadMomentum} durationInFrames={210} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="OverUnderTracker" component={OverUnderTracker} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="MatchWinProbability" component={MatchWinProbability} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
 
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 2 — Progression HUD (Numbers & Multipliers)
+          PART 2 (06-10)
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition id="PH-EndlessWave" component={EndlessWaveProgress} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="PH-IdleResource" component={IdleResourceGenerator} durationInFrames={300} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="PH-DamageNumbers" component={FloatingDamageNumbers} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="PH-UpgradePanel" component={MinimalistUpgradePanel} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="PH-IdleMultiplier" component={IdleMultiplierMeter} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="ExpectedGoalsDynamics" component={ExpectedGoalsDynamics} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="AsianHandicapIndicator" component={AsianHandicapIndicator} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="FormGuideTracker" component={FormGuideTracker} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="SharpMoneyAlert" component={SharpMoneyAlert} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="CleanSheetProbability" component={CleanSheetProbability} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
 
       {/* ═══════════════════════════════════════════════════════════════
-          MODULE 3 — System Events (Alerts & Loot)
+          PART 3 (11-15)
           ═══════════════════════════════════════════════════════════════ */}
-      <Composition id="SE-PrestigeRebirth" component={SystemPrestigeRebirth} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="SE-BossWarning" component={BossEncounterWarning} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="SE-OfflineEarnings" component={OfflineEarningsPopup} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="SE-CoreOverclock" component={CoreOverclock} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
-      <Composition id="SE-ParticleLoot" component={NeonParticleLootDrop} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="LiveCashOutPulsar" component={LiveCashOutPulsar} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="InPlayPossession" component={InPlayPossession} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="BTTSRadar" component={BTTSRadar} durationInFrames={150} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="InjuryTimeDrama" component={InjuryTimeDrama} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
+      <Composition id="BankrollROITracker" component={BankrollROITracker} durationInFrames={180} fps={FPS} width={W4K} height={H4K} />
     </>
   );
 };

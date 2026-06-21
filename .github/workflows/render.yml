@@ -77,26 +77,26 @@ jobs:
             EXT="mp4"
           fi
 
-          # Daftar lengkap 15 komposisi Idle Game HUD
+          # Daftar lengkap 15 komposisi Sports Betting Overlays 4K
           COMPOSITIONS=(
-            # Module 1 — Tactical HUD
-            "TH-HexagonGrid"
-            "TH-AutoTurret"
-            "TH-TechTree"
-            "TH-SpawnRadar"
-            "TH-ShieldBar"
-            # Module 2 — Progression HUD
-            "PH-EndlessWave"
-            "PH-IdleResource"
-            "PH-DamageNumbers"
-            "PH-UpgradePanel"
-            "PH-IdleMultiplier"
-            # Module 3 — System Events
-            "SE-PrestigeRebirth"
-            "SE-BossWarning"
-            "SE-OfflineEarnings"
-            "SE-CoreOverclock"
-            "SE-ParticleLoot"
+            # Tahap 1 — Odds & Probabilitas
+            "LiveOddsFluctuator"
+            "SafeParlayBuilder"
+            "HeadToHeadMomentum"
+            "OverUnderTracker"
+            "MatchWinProbability"
+            # Tahap 2 — Taktis & Tracker
+            "ExpectedGoalsDynamics"
+            "AsianHandicapIndicator"
+            "FormGuideTracker"
+            "SharpMoneyAlert"
+            "CleanSheetProbability"
+            # Tahap 3 — Live Action & Emosi
+            "LiveCashOutPulsar"
+            "InPlayPossession"
+            "BTTSRadar"
+            "InjuryTimeDrama"
+            "BankrollROITracker"
           )
 
           TOTAL=${#COMPOSITIONS[@]}
