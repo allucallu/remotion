@@ -77,26 +77,32 @@ jobs:
             EXT="mp4"
           fi
 
-          # Daftar lengkap 15 komposisi Sports Betting Overlays 4K
+          # Daftar lengkap 20 komposisi Satirical Pop-ups & Brainrot Hooks 4K
           COMPOSITIONS=(
-            # Tahap 1 — Odds & Probabilitas
-            "LiveOddsFluctuator"
-            "SafeParlayBuilder"
-            "HeadToHeadMomentum"
-            "OverUnderTracker"
-            "MatchWinProbability"
-            # Tahap 2 — Taktis & Tracker
-            "ExpectedGoalsDynamics"
-            "AsianHandicapIndicator"
-            "FormGuideTracker"
-            "SharpMoneyAlert"
-            "CleanSheetProbability"
-            # Tahap 3 — Live Action & Emosi
-            "LiveCashOutPulsar"
-            "InPlayPossession"
-            "BTTSRadar"
-            "InjuryTimeDrama"
-            "BankrollROITracker"
+            # Tahap 1 — Existential Tech Errors
+            "WillToLive404"
+            "BrainExeError"
+            "OverthinkingBuffer"
+            "SocialBatteryWarning"
+            "BlueScreenOfBurnout"
+            # Tahap 2 — Anti-Hustle & Slow Living
+            "SlowLivingProtocol"
+            "MeetingToEmailConverter"
+            "HustleModeFailed"
+            "CopingMechanismUpdate"
+            "BareMinimumAchievement"
+            # Tahap 3 — Dopamine Hooks
+            "DopamineRestockingBar"
+            "DelusionRecaptcha"
+            "DownloadingSerotonin"
+            "AreYouStillDoomscrolling"
+            "AttentionSpanCheckpoint"
+            # Tahap 4 — Sarcastic Notifications
+            "ThoughtsAndPrayers"
+            "TermsOfAnxiety"
+            "DelusionRadarPing"
+            "UnsubscribeAdulthood"
+            "VibeCheckTerminal"
           )
 
           TOTAL=${#COMPOSITIONS[@]}

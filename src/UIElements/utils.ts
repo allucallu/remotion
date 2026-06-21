@@ -21,6 +21,18 @@ export const C = {
   red: "#FF3B30",
   lime: "#39FF14",
   blue: "#0055FF",
+
+  // Classic UI Palette
+  xpBlue: "#0055E5",
+  winGrey: "#ECE9D8",
+  win98Grey: "#C0C0C0",
+  win98Dark: "#808080",
+  win98Light: "#FFFFFF",
+  iosGreen: "#34C759",
+  iosRed: "#FF3B30",
+  macGrey: "#EBEBEB",
+  transparentGlass: "rgba(255, 255, 255, 0.1)",
+  borderGlass: "rgba(255, 255, 255, 0.2)"
 };
 
 // ─── GLOW FORMULAS ──────────────────────────────────────────────────────────
