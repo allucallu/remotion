@@ -1,157 +1,36 @@
-name: Render Remotion Video
-
-on:
-  workflow_dispatch:
-    inputs:
-      composition_id:
-        description: 'ID komposisi (contoh: SE-HeartBurst) atau "ALL" untuk render semua'
-        required: true
-        default: 'ALL'
-      codec:
-        description: 'Format output'
-        required: false
-        default: 'h264'
-        type: choice
-        options:
-          - h264
-          - prores-4444
+name: Render Broadcast News Pack
+on: [workflow_dispatch]
 
 jobs:
   render:
+    name: Render Broadcast Assets
     runs-on: ubuntu-latest
-    timeout-minutes: 120
-
+    strategy:
+      matrix:
+        composition:
+          - BreakingNewsBanner
+          - LowerThirdCorporate
+          - NewsTicker
+          - LiveBroadcastBadge
+          - WorldMapIntro
+          - WeatherGraphicTemplate
+          - CountdownTimerBroadcast
+          - SportsScoreboardBug
+          - ElectionResultBar
+          - StudioTransitionWipe
+          - SocialMediaOverlay
+          - EmergencyAlertBroadcast
+          - SplitScreenLayout
+          - PressConferenceBackdrop
+          - NewsIntroStinger
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install Node dependencies
-        run: npm ci
-
-      - name: Install Chromium system dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y \
-            libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 \
-            libcups2t64 libdrm2 libxkbcommon0 libxcomposite1 \
-            libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64 \
-            libxshmfence1 libgles2 fonts-liberation
-
-      # ─── RENDER SATU KOMPOSISI ──────────────────────────────────────
-      - name: Render single composition
-        if: github.event.inputs.composition_id != 'ALL'
-        run: |
-          mkdir -p out
-          CODEC="${{ github.event.inputs.codec }}"
-          ID="${{ github.event.inputs.composition_id }}"
-
-          if [ "$CODEC" = "prores-4444" ]; then
-            EXT="mov"
-          else
-            EXT="mp4"
-          fi
-
-          echo "▶ Rendering: $ID.$EXT"
-          npx remotion render \
-            --codec="$CODEC" \
-            --log=verbose \
-            "$ID" \
-            "out/${ID}.${EXT}"
-
-      # ─── RENDER SEMUA KOMPOSISI ─────────────────────────────────────
-      - name: Render ALL compositions
-        if: github.event.inputs.composition_id == 'ALL'
-        run: |
-          mkdir -p out
-
-          CODEC="${{ github.event.inputs.codec }}"
-          if [ "$CODEC" = "prores-4444" ]; then
-            EXT="mov"
-          else
-            EXT="mp4"
-          fi
-
-          # Daftar lengkap 20 komposisi Satirical Pop-ups & Brainrot Hooks 4K
-          COMPOSITIONS=(
-            # Tahap 1 — Existential Tech Errors
-            "WillToLive404"
-            "BrainExeError"
-            "OverthinkingBuffer"
-            "SocialBatteryWarning"
-            "BlueScreenOfBurnout"
-            # Tahap 2 — Anti-Hustle & Slow Living
-            "SlowLivingProtocol"
-            "MeetingToEmailConverter"
-            "HustleModeFailed"
-            "CopingMechanismUpdate"
-            "BareMinimumAchievement"
-            # Tahap 3 — Dopamine Hooks
-            "DopamineRestockingBar"
-            "DelusionRecaptcha"
-            "DownloadingSerotonin"
-            "AreYouStillDoomscrolling"
-            "AttentionSpanCheckpoint"
-            # Tahap 4 — Sarcastic Notifications
-            "ThoughtsAndPrayers"
-            "TermsOfAnxiety"
-            "DelusionRadarPing"
-            "UnsubscribeAdulthood"
-            "VibeCheckTerminal"
-          )
-
-          TOTAL=${#COMPOSITIONS[@]}
-          CURRENT=0
-          FAILED=()
-
-          for ID in "${COMPOSITIONS[@]}"; do
-            CURRENT=$((CURRENT + 1))
-            echo ""
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-            echo "▶ [$CURRENT/$TOTAL] Rendering: $ID.$EXT"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-            npx remotion render \
-              --codec="$CODEC" \
-              "$ID" \
-              "out/${ID}.${EXT}" \
-            || {
-              echo "❌ GAGAL: $ID"
-              FAILED+=("$ID")
-            }
-
-            echo "✅ Selesai: $ID"
-          done
-
-          echo ""
-          echo "══════════════════════════════════════════"
-          echo "RENDER SELESAI: $TOTAL komposisi"
-          if [ ${#FAILED[@]} -gt 0 ]; then
-            echo "❌ Yang gagal:"
-            for F in "${FAILED[@]}"; do echo "   - $F"; done
-            exit 1
-          else
-            echo "✅ Semua berhasil!"
-          fi
-
-      # ─── TAMPILKAN DAFTAR FILE OUTPUT ───────────────────────────────
-      - name: List output files
-        if: always()
-        run: |
-          echo "📁 File hasil render:"
-          ls -lh out/ 2>/dev/null || echo "(tidak ada output)"
-
-      # ─── UPLOAD KE GITHUB ARTIFACTS ─────────────────────────────────
-      - name: Upload render artifacts
-        if: always()
-        uses: actions/upload-artifact@v5
+          node-version: '18'
+      - run: npm install
+      - run: npx remotion render src/index.ts ${{ matrix.composition }} out/${{ matrix.composition }}.mp4 --gl=angle
+      - uses: actions/upload-artifact@v3
         with:
-          name: idle-game-hud-4k-${{ github.event.inputs.codec }}
-          path: out/
-          retention-days: 30
-          if-no-files-found: warn
+          name: ${{ matrix.composition }}
+          path: out/${{ matrix.composition }}.mp4
