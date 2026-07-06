@@ -61,3 +61,28 @@ jobs:
         with:
           name: ${{ matrix.composition }}
           path: out/${{ matrix.composition }}.mp4
+
+  bundle:
+    name: Bundle All into ZIP
+    runs-on: ubuntu-latest
+    needs: render
+    if: ${{ always() }}
+    steps:
+      - name: Download all rendered artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-renders
+          merge-multiple: true
+
+      - name: Create ZIP archive
+        run: |
+          cd all-renders
+          zip -r ../BroadcastNewsPack.zip .
+          echo "ZIP created:"
+          ls -lh ../BroadcastNewsPack.zip
+
+      - name: Upload ZIP bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: BroadcastNewsPack
+          path: BroadcastNewsPack.zip
