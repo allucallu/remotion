@@ -24,13 +24,13 @@ jobs:
           - PressConferenceBackdrop
           - NewsIntroStinger
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
       - run: npm install
       - run: npx remotion render src/index.ts ${{ matrix.composition }} out/${{ matrix.composition }}.mp4 --gl=angle
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.composition }}
           path: out/${{ matrix.composition }}.mp4
