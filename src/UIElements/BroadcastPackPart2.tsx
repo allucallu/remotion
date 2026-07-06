@@ -12,6 +12,7 @@ const C = {
   white:   "#FFFFFF",
   orange:  "#F97316",
   yellow:  "#EAB308",
+  gold:    "#F2C94C",
   cyan:    "#00E5FF",
   grey:    "#333333",
   greyL:   "#9CA3AF",

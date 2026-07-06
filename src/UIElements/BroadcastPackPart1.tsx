@@ -52,7 +52,6 @@ export const BreakingNewsBanner: React.FC = () => {
   const frame = useCurrentFrame();
   
   // Animation timings
-  const IN_DUR = 12;
   const EXIT_START = 160;
   
   // Slide in from bottom-left (skewed)
