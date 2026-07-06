@@ -3,9 +3,10 @@ on: [workflow_dispatch]
 
 jobs:
   render:
-    name: Render Broadcast Assets
+    name: Render ${{ matrix.composition }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         composition:
           - BreakingNewsBanner
@@ -25,11 +26,37 @@ jobs:
           - NewsIntroStinger
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - run: npm install
-      - run: npx remotion render src/index.ts ${{ matrix.composition }} out/${{ matrix.composition }}.mp4 --gl=angle
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chrome dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgbm-dev \
+            libasound2-dev \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libcups2 \
+            libdrm2 \
+            libgtk-3-0 \
+            libnspr4 \
+            libnss3 \
+            libx11-xcb1 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxfixes3 \
+            libxrandr2 \
+            xvfb
+
+      - name: Render ${{ matrix.composition }}
+        run: npx remotion render src/index.ts ${{ matrix.composition }} out/${{ matrix.composition }}.mp4 --gl=swangle
+
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.composition }}
