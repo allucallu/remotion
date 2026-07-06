@@ -2,28 +2,9 @@ name: Render Broadcast News Pack
 on: [workflow_dispatch]
 
 jobs:
-  render:
-    name: Render ${{ matrix.composition }}
+  render-and-bundle:
+    name: Render All & Bundle ZIP
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        composition:
-          - BreakingNewsBanner
-          - LowerThirdCorporate
-          - NewsTicker
-          - LiveBroadcastBadge
-          - WorldMapIntro
-          - WeatherGraphicTemplate
-          - CountdownTimerBroadcast
-          - SportsScoreboardBug
-          - ElectionResultBar
-          - StudioTransitionWipe
-          - SocialMediaOverlay
-          - EmergencyAlertBroadcast
-          - SplitScreenLayout
-          - PressConferenceBackdrop
-          - NewsIntroStinger
     steps:
       - uses: actions/checkout@v4
 
@@ -54,34 +35,45 @@ jobs:
             libxrandr2 \
             xvfb
 
-      - name: Render ${{ matrix.composition }}
-        run: npx remotion render src/index.ts ${{ matrix.composition }} out/${{ matrix.composition }}.mp4 --gl=swangle
+      - name: Bundle Remotion (once, shared)
+        run: npx remotion bundle src/index.ts --out-dir bundle-out
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.composition }}
-          path: out/${{ matrix.composition }}.mp4
-
-  bundle:
-    name: Bundle All into ZIP
-    runs-on: ubuntu-latest
-    needs: render
-    if: ${{ always() }}
-    steps:
-      - name: Download all rendered artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: all-renders
-          merge-multiple: true
-
-      - name: Create ZIP archive
+      - name: Render all compositions
         run: |
-          cd all-renders
-          zip -r ../BroadcastNewsPack.zip .
-          echo "ZIP created:"
+          mkdir -p out
+          COMPOSITIONS=(
+            BreakingNewsBanner
+            LowerThirdCorporate
+            NewsTicker
+            LiveBroadcastBadge
+            WorldMapIntro
+            WeatherGraphicTemplate
+            CountdownTimerBroadcast
+            SportsScoreboardBug
+            ElectionResultBar
+            StudioTransitionWipe
+            SocialMediaOverlay
+            EmergencyAlertBroadcast
+            SplitScreenLayout
+            PressConferenceBackdrop
+            NewsIntroStinger
+          )
+          for COMP in "${COMPOSITIONS[@]}"; do
+            echo "▶ Rendering $COMP..."
+            npx remotion render src/index.ts "$COMP" "out/${COMP}.mp4" --gl=swangle
+            echo "✅ Done: $COMP"
+          done
+
+      - name: Create ZIP bundle
+        run: |
+          cd out
+          zip -r ../BroadcastNewsPack.zip *.mp4
+          echo "=== ZIP contents ==="
+          unzip -l ../BroadcastNewsPack.zip
+          echo "=== ZIP size ==="
           ls -lh ../BroadcastNewsPack.zip
 
-      - name: Upload ZIP bundle
+      - name: Upload BroadcastNewsPack.zip
         uses: actions/upload-artifact@v4
         with:
           name: BroadcastNewsPack
