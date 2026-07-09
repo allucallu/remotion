@@ -51,7 +51,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const whiteW = 2400 * whiteSpring * outroScale;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Main Lower Third Group */}
           <div style={{position: 'absolute', bottom: 180, left: 160, display: 'flex', flexDirection: 'column', gap: 16}}>
             {/* White top tier */}
@@ -108,7 +108,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Rounded Corporate lower-third box with drop shadow */}
           <div style={{
             position: 'absolute', bottom: 180, left: 160,
@@ -150,7 +150,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const overlayScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Cyberpunk Glassmorphic Lower Panel */}
           <div style={{
             position: 'absolute', bottom: 160, left: 160,
@@ -202,7 +202,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Asymmetric pastel layered plates in Y & X axis */}
           <div style={{
             position: 'absolute', bottom: 180, left: 160,
@@ -241,7 +241,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Screen-wide lower ticker strip */}
           <div style={{
             position: 'absolute', bottom: 140, left: 0, right: 0,
@@ -278,7 +278,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Sports scoreboard widget (Top Left) */}
           <div style={{
             position: 'absolute', top: 120, left: 160,
@@ -336,7 +336,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Weather Side Panel layout (Right side) */}
           <div style={{
             position: 'absolute', top: 120, right: 160, bottom: 120,
@@ -388,7 +388,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const barW = 2800 * baseSpring * outroScale;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Election comparison lower bar */}
           <div style={{
             position: 'absolute', bottom: 180, left: cx - barW / 2,
@@ -440,7 +440,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Animated emergency framing borders (caution stripes) */}
           <svg width={width} height={height} style={{position: 'absolute', top: 0, left: 0, pointerEvents: 'none'}}>
             <defs>
@@ -481,7 +481,7 @@ export const TextlessBroadcastOverlay: React.FC<Props> = ({style}) => {
       const outroScale = 1 - easedOutro;
 
       return (
-        <AbsoluteFill style={{background: 'transparent', overflow: 'hidden'}}>
+        <AbsoluteFill style={{background: '#000000', overflow: 'hidden'}}>
           {/* Slanted pembagi asimetris layar */}
           <div style={{
             position: 'absolute', top: 0, bottom: 0, left: width * 0.4 - 10,

@@ -42,21 +42,16 @@ jobs:
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            BreakingNewsBanner
-            LowerThirdCorporate
-            NewsTicker
-            LiveBroadcastBadge
-            WorldMapIntro
-            WeatherGraphicTemplate
-            CountdownTimerBroadcast
-            SportsScoreboardBug
-            ElectionResultBar
-            StudioTransitionWipe
-            SocialMediaOverlay
-            EmergencyAlertBroadcast
-            SplitScreenLayout
-            PressConferenceBackdrop
-            NewsIntroStinger
+            VariantNews
+            VariantCorporate
+            VariantCyberpunk
+            VariantFluid
+            VariantTicker
+            VariantSports
+            VariantWeather
+            VariantElection
+            VariantEmergency
+            VariantSplit
           )
           for COMP in "${COMPOSITIONS[@]}"; do
             echo "▶ Rendering $COMP..."
@@ -67,14 +62,14 @@ jobs:
       - name: Create ZIP bundle
         run: |
           cd out
-          zip -r ../BroadcastNewsPack.zip *.mp4
+          zip -r ../TextlessBroadcastOverlayPack.zip *.mp4
           echo "=== ZIP contents ==="
-          unzip -l ../BroadcastNewsPack.zip
+          unzip -l ../TextlessBroadcastOverlayPack.zip
           echo "=== ZIP size ==="
-          ls -lh ../BroadcastNewsPack.zip
+          ls -lh ../TextlessBroadcastOverlayPack.zip
 
-      - name: Upload BroadcastNewsPack.zip
+      - name: Upload TextlessBroadcastOverlayPack.zip
         uses: actions/upload-artifact@v4
         with:
-          name: BroadcastNewsPack
-          path: BroadcastNewsPack.zip
+          name: TextlessBroadcastOverlayPack
+          path: TextlessBroadcastOverlayPack.zip
