@@ -1,4 +1,4 @@
-name: Render All Corporate Background Videos (Zip Bundle)
+name: Render All Lower Third Videos (Zip Bundle)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-all:
-    name: Render All 10 Backgrounds & Bundle to Zip
+    name: Render All 10 Lower Thirds & Bundle to Zip
     runs-on: ubuntu-latest
 
     steps:
@@ -25,20 +25,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All 10 Compositions (4K MP4)
+      - name: Render All 10 Compositions (4K ProRes / MP4)
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "Corporate-01-GradientFlow"
-            "Corporate-02-AuroraWave"
-            "Corporate-03-BlobMorph"
-            "Corporate-04-ParticleDrift"
-            "Corporate-05-GeometricPulse"
-            "Corporate-06-NoiseField"
-            "Corporate-07-WaveStack"
-            "Corporate-08-RadialBreath"
-            "Corporate-09-LiquidMetal"
-            "Corporate-10-DiamondGrid"
+            "LowerThird-01-Corporate"
+            "LowerThird-02-Broadcast"
+            "LowerThird-03-TechPill"
+            "LowerThird-04-Editorial"
+            "LowerThird-05-Podcast"
+            "LowerThird-06-Cinema"
+            "LowerThird-07-Sports"
+            "LowerThird-08-Finance"
+            "LowerThird-09-Creative"
+            "LowerThird-10-CyberTech"
           )
           for comp in "${COMPOSITIONS[@]}"; do
             echo "=== Rendering $comp ==="
@@ -48,12 +48,12 @@ jobs:
       - name: Zip Rendered Videos
         run: |
           cd out
-          zip -r ../corporate-backgrounds-4k.zip *.mp4
+          zip -r ../lower-thirds-4k.zip *.mp4
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: corporate-backgrounds-4k
-          path: corporate-backgrounds-4k.zip
+          name: lower-thirds-4k
+          path: lower-thirds-4k.zip
           retention-days: 14
