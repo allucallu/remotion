@@ -1,75 +1,52 @@
-name: Render Broadcast News Pack
-on: [workflow_dispatch]
+name: Render Corporate Background Videos
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
 
 jobs:
-  render-and-bundle:
-    name: Render All & Bundle ZIP
+  render:
+    name: Render ${{ matrix.composition }}
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    strategy:
+      fail-fast: false
+      matrix:
+        composition:
+          - Corporate-01-GradientFlow
+          - Corporate-02-AuroraWave
+          - Corporate-03-BlobMorph
+          - Corporate-04-ParticleDrift
+          - Corporate-05-GeometricPulse
+          - Corporate-06-NoiseField
+          - Corporate-07-WaveStack
+          - Corporate-08-RadialBreath
+          - Corporate-09-LiquidMetal
+          - Corporate-10-DiamondGrid
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Chrome dependencies (Linux)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libgbm-dev \
-            libasound2-dev \
-            libatk1.0-0 \
-            libatk-bridge2.0-0 \
-            libcups2 \
-            libdrm2 \
-            libgtk-3-0 \
-            libnspr4 \
-            libnss3 \
-            libx11-xcb1 \
-            libxcomposite1 \
-            libxdamage1 \
-            libxfixes3 \
-            libxrandr2 \
-            xvfb
-
-      - name: Bundle Remotion (once, shared)
-        run: npx remotion bundle src/index.ts --out-dir bundle-out
-
-      - name: Render all compositions
+      - name: Render Video (4K MP4)
         run: |
           mkdir -p out
-          COMPOSITIONS=(
-            VariantNews
-            VariantCorporate
-            VariantCyberpunk
-            VariantFluid
-            VariantTicker
-            VariantSports
-            VariantWeather
-            VariantElection
-            VariantEmergency
-            VariantSplit
-          )
-          for COMP in "${COMPOSITIONS[@]}"; do
-            echo "▶ Rendering $COMP..."
-            npx remotion render src/index.ts "$COMP" "out/${COMP}.mp4" --gl=swangle
-            echo "✅ Done: $COMP"
-          done
+          npx remotion render ${{ matrix.composition }} out/${{ matrix.composition }}.mp4 --codec=h264
 
-      - name: Create ZIP bundle
-        run: |
-          cd out
-          zip -r ../TextlessBroadcastOverlayPack.zip *.mp4
-          echo "=== ZIP contents ==="
-          unzip -l ../TextlessBroadcastOverlayPack.zip
-          echo "=== ZIP size ==="
-          ls -lh ../TextlessBroadcastOverlayPack.zip
-
-      - name: Upload TextlessBroadcastOverlayPack.zip
+      - name: Upload Video Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TextlessBroadcastOverlayPack
-          path: TextlessBroadcastOverlayPack.zip
+          name: video-${{ matrix.composition }}
+          path: out/${{ matrix.composition }}.mp4
+          retention-days: 14
