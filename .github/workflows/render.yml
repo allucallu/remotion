@@ -1,4 +1,4 @@
-name: Render All 4K Social CTA Lower Thirds (ProRes 4444 Alpha Zip Bundle)
+name: Render All 4K Anti-Generic Lower Thirds (ProRes 4444 Alpha Zip Bundle)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-all:
-    name: Render All 10 Social CTA Lower Thirds (ProRes 4444 Alpha) & Bundle to Zip
+    name: Render All 10 Anti-Generic Lower Thirds (ProRes 4444 Alpha) & Bundle to Zip
     runs-on: ubuntu-latest
 
     steps:
@@ -29,16 +29,16 @@ jobs:
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "SocialCta-01-SubscribePill"
-            "SocialCta-02-FollowerCount"
-            "SocialCta-03-NotifyBell"
-            "SocialCta-04-HandleBar"
-            "SocialCta-05-PlayWatch"
-            "SocialCta-06-LikeEngage"
-            "SocialCta-07-JoinCommunity"
-            "SocialCta-08-SplitDualBar"
-            "SocialCta-09-SwipeUp"
-            "SocialCta-10-LiveNow"
+            "LowerThird-01-ShardAssemble"
+            "LowerThird-02-OrigamiUnfold"
+            "LowerThird-03-JaggedTear"
+            "LowerThird-04-InterlockingSlits"
+            "LowerThird-05-KineticSlatRotator"
+            "LowerThird-06-ApertureExpand"
+            "LowerThird-07-LiquidWaveExpand"
+            "LowerThird-08-ElasticRibbonUnroll"
+            "LowerThird-09-VoxelDropConstruct"
+            "LowerThird-10-PrismSlantShift"
           )
           for comp in "${COMPOSITIONS[@]}"; do
             echo "=== Rendering $comp (ProRes 4444 Alpha) ==="
@@ -48,12 +48,12 @@ jobs:
       - name: Zip Rendered Videos
         run: |
           cd out
-          zip -r ../social-cta-lower-thirds-prores-4k.zip *.mov
+          zip -r ../anti-generic-lower-thirds-prores-4k.zip *.mov
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: social-cta-lower-thirds-prores-4k
-          path: social-cta-lower-thirds-prores-4k.zip
+          name: anti-generic-lower-thirds-prores-4k
+          path: anti-generic-lower-thirds-prores-4k.zip
           retention-days: 14

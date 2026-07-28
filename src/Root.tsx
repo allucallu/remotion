@@ -2,28 +2,28 @@ import React from 'react';
 import { Composition } from 'remotion';
 import './index.css';
 
-import { SocialCtaSubscribePill } from './SocialCtaSubscribePill';
-import { SocialCtaFollowerCount } from './SocialCtaFollowerCount';
-import { SocialCtaNotifyBell } from './SocialCtaNotifyBell';
-import { SocialCtaHandleBar } from './SocialCtaHandleBar';
-import { SocialCtaPlayWatch } from './SocialCtaPlayWatch';
-import { SocialCtaLikeEngage } from './SocialCtaLikeEngage';
-import { SocialCtaJoinCommunity } from './SocialCtaJoinCommunity';
-import { SocialCtaSplitDualBar } from './SocialCtaSplitDualBar';
-import { SocialCtaSwipeUp } from './SocialCtaSwipeUp';
-import { SocialCtaLiveNow } from './SocialCtaLiveNow';
+import { LowerThirdShardAssemble } from './LowerThirdShardAssemble';
+import { LowerThirdOrigamiUnfold } from './LowerThirdOrigamiUnfold';
+import { LowerThirdJaggedTear } from './LowerThirdJaggedTear';
+import { LowerThirdInterlockingSlits } from './LowerThirdInterlockingSlits';
+import { LowerThirdKineticSlatRotator } from './LowerThirdKineticSlatRotator';
+import { LowerThirdApertureExpand } from './LowerThirdApertureExpand';
+import { LowerThirdLiquidWaveExpand } from './LowerThirdLiquidWaveExpand';
+import { LowerThirdElasticRibbonUnroll } from './LowerThirdElasticRibbonUnroll';
+import { LowerThirdVoxelDropConstruct } from './LowerThirdVoxelDropConstruct';
+import { LowerThirdPrismSlantShift } from './LowerThirdPrismSlantShift';
 
 const compositions = [
-  { id: 'SocialCta-01-SubscribePill', component: SocialCtaSubscribePill, dur: 180 },
-  { id: 'SocialCta-02-FollowerCount', component: SocialCtaFollowerCount, dur: 180 },
-  { id: 'SocialCta-03-NotifyBell', component: SocialCtaNotifyBell, dur: 210 },
-  { id: 'SocialCta-04-HandleBar', component: SocialCtaHandleBar, dur: 180 },
-  { id: 'SocialCta-05-PlayWatch', component: SocialCtaPlayWatch, dur: 180 },
-  { id: 'SocialCta-06-LikeEngage', component: SocialCtaLikeEngage, dur: 180 },
-  { id: 'SocialCta-07-JoinCommunity', component: SocialCtaJoinCommunity, dur: 210 },
-  { id: 'SocialCta-08-SplitDualBar', component: SocialCtaSplitDualBar, dur: 180 },
-  { id: 'SocialCta-09-SwipeUp', component: SocialCtaSwipeUp, dur: 210 },
-  { id: 'SocialCta-10-LiveNow', component: SocialCtaLiveNow, dur: 180 },
+  { id: 'LowerThird-01-ShardAssemble', component: LowerThirdShardAssemble, dur: 180 },
+  { id: 'LowerThird-02-OrigamiUnfold', component: LowerThirdOrigamiUnfold, dur: 180 },
+  { id: 'LowerThird-03-JaggedTear', component: LowerThirdJaggedTear, dur: 210 },
+  { id: 'LowerThird-04-InterlockingSlits', component: LowerThirdInterlockingSlits, dur: 180 },
+  { id: 'LowerThird-05-KineticSlatRotator', component: LowerThirdKineticSlatRotator, dur: 180 },
+  { id: 'LowerThird-06-ApertureExpand', component: LowerThirdApertureExpand, dur: 210 },
+  { id: 'LowerThird-07-LiquidWaveExpand', component: LowerThirdLiquidWaveExpand, dur: 180 },
+  { id: 'LowerThird-08-ElasticRibbonUnroll', component: LowerThirdElasticRibbonUnroll, dur: 180 },
+  { id: 'LowerThird-09-VoxelDropConstruct', component: LowerThirdVoxelDropConstruct, dur: 180 },
+  { id: 'LowerThird-10-PrismSlantShift', component: LowerThirdPrismSlantShift, dur: 180 },
 ];
 
 export const RemotionRoot: React.FC = () => {
