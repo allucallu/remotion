@@ -2,31 +2,31 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * 2. LowerThirdOrigamiUnfold (REVISED: 100% Clean Off-Screen Exit)
+ * 4. LowerThirdCubePerspectiveUnfold (Batch 2)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal DARI LUAR FRAME BAWAH LAYAR 4K (+2200px), plat 3D naik sambil merekah berdiri 90 derajat di sumbu-X (`rotateX`) lalu melipat membentang ke samping di sumbu-Y (`rotateY`).
- * Saat exit, seluruh struktur melipat kembali, mengecil, dan meluncur jatuh jauh ke luar frame bawah 4K (+2200px) secara bersih tanpa sisa visual.
+ * Berawal DARI LUAR FRAME BAWAH LAYAR 4K (+2200px), struktur kotak 3D isometris meluncur naik dan merekah membentangkan muka depannya (`rotateX`, `rotateY`) membentuk spanduk multi-layer.
+ * Saat exit, seluruh kotak melipat kembali, mengecil, dan jatuh keluar melintasi bawah frame 4K (+2200px).
  *
  * GERAKAN SEKUNDER:
- * Bracket aksen pop-out di sudut kanan melompat keluar (frame 34) dan meluncur keluar frame kanan (+3500px) saat exit.
+ * Cap aksen sudut atas membal membesar pada frame 38 dan meluncur keluar frame kiri (-2500px) saat exit.
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
- *   - Nama Utama (Baris 1): Left = 260px, Top = 1580px, Width = 2000px, Height = 100px
- *   - Subtitle / Jabatan (Baris 2): Left = 280px, Top = 1690px, Width = 1750px, Height = 65px
+ *   - Nama Utama (Baris 1): Left = 240px, Top = 1580px, Width = 2100px, Height = 100px
+ *   - Subtitle / Jabatan (Baris 2): Left = 260px, Top = 1690px, Width = 1800px, Height = 65px
  *
  * DURASI: 180 frames (6.0s @ 30fps)
  */
 
-interface LowerThirdOrigamiUnfoldProps {
+interface LowerThirdCubePerspectiveUnfoldProps {
   primaryColor?: string;
   accentColor?: string;
   delayFrame?: number;
 }
 
-export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = ({
-  primaryColor = '#111827',
-  accentColor = '#F59E0B',
+export const LowerThirdCubePerspectiveUnfold: React.FC<LowerThirdCubePerspectiveUnfoldProps> = ({
+  primaryColor = '#18181B',
+  accentColor = '#A855F7',
   delayFrame = 0,
 }) => {
   const frame = useCurrentFrame();
@@ -37,42 +37,35 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
   const exitLocalFrame = frame - exitStartFrame;
   const isExiting = frame >= exitStartFrame;
 
-  // Phase 1 Spring: Vertical Translate + Flip Up X-axis
-  const entranceSpring = spring({ frame: localFrame, fps, config: { damping: 12, stiffness: 150, mass: 0.8 } });
-  // Phase 2 Spring: Unfold Y-axis (delayed frame 12)
-  const unfoldYSpring = spring({ frame: localFrame - 12, fps, config: { damping: 11, stiffness: 140, mass: 0.8 } });
-  // Secondary Motion Spring: Bracket Pop Out (delayed frame 34)
-  const bracketSpring = spring({ frame: localFrame - 34, fps, config: { damping: 9, stiffness: 170, mass: 0.5 } });
+  // Entrance Springs
+  const containerSpring = spring({ frame: localFrame, fps, config: { damping: 12, stiffness: 150, mass: 0.8 } });
+  const unfoldSpring = spring({ frame: localFrame - 10, fps, config: { damping: 11, stiffness: 140, mass: 0.8 } });
+  const capSpring = spring({ frame: localFrame - 38, fps, config: { damping: 9, stiffness: 170, mass: 0.5 } });
 
-  // Exit Spring (Crisp, fast drop)
-  const exitSpring = spring({ frame: exitLocalFrame, fps, config: { damping: 15, stiffness: 200, mass: 0.6 } });
+  // Exit Spring
+  const exitSpring = spring({ frame: exitLocalFrame, fps, config: { damping: 14, stiffness: 180, mass: 0.7 } });
 
-  // Offscreen Interpolations: +2200px guarantees complete offscreen clearance below 2160px canvas
+  // Offscreen Interpolations (+2200px bottom drop)
   const translateY = isExiting
     ? interpolate(exitSpring, [0, 1], [0, 2200])
-    : interpolate(entranceSpring, [0, 1], [2200, 0]);
+    : interpolate(containerSpring, [0, 1], [2200, 0]);
 
   const rotateX = isExiting
     ? interpolate(exitSpring, [0, 1], [0, 90])
-    : interpolate(entranceSpring, [0, 1], [-90, 0]);
+    : interpolate(containerSpring, [0, 1], [-90, 0]);
 
   const rotateY = isExiting
     ? interpolate(exitSpring, [0, 1], [0, -90])
-    : interpolate(unfoldYSpring, [0, 1], [90, 0]);
+    : interpolate(unfoldSpring, [0, 1], [90, 0]);
 
-  const scale = isExiting
-    ? interpolate(exitSpring, [0, 1], [1, 0])
-    : 1;
+  const scale = isExiting ? interpolate(exitSpring, [0, 1], [1, 0]) : 1;
+  const opacity = isExiting ? interpolate(exitSpring, [0.6, 1], [1, 0], { extrapolateRight: 'clamp' }) : 1;
 
-  const opacity = isExiting
-    ? interpolate(exitSpring, [0.6, 1], [1, 0], { extrapolateRight: 'clamp' })
-    : 1;
+  const capScale = interpolate(capSpring, [0, 1], [0, 1]);
+  const capExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, -2500]) : 0;
 
-  const bracketScale = interpolate(bracketSpring, [0, 1], [0, 1]);
-  const bracketExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3500]) : 0;
-
-  const baseLeft = 210;
-  const baseTop = 1550;
+  const baseLeft = 200;
+  const baseTop = 1540;
 
   return (
     <AbsoluteFill>
@@ -81,14 +74,14 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
           position: 'absolute',
           left: baseLeft,
           top: baseTop,
-          width: 2200,
-          height: 240,
+          width: 2250,
+          height: 250,
           perspective: 1400,
           transform: `translate3d(0, ${translateY}px, 0) scale(${scale})`,
           opacity,
         }}
       >
-        {/* Main Origami Base Board with X-axis flip */}
+        {/* Main 3D Box Surface */}
         <div
           style={{
             position: 'absolute',
@@ -116,7 +109,7 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
             }}
           />
 
-          {/* Secondary Unfolding Wing on Y-axis */}
+          {/* Unfolding 3D Cube Wing */}
           <div
             style={{
               position: 'absolute',
@@ -124,7 +117,7 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
               top: 0,
               width: 785,
               height: 150,
-              backgroundColor: '#1F2937',
+              backgroundColor: '#27272A',
               borderRadius: '0 8px 8px 0',
               transformOrigin: 'left center',
               transform: `rotateY(${rotateY}deg)`,
@@ -139,9 +132,9 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
               position: 'absolute',
               left: 40,
               top: 145,
-              width: 1700,
+              width: 1750,
               height: 85,
-              backgroundColor: '#374151',
+              backgroundColor: '#3F3F46',
               borderRadius: 6,
               transformOrigin: 'left center',
               transform: `rotateY(${rotateY}deg)`,
@@ -149,19 +142,20 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
             }}
           />
 
-          {/* SECONDARY MOTION: Accent Pop-out Bracket */}
+          {/* SECONDARY MOTION: Accent Corner Cap */}
           <div
             style={{
               position: 'absolute',
-              right: 10,
+              left: -15,
               top: -15,
-              width: 120,
-              height: 40,
+              width: 50,
+              height: 50,
               backgroundColor: accentColor,
-              borderRadius: 4,
+              borderRadius: 6,
               transformOrigin: 'center center',
-              transform: `translate3d(${bracketExitX}px, 0, 0) scale(${isExiting ? 0 : bracketScale})`,
-              boxShadow: `0 0 25px ${accentColor}80`,
+              transform: `translate3d(${capExitX}px, 0, 0) scale(${isExiting ? 0 : capScale})`,
+              boxShadow: `0 0 25px ${accentColor}90`,
+              zIndex: 20,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -169,10 +163,10 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
           >
             <div
               style={{
-                width: 60,
-                height: 4,
-                backgroundColor: '#111827',
-                borderRadius: 2,
+                width: 20,
+                height: 20,
+                backgroundColor: '#18181B',
+                borderRadius: 3,
               }}
             />
           </div>
@@ -183,8 +177,8 @@ export const LowerThirdOrigamiUnfold: React.FC<LowerThirdOrigamiUnfoldProps> = (
         =======================================================================
         TEXT-SAFE ZONE SPECIFICATION (PURPOSELY KOSONG / UNRENDERED):
         Buyer text overlay must be rendered at:
-        - Primary Name Line: Left = 260px, Top = 1580px, Width = 2000px, Height = 100px
-        - Subtitle Line:     Left = 280px, Top = 1690px, Width = 1750px, Height = 65px
+        - Primary Name Line: Left = 240px, Top = 1580px, Width = 2100px, Height = 100px
+        - Subtitle Line:     Left = 260px, Top = 1690px, Width = 1800px, Height = 65px
         =======================================================================
       */}
     </AbsoluteFill>

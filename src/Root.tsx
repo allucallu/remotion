@@ -2,28 +2,28 @@ import React from 'react';
 import { Composition } from 'remotion';
 import './index.css';
 
-import { LowerThirdShardAssemble } from './LowerThirdShardAssemble';
-import { LowerThirdOrigamiUnfold } from './LowerThirdOrigamiUnfold';
-import { LowerThirdJaggedTear } from './LowerThirdJaggedTear';
-import { LowerThirdInterlockingSlits } from './LowerThirdInterlockingSlits';
-import { LowerThirdKineticSlatRotator } from './LowerThirdKineticSlatRotator';
-import { LowerThirdApertureExpand } from './LowerThirdApertureExpand';
-import { LowerThirdLiquidWaveExpand } from './LowerThirdLiquidWaveExpand';
-import { LowerThirdElasticRibbonUnroll } from './LowerThirdElasticRibbonUnroll';
-import { LowerThirdVoxelDropConstruct } from './LowerThirdVoxelDropConstruct';
-import { LowerThirdPrismSlantShift } from './LowerThirdPrismSlantShift';
+import { LowerThirdChronoDialUnmask } from './LowerThirdChronoDialUnmask';
+import { LowerThirdMatrixGlitchShift } from './LowerThirdMatrixGlitchShift';
+import { LowerThirdPortalApertureSlice } from './LowerThirdPortalApertureSlice';
+import { LowerThirdCubePerspectiveUnfold } from './LowerThirdCubePerspectiveUnfold';
+import { LowerThirdHelixRibbonWeave } from './LowerThirdHelixRibbonWeave';
+import { LowerThirdCascadeShutterSqueeze } from './LowerThirdCascadeShutterSqueeze';
+import { LowerThirdOrbitalRingConstruct } from './LowerThirdOrbitalRingConstruct';
+import { LowerThirdSlantedBellowsExpand } from './LowerThirdSlantedBellowsExpand';
+import { LowerThirdSplitCrosshatchSnap } from './LowerThirdSplitCrosshatchSnap';
+import { LowerThirdConcentricRingBurst } from './LowerThirdConcentricRingBurst';
 
 const compositions = [
-  { id: 'LowerThird-01-ShardAssemble', component: LowerThirdShardAssemble, dur: 180 },
-  { id: 'LowerThird-02-OrigamiUnfold', component: LowerThirdOrigamiUnfold, dur: 180 },
-  { id: 'LowerThird-03-JaggedTear', component: LowerThirdJaggedTear, dur: 210 },
-  { id: 'LowerThird-04-InterlockingSlits', component: LowerThirdInterlockingSlits, dur: 180 },
-  { id: 'LowerThird-05-KineticSlatRotator', component: LowerThirdKineticSlatRotator, dur: 180 },
-  { id: 'LowerThird-06-ApertureExpand', component: LowerThirdApertureExpand, dur: 210 },
-  { id: 'LowerThird-07-LiquidWaveExpand', component: LowerThirdLiquidWaveExpand, dur: 180 },
-  { id: 'LowerThird-08-ElasticRibbonUnroll', component: LowerThirdElasticRibbonUnroll, dur: 180 },
-  { id: 'LowerThird-09-VoxelDropConstruct', component: LowerThirdVoxelDropConstruct, dur: 180 },
-  { id: 'LowerThird-10-PrismSlantShift', component: LowerThirdPrismSlantShift, dur: 180 },
+  { id: 'LowerThird-01-ChronoDialUnmask', component: LowerThirdChronoDialUnmask, dur: 180 },
+  { id: 'LowerThird-02-MatrixGlitchShift', component: LowerThirdMatrixGlitchShift, dur: 180 },
+  { id: 'LowerThird-03-PortalApertureSlice', component: LowerThirdPortalApertureSlice, dur: 210 },
+  { id: 'LowerThird-04-CubePerspectiveUnfold', component: LowerThirdCubePerspectiveUnfold, dur: 180 },
+  { id: 'LowerThird-05-HelixRibbonWeave', component: LowerThirdHelixRibbonWeave, dur: 180 },
+  { id: 'LowerThird-06-CascadeShutterSqueeze', component: LowerThirdCascadeShutterSqueeze, dur: 180 },
+  { id: 'LowerThird-07-OrbitalRingConstruct', component: LowerThirdOrbitalRingConstruct, dur: 210 },
+  { id: 'LowerThird-08-SlantedBellowsExpand', component: LowerThirdSlantedBellowsExpand, dur: 180 },
+  { id: 'LowerThird-09-SplitCrosshatchSnap', component: LowerThirdSplitCrosshatchSnap, dur: 180 },
+  { id: 'LowerThird-10-ConcentricRingBurst', component: LowerThirdConcentricRingBurst, dur: 180 },
 ];
 
 export const RemotionRoot: React.FC = () => {
