@@ -2,28 +2,28 @@ import React from 'react';
 import { Composition } from 'remotion';
 import './index.css';
 
-import { LowerThirdCorporate } from './LowerThirdCorporate';
-import { LowerThirdBroadcast } from './LowerThirdBroadcast';
-import { LowerThirdTechPill } from './LowerThirdTechPill';
-import { LowerThirdEditorial } from './LowerThirdEditorial';
-import { LowerThirdPodcast } from './LowerThirdPodcast';
-import { LowerThirdCinema } from './LowerThirdCinema';
-import { LowerThirdSports } from './LowerThirdSports';
-import { LowerThirdFinance } from './LowerThirdFinance';
-import { LowerThirdCreative } from './LowerThirdCreative';
-import { LowerThirdCyberTech } from './LowerThirdCyberTech';
+import { SocialCtaSubscribePill } from './SocialCtaSubscribePill';
+import { SocialCtaFollowerCount } from './SocialCtaFollowerCount';
+import { SocialCtaNotifyBell } from './SocialCtaNotifyBell';
+import { SocialCtaHandleBar } from './SocialCtaHandleBar';
+import { SocialCtaPlayWatch } from './SocialCtaPlayWatch';
+import { SocialCtaLikeEngage } from './SocialCtaLikeEngage';
+import { SocialCtaJoinCommunity } from './SocialCtaJoinCommunity';
+import { SocialCtaSplitDualBar } from './SocialCtaSplitDualBar';
+import { SocialCtaSwipeUp } from './SocialCtaSwipeUp';
+import { SocialCtaLiveNow } from './SocialCtaLiveNow';
 
 const compositions = [
-  { id: 'LowerThird-01-Corporate', component: LowerThirdCorporate },
-  { id: 'LowerThird-02-Broadcast', component: LowerThirdBroadcast },
-  { id: 'LowerThird-03-TechPill', component: LowerThirdTechPill },
-  { id: 'LowerThird-04-Editorial', component: LowerThirdEditorial },
-  { id: 'LowerThird-05-Podcast', component: LowerThirdPodcast },
-  { id: 'LowerThird-06-Cinema', component: LowerThirdCinema },
-  { id: 'LowerThird-07-Sports', component: LowerThirdSports },
-  { id: 'LowerThird-08-Finance', component: LowerThirdFinance },
-  { id: 'LowerThird-09-Creative', component: LowerThirdCreative },
-  { id: 'LowerThird-10-CyberTech', component: LowerThirdCyberTech },
+  { id: 'SocialCta-01-SubscribePill', component: SocialCtaSubscribePill, dur: 180 },
+  { id: 'SocialCta-02-FollowerCount', component: SocialCtaFollowerCount, dur: 180 },
+  { id: 'SocialCta-03-NotifyBell', component: SocialCtaNotifyBell, dur: 210 },
+  { id: 'SocialCta-04-HandleBar', component: SocialCtaHandleBar, dur: 180 },
+  { id: 'SocialCta-05-PlayWatch', component: SocialCtaPlayWatch, dur: 180 },
+  { id: 'SocialCta-06-LikeEngage', component: SocialCtaLikeEngage, dur: 180 },
+  { id: 'SocialCta-07-JoinCommunity', component: SocialCtaJoinCommunity, dur: 210 },
+  { id: 'SocialCta-08-SplitDualBar', component: SocialCtaSplitDualBar, dur: 180 },
+  { id: 'SocialCta-09-SwipeUp', component: SocialCtaSwipeUp, dur: 210 },
+  { id: 'SocialCta-10-LiveNow', component: SocialCtaLiveNow, dur: 180 },
 ];
 
 export const RemotionRoot: React.FC = () => {
@@ -34,7 +34,7 @@ export const RemotionRoot: React.FC = () => {
           key={comp.id}
           id={comp.id}
           component={comp.component}
-          durationInFrames={180} // 6 seconds at 30fps: in -> hold -> out
+          durationInFrames={comp.dur}
           fps={30}
           width={3840}
           height={2160}
