@@ -2,22 +2,22 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * TEMA 3: KINETIC GRID & SWISS DESIGN
- * Konsep 6: LowerThirdModularStackingRatio (Bentuk Visual Komposisi 4 Balok Rasio Emas Golden Ratio 1:1.618)
+ * BATCH 2 - TEMA 2: RAW BRUTALISM & NEO-GRAPHIC
+ * Konsep 4: LowerThirdAsymmetricalStaggerGrid
  *
  * MEKANISME REVEAL UTAMA:
- * Urutan 4 balok-balok ukuran Rasio Emas (Golden Ratio 1:1.618) yang muncul secara staggered (bertahap cepat) membentuk ruang komposisi modular Swiss.
+ * Berawal dari luar frame atas (-2200px), komposisi balok brutalist yang saling bertumpuk acak jatuh tegak lurus secara staggered (bertahap cepat) dengan micro-bounce dramatis.
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
- * Pin indikator aksen Swiss menancap keluar di samping kanan (frame 34) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Balok penanda aksen neo-brutalist mendarat menancap di sudut kanan (frame 34) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
- * Balok-balok komposisi runtuh terlepas satu per satu secara staggered meluncur jatuh keluar frame bawah (+2200px).
+ * Balok-balok runtuh terlepas satu per satu secara staggered meluncur jatuh keluar melintasi batas frame bawah (+2200px).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
- *   - Nama Utama (Baris 1): Left = 240px, Top = 1570px, Width = 2100px, Height = 100px
- *   - Subtitle / Jabatan (Baris 2): Left = 260px, Top = 1680px, Width = 1800px, Height = 65px
+ *   - Nama Utama (Baris 1): Left = 250px, Top = 1580px, Width = 2100px, Height = 100px
+ *   - Subtitle / Jabatan (Baris 2): Left = 270px, Top = 1690px, Width = 1800px, Height = 65px
  *
  * DURASI: 180 frames (6.0s @ 30fps) | Settle/Hold: Frame 35 s/d 145 (3.67 detik)
  */
@@ -28,9 +28,9 @@ interface LowerThirdProps {
   delayFrame?: number;
 }
 
-export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
+export const LowerThirdAsymmetricalStaggerGrid: React.FC<LowerThirdProps> = ({
   primaryColor = '#18181B',
-  accentColor = '#F59E0B',
+  accentColor = '#EF4444',
   delayFrame = 0,
 }) => {
   const frame = useCurrentFrame();
@@ -41,24 +41,19 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
   const exitLocalFrame = frame - exitStartFrame;
   const isExiting = frame >= exitStartFrame;
 
-  // Staggered Springs for 4 Golden Ratio Blocks
+  // Staggered Springs for 3 Brutalist Blocks
   const b1Spring = spring({
     frame: localFrame,
     fps,
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
   const b2Spring = spring({
-    frame: Math.max(0, localFrame - 3),
+    frame: Math.max(0, localFrame - 4),
     fps,
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
   const b3Spring = spring({
-    frame: Math.max(0, localFrame - 6),
-    fps,
-    config: { mass: 0.5, damping: 12, stiffness: 200 },
-  });
-  const b4Spring = spring({
-    frame: Math.max(0, localFrame - 9),
+    frame: Math.max(0, localFrame - 8),
     fps,
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
@@ -75,11 +70,11 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
 
-  // Offscreen Interpolations (+2200px Y Bottom Drop)
+  // Offscreen Interpolations (-2200px Top Entrance & +2200px Bottom Exit)
   const getBlockY = (bSpring: number) => {
     return isExiting
       ? interpolate(exitSpring, [0, 1], [0, 2200])
-      : interpolate(bSpring, [0, 1], [2200, 0]);
+      : interpolate(bSpring, [0, 1], [-2200, 0]);
   };
 
   const pinScale = interpolate(pinSpring, [0, 1], [0, 1]);
@@ -99,68 +94,56 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Golden Ratio Block 1 (61.8% Main Left) */}
+        {/* Brutalist Block 1 (Main Left 65%) */}
         <div
           style={{
             position: 'absolute',
             left: 0,
             top: 0,
-            width: 1360,
+            width: 1400,
             height: 140,
             backgroundColor: primaryColor,
-            borderRadius: '12px 0 0 0',
+            borderRadius: 0,
+            border: '6px solid #000000',
+            boxShadow: '10px 10px 0px #000000',
             transform: `translate3d(0, ${getBlockY(b1Spring)}px, 0)`,
-            boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
-            borderLeft: `8px solid ${accentColor}`,
+            borderLeft: `12px solid ${accentColor}`,
           }}
         />
 
-        {/* Golden Ratio Block 2 (38.2% Right Complementary) */}
+        {/* Brutalist Block 2 (Right Complementary 35%) */}
         <div
           style={{
             position: 'absolute',
-            left: 1365,
+            left: 1405,
             top: 0,
-            width: 835,
+            width: 795,
             height: 140,
-            backgroundColor: '#27272A',
-            borderRadius: '0 12px 0 0',
+            backgroundColor: '#FFFFFF',
+            borderRadius: 0,
+            border: '6px solid #000000',
+            boxShadow: '10px 10px 0px #000000',
             transform: `translate3d(0, ${getBlockY(b2Spring)}px, 0)`,
-            boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
           }}
         />
 
-        {/* Golden Ratio Block 3 (Subtier Left Base) */}
+        {/* Brutalist Block 3 (Subtier Base) */}
         <div
           style={{
             position: 'absolute',
             left: 40,
             top: 145,
-            width: 1140,
+            width: 1850,
             height: 90,
-            backgroundColor: '#78350F',
-            borderRadius: '0 0 0 12px',
+            backgroundColor: accentColor,
+            borderRadius: 0,
+            border: '6px solid #000000',
+            boxShadow: '8px 8px 0px #000000',
             transform: `translate3d(0, ${getBlockY(b3Spring)}px, 0)`,
-            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}
         />
 
-        {/* Golden Ratio Block 4 (Subtier Right Base) */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 1185,
-            top: 145,
-            width: 705,
-            height: 90,
-            backgroundColor: primaryColor,
-            borderRadius: '0 0 12px 0',
-            transform: `translate3d(0, ${getBlockY(b4Spring)}px, 0)`,
-            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
-          }}
-        />
-
-        {/* SECONDARY MOTION: Swiss Indicator Pin */}
+        {/* SECONDARY MOTION: Micro Snap Neo-Brutalist Indicator Pin */}
         <div
           style={{
             position: 'absolute',
@@ -168,11 +151,12 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
             top: 40,
             width: 35,
             height: 160,
-            backgroundColor: accentColor,
-            borderRadius: 6,
+            backgroundColor: '#000000',
+            borderRadius: 0,
+            border: '4px solid #FFFFFF',
+            boxShadow: '6px 6px 0px #000000',
             transformOrigin: 'center center',
             transform: `translate3d(${pinExitX}px, 0, 0) scale(${isExiting ? 1 : pinScale})`,
-            boxShadow: `0 0 25px ${accentColor}`,
             zIndex: 20,
           }}
         />
@@ -182,8 +166,8 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
         =======================================================================
         TEXT-SAFE ZONE SPECIFICATION (PURPOSELY KOSONG / UNRENDERED):
         Buyer text overlay must be rendered at:
-        - Primary Name Line: Left = 240px, Top = 1570px, Width = 2100px, Height = 100px
-        - Subtitle Line:     Left = 260px, Top = 1680px, Width = 1800px, Height = 65px
+        - Primary Name Line: Left = 250px, Top = 1580px, Width = 2100px, Height = 100px
+        - Subtitle Line:     Left = 270px, Top = 1690px, Width = 1800px, Height = 65px
         =======================================================================
       */}
     </AbsoluteFill>

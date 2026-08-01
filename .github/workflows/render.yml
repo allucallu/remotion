@@ -1,4 +1,4 @@
-name: Render All 4K Radical Lower Thirds (ProRes 4444 Alpha Zip Bundle)
+name: Render All 4K Batch 2 Lower Thirds (ProRes 4444 Alpha Zip Bundle)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-all:
-    name: Render All 10 Radical Lower Thirds (ProRes 4444 Alpha) & Bundle to Zip
+    name: Render All 10 Batch 2 Lower Thirds (ProRes 4444 Alpha) & Bundle to Zip
     runs-on: ubuntu-latest
 
     steps:
@@ -29,16 +29,16 @@ jobs:
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "LowerThird-01-HexPrismOrigamiFold"
-            "LowerThird-02-TrapezoidPedestalDrop"
-            "LowerThird-03-RazorCrystalShardFusion"
-            "LowerThird-04-DiagonalChevronTectonicShift"
-            "LowerThird-05-ReticleSwissGridExpand"
-            "LowerThird-06-GoldenRatioModularStack"
-            "LowerThird-07-OrganicLiquidPodTear"
-            "LowerThird-08-TornEdgeNoiseSweep"
-            "LowerThird-09-DualScannerCyberMatrix"
-            "LowerThird-10-SlantedParallelogramCascade"
+            "LowerThird-01-RefractivePrismUnfold"
+            "LowerThird-02-FrostedLiquidSlide"
+            "LowerThird-03-HardOffsetSnap"
+            "LowerThird-04-AsymmetricalStaggerGrid"
+            "LowerThird-05-TargetReticleExpand"
+            "LowerThird-06-QuantumCircuitReveal"
+            "LowerThird-07-ElasticVectorSweep"
+            "LowerThird-08-StaggeredRuleCascade"
+            "LowerThird-09-BeveledGoldShimmer"
+            "LowerThird-10-MetallicInsetSlide"
           )
           for comp in "${COMPOSITIONS[@]}"; do
             echo "=== Rendering $comp (ProRes 4444 Alpha) ==="
@@ -48,12 +48,12 @@ jobs:
       - name: Zip Rendered Videos
         run: |
           cd out
-          zip -r ../radical-lower-thirds-prores-4k.zip *.mov
+          zip -r ../batch2-lower-thirds-prores-4k.zip *.mov
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: radical-lower-thirds-prores-4k
-          path: radical-lower-thirds-prores-4k.zip
+          name: batch2-lower-thirds-prores-4k
+          path: batch2-lower-thirds-prores-4k.zip
           retention-days: 14

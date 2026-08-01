@@ -2,18 +2,18 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * TEMA 3: KINETIC GRID & SWISS DESIGN
- * Konsep 5: LowerThirdCrosshairGridExpand (Bentuk Visual Target Reticle Crosshair Swiss Grid)
+ * BATCH 2 - TEMA 3: HUD CYBERNETICS & SCI-FI
+ * Konsep 5: LowerThirdTargetReticleExpand
  *
  * MEKANISME REVEAL UTAMA:
- * Dimulai dari titik silang aksen target reticle crosshair (+) yang meledak mekar membentuk kisi geometris asimetris bertingkat (grid Swiss).
+ * Berawal dari titik lingkaran HUD reticle kecil di pusat (-2800px kiri), reticle meledak mekar menjadi panel heksagonal teknis dengan data-bar sekunder.
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
- * Bracket HUD aksen L-corner mekar menancap di sudut kisi (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Bracket HUD aksen L-corner mekar menancap di sudut heksagonal (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
- * Kisi-kisi geometris menyusut cepat kembali ke titik silang crosshair dan menghilang sempurna.
+ * Panel heksagonal menyusut kembali ke titik target reticle dan meledak menghilang ke luar kanan (+3840px).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 260px, Top = 1560px, Width = 2150px, Height = 100px
@@ -28,9 +28,9 @@ interface LowerThirdProps {
   delayFrame?: number;
 }
 
-export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
+export const LowerThirdTargetReticleExpand: React.FC<LowerThirdProps> = ({
   primaryColor = '#0F172A',
-  accentColor = '#6366F1',
+  accentColor = '#06B6D4',
   delayFrame = 0,
 }) => {
   const frame = useCurrentFrame();
@@ -61,11 +61,11 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
   });
 
   // Scale & Expand Interpolations
-  const gridScaleX = isExiting
+  const scaleX = isExiting
     ? interpolate(exitSpring, [0, 1], [1, 0])
     : interpolate(springSnappy, [0, 1], [0.01, 1]);
 
-  const gridScaleY = isExiting
+  const scaleY = isExiting
     ? interpolate(exitSpring, [0, 1], [1, 0])
     : interpolate(springSnappy, [0, 1], [0.01, 1]);
 
@@ -86,7 +86,7 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Main Target Reticle Swiss Grid Slate */}
+        {/* Main Technical Hexagonal HUD Slate */}
         <div
           style={{
             position: 'absolute',
@@ -96,15 +96,16 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
             height: 145,
             backgroundColor: primaryColor,
             borderRadius: 12,
+            clipPath: 'polygon(0 0, 95% 0, 100% 35%, 95% 100%, 0 100%)',
             transformOrigin: 'left center',
-            transform: `scale(${gridScaleX}, ${gridScaleY})`,
-            boxShadow: '0 30px 70px rgba(0,0,0,0.85)',
+            transform: `scale(${scaleX}, ${scaleY})`,
+            boxShadow: `0 30px 70px rgba(0,0,0,0.85), inset 0 0 25px ${accentColor}30`,
             borderLeft: `8px solid ${accentColor}`,
             borderTop: `2px solid ${accentColor}60`,
           }}
         />
 
-        {/* Subtier Swiss Grid Slate */}
+        {/* Subtier Hexagonal HUD Slate */}
         <div
           style={{
             position: 'absolute',
@@ -112,15 +113,16 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
             top: 145,
             width: 1850,
             height: 85,
-            backgroundColor: '#1E1B4B',
+            backgroundColor: '#083344',
             borderRadius: '0 0 12px 12px',
+            clipPath: 'polygon(0 0, 95% 0, 98% 100%, 0 100%)',
             transformOrigin: 'left center',
-            transform: `scale(${gridScaleX}, ${gridScaleY})`,
+            transform: `scale(${scaleX}, ${scaleY})`,
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Corner L-Bracket HUD Crosshair */}
+        {/* SECONDARY MOTION: Micro Snap Corner HUD L-Bracket */}
         <div
           style={{
             position: 'absolute',

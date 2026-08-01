@@ -2,18 +2,18 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * TEMA 1: ARCHITECTURAL & SPATIAL 3D
- * Konsep 1: LowerThirdSpatialOrigamiFold (Bentuk Visual Hexagonal Prism Asimetris)
+ * BATCH 2 - TEMA 5: LUXURY GOLD & METALLIC
+ * Konsep 9: LowerThirdBeveledGoldShimmer
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari garis tipis 1px di pusat area (-2200px dari luar frame atas), lembaran prisma heksagonal asimetris mekar secara 3D (perspective 1600px + rotateX/rotateY) hingga membentang menjadi plat datar berlapis.
+ * Berawal dari luar frame top-right (+3500px, -1800px), plat bernuansa logam emas/champagne tebal memutar dari sudut 45 derajat dengan efek kemilau sudut (specular sweep) saat settle.
  * Menggunakan fisika spring Elegant/Dramatic: { mass: 2, damping: 20, stiffness: 80 }.
  *
  * GERAKAN SEKUNDER:
- * Pin aksen chevron sudut meluncur snap mekar di sepanjang garis lipatan diagonal (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Kemilau emas specular menyala menyusuri bevel tepi (frame 35) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
- * Terlipat kembali di ruang 3D menyusut ke garis 1px dan terpental naik keluar melintasi batas frame atas (-2200px).
+ * Memutar 45 derajat mundur dan meluncur keluar melintasi batas frame top-right (+3500px, -1800px).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 240px, Top = 1560px, Width = 2100px, Height = 100px
@@ -28,9 +28,9 @@ interface LowerThirdProps {
   delayFrame?: number;
 }
 
-export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
-  primaryColor = '#0F172A',
-  accentColor = '#38BDF8',
+export const LowerThirdBeveledGoldShimmer: React.FC<LowerThirdProps> = ({
+  primaryColor = '#1F1905',
+  accentColor = '#F59E0B',
   delayFrame = 0,
 }) => {
   const frame = useCurrentFrame();
@@ -48,8 +48,8 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
     config: { mass: 2, damping: 20, stiffness: 80 },
   });
 
-  const springMicroChevron = spring({
-    frame: Math.max(0, localFrame - 30),
+  const springMicroShimmer = spring({
+    frame: Math.max(0, localFrame - 35),
     fps,
     config: { mass: 0.1, damping: 8, stiffness: 300 },
   });
@@ -60,25 +60,23 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
     config: { mass: 2, damping: 20, stiffness: 80 },
   });
 
-  // Offscreen Interpolations (-2200px Y Top)
+  // Offscreen Interpolations (+3500px X & -1800px Y Top-Right)
+  const translateX = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, 3500])
+    : interpolate(springDramatic, [0, 1], [3500, 0]);
+
   const translateY = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, -2200])
-    : interpolate(springDramatic, [0, 1], [-2200, 0]);
+    ? interpolate(exitSpring, [0, 1], [0, -1800])
+    : interpolate(springDramatic, [0, 1], [-1800, 0]);
 
-  const rotateX = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, 90])
-    : interpolate(springDramatic, [0, 1], [90, 0]);
+  const rotateZ = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, 45])
+    : interpolate(springDramatic, [0, 1], [-45, 0]);
 
-  const rotateY = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, -55])
-    : interpolate(springDramatic, [0, 1], [-55, 0]);
-
-  const scaleX = isExiting
-    ? interpolate(exitSpring, [0, 1], [1, 0.005])
-    : interpolate(springDramatic, [0, 1], [0.005, 1]);
-
-  const chevronScale = interpolate(springMicroChevron, [0, 1], [0, 1]);
-  const chevronExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
+  const shimmerProgress = interpolate(springMicroShimmer, [0, 1], [0, 1]);
+  const shimmerX = isExiting
+    ? interpolate(exitSpring, [0, 1], [shimmerProgress * 2100, 3840])
+    : shimmerProgress * 2100;
 
   const baseLeft = 200;
   const baseTop = 1530;
@@ -92,11 +90,10 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
           top: baseTop,
           width: 2250,
           height: 250,
-          perspective: 1600,
-          transform: `translate3d(0, ${translateY}px, 0)`,
+          transform: `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotateZ}deg)`,
         }}
       >
-        {/* Main 3D Hexagonal Prism Unfolding Slate */}
+        {/* Main Luxury Beveled Gold Plate */}
         <div
           style={{
             position: 'absolute',
@@ -105,45 +102,43 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
             width: 2200,
             height: 145,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(0 20%, 30% 0, 100% 10%, 90% 100%, 10% 90%)',
-            transformOrigin: 'left center',
-            transform: `scaleX(${scaleX}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-            transformStyle: 'preserve-3d',
-            boxShadow: '0 30px 70px rgba(0,0,0,0.85)',
+            borderRadius: 12,
+            clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)',
+            boxShadow: `0 30px 70px rgba(0,0,0,0.9), inset 0 0 35px ${accentColor}60`,
             borderLeft: `8px solid ${accentColor}`,
+            borderTop: `2px solid ${accentColor}`,
           }}
         />
 
-        {/* Subtier Hexagonal Prism Face */}
+        {/* Subtier Metallic Gold Base */}
         <div
           style={{
             position: 'absolute',
             left: 40,
-            top: 140,
+            top: 145,
             width: 1850,
-            height: 90,
-            backgroundColor: '#1E293B',
-            clipPath: 'polygon(5% 0, 100% 0, 92% 100%, 0 100%)',
-            transformOrigin: 'left center',
-            transform: `scaleX(${scaleX}) rotateX(${-rotateX}deg)`,
-            transformStyle: 'preserve-3d',
+            height: 85,
+            backgroundColor: '#78350F',
+            borderRadius: '0 0 12px 12px',
+            clipPath: 'polygon(0 0, 95% 0, 88% 100%, 0 100%)',
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
+            borderBottom: `2px solid ${accentColor}80`,
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Corner Chevron Pin */}
+        {/* SECONDARY MOTION: Micro Snap Gold Specular Sweep */}
         <div
           style={{
             position: 'absolute',
-            left: 2160,
+            left: 50 + shimmerX,
             top: -10,
-            width: 55,
-            height: 55,
-            backgroundColor: accentColor,
-            clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+            width: 60,
+            height: 160,
+            backgroundColor: '#FEF08A',
+            clipPath: 'polygon(30% 0, 100% 0, 70% 100%, 0 100%)',
             transformOrigin: 'center center',
-            transform: `translate3d(${chevronExitX}px, 0, 0) scale(${isExiting ? 1 : chevronScale})`,
-            boxShadow: `0 0 30px ${accentColor}`,
+            boxShadow: `0 0 35px ${accentColor}, 0 0 70px #FEF08A`,
+            opacity: shimmerProgress > 0.05 ? 0.9 : 0,
             zIndex: 20,
           }}
         />

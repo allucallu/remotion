@@ -2,18 +2,18 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * TEMA 1: ARCHITECTURAL & SPATIAL 3D
- * Konsep 2: LowerThirdDepthSlateDrop (Bentuk Visual Trapezoidal Pedestal 3D)
+ * BATCH 2 - TEMA 1: GLASSMORPHISM & FROSTED LAYER
+ * Konsep 2: LowerThirdFrostedLiquidSlide
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame bawah (+2200px), plat trapesium alas 3D dua tingkat berdiri tegak lurus dari posisi rebah 90 derajat dengan efek ketebalan & shadow 3D dinamis saat mendarat.
- * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
+ * Berawal dari luar frame bawah (+2200px), lapisan kaca bergelombang (frosted glass) mengembang lembut dari garis aksen cair dengan efek pencahayaan tepi (edge-glow highlight).
+ * Menggunakan fisika spring Elegant/Dramatic: { mass: 2, damping: 20, stiffness: 80 }.
  *
  * GERAKAN SEKUNDER:
- * Pilar aksen vertikal ganda mendarat menancap di sudut kanan (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Manjakani pencahayaan tepi (edge-glow bead) meluncur di sepanjang lengkungan kaca (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
- * Rebah memutar 90 derajat mundur ke posisi datar dan meluncur jatuh keluar melintasi batas frame bawah (+2200px).
+ * Menguncup membal dan meluncur jatuh keluar melintasi batas frame bawah (+2200px).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 250px, Top = 1570px, Width = 2150px, Height = 100px
@@ -28,8 +28,8 @@ interface LowerThirdProps {
   delayFrame?: number;
 }
 
-export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
-  primaryColor = '#0F172A',
+export const LowerThirdFrostedLiquidSlide: React.FC<LowerThirdProps> = ({
+  primaryColor = '#0F172A90',
   accentColor = '#10B981',
   delayFrame = 0,
 }) => {
@@ -42,13 +42,13 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
   const isExiting = frame >= exitStartFrame;
 
   // Spring Configurations
-  const springSnappy = spring({
+  const springDramatic = spring({
     frame: localFrame,
     fps,
-    config: { mass: 0.5, damping: 12, stiffness: 200 },
+    config: { mass: 2, damping: 20, stiffness: 80 },
   });
 
-  const springMicroPillar = spring({
+  const springMicroGlow = spring({
     frame: Math.max(0, localFrame - 32),
     fps,
     config: { mass: 0.1, damping: 8, stiffness: 300 },
@@ -57,21 +57,24 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
   const exitSpring = spring({
     frame: exitLocalFrame,
     fps,
-    config: { mass: 0.5, damping: 12, stiffness: 200 },
+    config: { mass: 2, damping: 20, stiffness: 80 },
   });
 
   // Offscreen Interpolations (+2200px Y Bottom)
   const translateY = isExiting
     ? interpolate(exitSpring, [0, 1], [0, 2200])
-    : interpolate(springSnappy, [0, 1], [2200, 0]);
+    : interpolate(springDramatic, [0, 1], [2200, 0]);
 
-  const rotateX = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, 90])
-    : interpolate(springSnappy, [0, 1], [-90, 0]);
+  const scaleY = isExiting
+    ? interpolate(exitSpring, [0, 1], [1, 0.05])
+    : interpolate(springDramatic, [0, 1], [0.05, 1]);
 
-  const shadowBlur = interpolate(springSnappy, [0, 1], [0, 60]);
-  const pillarScale = interpolate(springMicroPillar, [0, 1], [0, 1]);
-  const pillarExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3500]) : 0;
+  const blurAmount = interpolate(springDramatic, [0, 1], [0, 18]);
+
+  const glowProgress = interpolate(springMicroGlow, [0, 1], [0, 1]);
+  const glowX = isExiting
+    ? interpolate(exitSpring, [0, 1], [glowProgress * 2100, 3840])
+    : glowProgress * 2100;
 
   const baseLeft = 200;
   const baseTop = 1530;
@@ -85,11 +88,10 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
           top: baseTop,
           width: 2250,
           height: 250,
-          perspective: 1500,
           transform: `translate3d(0, ${translateY}px, 0)`,
         }}
       >
-        {/* Main 3D Trapezoidal Pedestal Slate */}
+        {/* Main Wavy Frosted Liquid Glass Pod */}
         <div
           style={{
             position: 'absolute',
@@ -98,45 +100,49 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
             width: 2200,
             height: 145,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(0 0, 94% 0, 100% 100%, 6% 100%)',
+            backdropFilter: `blur(${blurAmount}px)`,
+            WebkitBackdropFilter: `blur(${blurAmount}px)`,
+            borderRadius: '40px 70px 30px 60px / 60% 30% 70% 40%',
             transformOrigin: 'bottom center',
-            transform: `rotateX(${rotateX}deg)`,
-            transformStyle: 'preserve-3d',
-            boxShadow: `0 35px ${shadowBlur}px rgba(0,0,0,0.9)`,
+            transform: `scaleY(${scaleY})`,
+            boxShadow: `0 35px 70px rgba(0,0,0,0.7), inset 0 0 35px ${accentColor}50`,
             borderLeft: `8px solid ${accentColor}`,
+            borderTop: `2px solid ${accentColor}90`,
           }}
         />
 
-        {/* Subtier Trapezoidal Pedestal Slate */}
+        {/* Subtier Liquid Glass Layer */}
         <div
           style={{
             position: 'absolute',
             left: 40,
-            top: 145,
+            top: 140,
             width: 1850,
             height: 85,
-            backgroundColor: '#065F46',
-            clipPath: 'polygon(4% 0, 96% 0, 100% 100%, 0% 100%)',
+            backgroundColor: '#065F4680',
+            backdropFilter: `blur(${blurAmount}px)`,
+            WebkitBackdropFilter: `blur(${blurAmount}px)`,
+            borderRadius: '30px 60px 40px 50% / 50% 40% 60% 30%',
             transformOrigin: 'top center',
-            transform: `rotateX(${-rotateX}deg)`,
-            transformStyle: 'preserve-3d',
-            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
+            transform: `scaleY(${scaleY})`,
+            boxShadow: '0 15px 35px rgba(0,0,0,0.4)',
+            borderBottom: `2px solid ${accentColor}70`,
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Dual Accent Pillars */}
+        {/* SECONDARY MOTION: Micro Snap Edge-Glow Highlight Bead */}
         <div
           style={{
             position: 'absolute',
-            left: 2150,
-            top: -15,
-            width: 28,
-            height: 240,
+            left: 80 + glowX,
+            top: -12,
+            width: 32,
+            height: 32,
             backgroundColor: accentColor,
-            borderRadius: 6,
+            borderRadius: '50%',
             transformOrigin: 'center center',
-            transform: `translate3d(${pillarExitX}px, 0, 0) scale(${isExiting ? 1 : pillarScale})`,
-            boxShadow: `0 0 30px ${accentColor}`,
+            boxShadow: `0 0 30px ${accentColor}, 0 0 60px ${accentColor}`,
+            opacity: glowProgress > 0.05 ? 1 : 0,
             zIndex: 20,
           }}
         />
