@@ -1,4 +1,4 @@
-name: Render All 4K Anti-Generic Lower Thirds Batch 2 (ProRes 4444 Alpha Zip Bundle)
+name: Render All 4K Radical Lower Thirds (ProRes 4444 Alpha Zip Bundle)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-all:
-    name: Render All 10 Anti-Generic Lower Thirds Batch 2 (ProRes 4444 Alpha) & Bundle to Zip
+    name: Render All 10 Radical Lower Thirds (ProRes 4444 Alpha) & Bundle to Zip
     runs-on: ubuntu-latest
 
     steps:
@@ -29,16 +29,16 @@ jobs:
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "LowerThird-01-ChronoDialUnmask"
-            "LowerThird-02-MatrixGlitchShift"
-            "LowerThird-03-PortalApertureSlice"
-            "LowerThird-04-CubePerspectiveUnfold"
-            "LowerThird-05-HelixRibbonWeave"
-            "LowerThird-06-CascadeShutterSqueeze"
-            "LowerThird-07-OrbitalRingConstruct"
-            "LowerThird-08-SlantedBellowsExpand"
-            "LowerThird-09-SplitCrosshatchSnap"
-            "LowerThird-10-ConcentricRingBurst"
+            "LowerThird-01-SpatialOrigamiFold"
+            "LowerThird-02-DepthSlateDrop"
+            "LowerThird-03-ShardPolygonFusion"
+            "LowerThird-04-TectonicBlockShift"
+            "LowerThird-05-CrosshairGridExpand"
+            "LowerThird-06-ModularStackingRatio"
+            "LowerThird-07-ViscousElastomerTear"
+            "LowerThird-08-AlgorithmicNoiseSweep"
+            "LowerThird-09-ScanlineFracture"
+            "LowerThird-10-SlitScanCascade"
           )
           for comp in "${COMPOSITIONS[@]}"; do
             echo "=== Rendering $comp (ProRes 4444 Alpha) ==="
@@ -48,12 +48,12 @@ jobs:
       - name: Zip Rendered Videos
         run: |
           cd out
-          zip -r ../anti-generic-lower-thirds-batch2-prores-4k.zip *.mov
+          zip -r ../radical-lower-thirds-prores-4k.zip *.mov
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: anti-generic-lower-thirds-batch2-prores-4k
-          path: anti-generic-lower-thirds-batch2-prores-4k.zip
+          name: radical-lower-thirds-prores-4k
+          path: radical-lower-thirds-prores-4k.zip
           retention-days: 14
