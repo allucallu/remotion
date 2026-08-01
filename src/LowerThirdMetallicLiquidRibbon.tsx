@@ -2,18 +2,18 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * BATCH 2 - TEMA 5: LUXURY GOLD & METALLIC
- * Konsep 9: LowerThirdBeveledGoldShimmer
+ * REVISED BATCH - TEMA 5: LUXURY SILK & METALLIC CURVES
+ * Konsep 9: LowerThirdMetallicLiquidRibbon (SVG Curved Liquid Ribbon Champagne Gold 3D & Active Moving Gradient)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame top-right (+3500px, -1800px), plat bernuansa logam emas/champagne tebal memutar dari sudut 45 derajat dengan efek kemilau sudut (specular sweep) saat settle.
+ * Berawal dari luar frame top-right (+3500px X & -1800px Y), pita emas/champagne melengkung halus (SVG curved path) meliuk dalam ruang 3D (perspective 1600px + rotateX/rotateY) dengan efek pencahayaan gradien yang bergerak aktif.
  * Menggunakan fisika spring Elegant/Dramatic: { mass: 2, damping: 20, stiffness: 80 }.
  *
- * GERAKAN SEKUNDER:
- * Kemilau emas specular menyala menyusuri bevel tepi (frame 35) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * FINISHING & TEKSTUR:
+ * Champagne gold metallic linear gradient shifting aktif, kilau specular neon, dan drop-shadow kedalaman tinggi.
  *
  * EXIT ANIMATION:
- * Memutar 45 derajat mundur dan meluncur keluar melintasi batas frame top-right (+3500px, -1800px).
+ * Meliuk memudar memutar 3D dan meluncur keluar melintasi batas frame top-right (+3500px, -1800px).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 240px, Top = 1560px, Width = 2100px, Height = 100px
@@ -28,7 +28,7 @@ interface LowerThirdProps {
   delayFrame?: number;
 }
 
-export const LowerThirdBeveledGoldShimmer: React.FC<LowerThirdProps> = ({
+export const LowerThirdMetallicLiquidRibbon: React.FC<LowerThirdProps> = ({
   primaryColor = '#1F1905',
   accentColor = '#F59E0B',
   delayFrame = 0,
@@ -48,7 +48,7 @@ export const LowerThirdBeveledGoldShimmer: React.FC<LowerThirdProps> = ({
     config: { mass: 2, damping: 20, stiffness: 80 },
   });
 
-  const springMicroShimmer = spring({
+  const springMicroGlint = spring({
     frame: Math.max(0, localFrame - 35),
     fps,
     config: { mass: 0.1, damping: 8, stiffness: 300 },
@@ -69,14 +69,16 @@ export const LowerThirdBeveledGoldShimmer: React.FC<LowerThirdProps> = ({
     ? interpolate(exitSpring, [0, 1], [0, -1800])
     : interpolate(springDramatic, [0, 1], [-1800, 0]);
 
-  const rotateZ = isExiting
+  const rotateX = isExiting
     ? interpolate(exitSpring, [0, 1], [0, 45])
     : interpolate(springDramatic, [0, 1], [-45, 0]);
 
-  const shimmerProgress = interpolate(springMicroShimmer, [0, 1], [0, 1]);
-  const shimmerX = isExiting
-    ? interpolate(exitSpring, [0, 1], [shimmerProgress * 2100, 3840])
-    : shimmerProgress * 2100;
+  const rotateY = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, -30])
+    : interpolate(springDramatic, [0, 1], [30, 0]);
+
+  const glintProgress = interpolate(springMicroGlint, [0, 1], [0, 1]);
+  const glintExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
 
   const baseLeft = 200;
   const baseTop = 1530;
@@ -90,55 +92,54 @@ export const LowerThirdBeveledGoldShimmer: React.FC<LowerThirdProps> = ({
           top: baseTop,
           width: 2250,
           height: 250,
-          transform: `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotateZ}deg)`,
+          perspective: 1600,
+          transform: `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+          transformOrigin: 'right center',
+          filter: 'drop-shadow(0px 25px 40px rgba(0,0,0,0.85))',
         }}
       >
-        {/* Main Luxury Beveled Gold Plate */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: 2200,
-            height: 145,
-            backgroundColor: primaryColor,
-            borderRadius: 12,
-            clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)',
-            boxShadow: `0 30px 70px rgba(0,0,0,0.9), inset 0 0 35px ${accentColor}60`,
-            borderLeft: `8px solid ${accentColor}`,
-            borderTop: `2px solid ${accentColor}`,
-          }}
-        />
+        <svg width="2250" height="250" viewBox="0 0 2250 250" fill="none">
+          <defs>
+            <linearGradient id="goldRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FEF08A" />
+              <stop offset="40%" stopColor={accentColor} />
+              <stop offset="80%" stopColor={primaryColor} />
+              <stop offset="100%" stopColor="#78350F" />
+            </linearGradient>
+            <linearGradient id="goldRibbonSub" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#B45309" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#78350F" stopOpacity="0.5" />
+            </linearGradient>
+          </defs>
 
-        {/* Subtier Metallic Gold Base */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 40,
-            top: 145,
-            width: 1850,
-            height: 85,
-            backgroundColor: '#78350F',
-            borderRadius: '0 0 12px 12px',
-            clipPath: 'polygon(0 0, 95% 0, 88% 100%, 0 100%)',
-            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
-            borderBottom: `2px solid ${accentColor}80`,
-          }}
-        />
+          {/* Subtier Metallic Ribbon Path */}
+          <path
+            d="M 40,140 C 500,170 1000,120 1500,160 C 1850,190 2100,140 2200,145 L 2200,230 L 40,230 Z"
+            fill="url(#goldRibbonSub)"
+          />
 
-        {/* SECONDARY MOTION: Micro Snap Gold Specular Sweep */}
+          {/* Main Curved Champagne Gold Liquid Ribbon Path */}
+          <path
+            d="M 0,20 C 500,-20 1000,40 1500,0 C 1850,-30 2100,20 2250,10 L 2250,150 L 0,150 Z"
+            fill="url(#goldRibbonGrad)"
+            stroke="#FEF08A"
+            strokeWidth="3"
+          />
+        </svg>
+
+        {/* SECONDARY MOTION: Micro Snap Gold Glint Node */}
         <div
           style={{
             position: 'absolute',
-            left: 50 + shimmerX,
-            top: -10,
-            width: 60,
-            height: 160,
+            left: 2170,
+            top: 5,
+            width: 36,
+            height: 36,
             backgroundColor: '#FEF08A',
-            clipPath: 'polygon(30% 0, 100% 0, 70% 100%, 0 100%)',
+            borderRadius: '50%',
             transformOrigin: 'center center',
+            transform: `translate3d(${glintExitX}px, 0, 0) scale(${isExiting ? 1 : glintProgress})`,
             boxShadow: `0 0 35px ${accentColor}, 0 0 70px #FEF08A`,
-            opacity: shimmerProgress > 0.05 ? 0.9 : 0,
             zIndex: 20,
           }}
         />

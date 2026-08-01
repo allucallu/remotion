@@ -2,18 +2,18 @@ import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 /**
- * BATCH 2 - TEMA 5: LUXURY GOLD & METALLIC
- * Konsep 10: LowerThirdMetallicInsetSlide
+ * REVISED BATCH - TEMA 5: LUXURY SILK & METALLIC CURVES
+ * Konsep 10: LowerThirdChiseledPrismUnravel (SVG Sisi Prisma Bergradien Cut Diagonal & Soft Ambient Shadow)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame (-2800px top-left & +3840px bottom-right), dua plat metallic tipis saling mengunci seperti engsel presisi tinggi, membuka ruang mewah di tengahnya.
+ * Berawal dari luar frame (-2800px top-left & +3840px bottom-right), sisi-sisi prisma bergradien SVG dipotong secara diagonal, berputar pelan dengan lereng bayangan lunak (soft ambient shadow).
  * Menggunakan fisika spring Snap/Micro: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
- * GERAKAN SEKUNDER:
- * Pasak engsel logam presisi menancap mengunci (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * FINISHING & TEKSTUR:
+ * Metalik perak/platinum bergradien kontras tinggi, garis potongan chiseled prism, dan drop-shadow lunak berlapis.
  *
  * EXIT ANIMATION:
- * Engsel terlepas dan dua plat meluncur keluar berlawanan arah ke top-left (-2800px) & bottom-right (+3840px).
+ * Sisi prisma terurai diagonal meluncur keluar berlawanan arah ke top-left (-2800px) & bottom-right (+3840px).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 250px, Top = 1570px, Width = 2200px, Height = 100px
@@ -28,7 +28,7 @@ interface LowerThirdProps {
   delayFrame?: number;
 }
 
-export const LowerThirdMetallicInsetSlide: React.FC<LowerThirdProps> = ({
+export const LowerThirdChiseledPrismUnravel: React.FC<LowerThirdProps> = ({
   primaryColor = '#111827',
   accentColor = '#E5E7EB',
   delayFrame = 0,
@@ -48,7 +48,7 @@ export const LowerThirdMetallicInsetSlide: React.FC<LowerThirdProps> = ({
     config: { mass: 0.1, damping: 8, stiffness: 300 },
   });
 
-  const springMicroHinge = spring({
+  const springMicroPin = spring({
     frame: Math.max(0, localFrame - 32),
     fps,
     config: { mass: 0.1, damping: 8, stiffness: 300 },
@@ -60,23 +60,23 @@ export const LowerThirdMetallicInsetSlide: React.FC<LowerThirdProps> = ({
     config: { mass: 0.1, damping: 8, stiffness: 300 },
   });
 
-  // Offscreen Interpolations (-2800px Top-Left & +3840px Bottom-Right)
-  const plate1X = isExiting
+  // Offscreen & Diagonal Vector Interpolations
+  const prism1X = isExiting
     ? interpolate(exitSpring, [0, 1], [0, -2800])
     : interpolate(springSnap, [0, 1], [-2800, 0]);
-  const plate1Y = isExiting
+  const prism1Y = isExiting
     ? interpolate(exitSpring, [0, 1], [0, -1800])
     : interpolate(springSnap, [0, 1], [-1800, 0]);
 
-  const plate2X = isExiting
+  const prism2X = isExiting
     ? interpolate(exitSpring, [0, 1], [0, 3840])
     : interpolate(springSnap, [0, 1], [3840, 0]);
-  const plate2Y = isExiting
+  const prism2Y = isExiting
     ? interpolate(exitSpring, [0, 1], [0, 1800])
     : interpolate(springSnap, [0, 1], [1800, 0]);
 
-  const hingeScale = interpolate(springMicroHinge, [0, 1], [0, 1]);
-  const hingeExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
+  const pinScale = interpolate(springMicroPin, [0, 1], [0, 1]);
+  const pinExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
 
   const baseLeft = 200;
   const baseTop = 1530;
@@ -90,59 +90,47 @@ export const LowerThirdMetallicInsetSlide: React.FC<LowerThirdProps> = ({
           top: baseTop,
           width: 2300,
           height: 250,
+          filter: 'drop-shadow(0px 25px 40px rgba(0,0,0,0.85))',
         }}
       >
-        {/* Main Precision Metallic Inset Plate 1 (from Top-Left) */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: 1250,
-            height: 145,
-            backgroundColor: primaryColor,
-            borderRadius: '12px 0 0 12px',
-            clipPath: 'polygon(0 0, 100% 0, 88% 100%, 0 100%)',
-            transform: `translate3d(${plate1X}px, ${plate1Y}px, 0)`,
-            boxShadow: '0 30px 70px rgba(0,0,0,0.85)',
-            borderLeft: `8px solid ${accentColor}`,
-          }}
-        />
+        <svg width="2300" height="250" viewBox="0 0 2300 250" fill="none">
+          <defs>
+            <linearGradient id="prismGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#F3F4F6" />
+              <stop offset="50%" stopColor={primaryColor} />
+              <stop offset="100%" stopColor="#1F2937" />
+            </linearGradient>
+            <linearGradient id="prismGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#4B5563" />
+              <stop offset="100%" stopColor="#1F2937" />
+            </linearGradient>
+          </defs>
 
-        {/* Precision Metallic Inset Plate 2 (from Bottom-Right) */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 1180,
-            top: 0,
-            width: 1020,
-            height: 145,
-            backgroundColor: '#374151',
-            borderRadius: '0 12px 12px 0',
-            clipPath: 'polygon(6% 0, 100% 0, 94% 100%, 0 100%)',
-            transform: `translate3d(${plate2X}px, ${plate2Y}px, 0)`,
-            boxShadow: '0 30px 70px rgba(0,0,0,0.85)',
-            borderRight: `4px solid ${accentColor}`,
-          }}
-        />
+          {/* Chiseled Prism Face 1 (from Top-Left) */}
+          <g transform={`translate(${prism1X}, ${prism1Y})`}>
+            <path
+              d="M 0,0 L 1300,0 L 1150,145 L 0,145 Z"
+              fill="url(#prismGrad1)"
+              stroke={accentColor}
+              strokeWidth="4"
+            />
+            <path
+              d="M 40,145 L 1200,145 L 1100,230 L 40,230 Z"
+              fill="#374151"
+              opacity="0.9"
+            />
+          </g>
 
-        {/* Subtier Metallic Base */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 40,
-            top: 145,
-            width: 1850,
-            height: 85,
-            backgroundColor: primaryColor,
-            borderRadius: '0 0 12px 12px',
-            clipPath: 'polygon(0 0, 96% 0, 90% 100%, 0 100%)',
-            transform: `translate3d(${plate1X}px, ${plate1Y}px, 0)`,
-            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
-          }}
-        />
+          {/* Chiseled Prism Face 2 (from Bottom-Right) */}
+          <g transform={`translate(${prism2X}, ${prism2Y})`}>
+            <path
+              d="M 1200,0 L 2250,0 L 2100,145 L 1050,145 Z"
+              fill="url(#prismGrad2)"
+            />
+          </g>
+        </svg>
 
-        {/* SECONDARY MOTION: Micro Snap Precision Hinge Pin */}
+        {/* SECONDARY MOTION: Micro Snap Precision Prism Pin */}
         <div
           style={{
             position: 'absolute',
@@ -153,7 +141,7 @@ export const LowerThirdMetallicInsetSlide: React.FC<LowerThirdProps> = ({
             backgroundColor: accentColor,
             borderRadius: 6,
             transformOrigin: 'center center',
-            transform: `translate3d(${hingeExitX}px, 0, 0) scale(${isExiting ? 1 : hingeScale})`,
+            transform: `translate3d(${pinExitX}px, 0, 0) scale(${isExiting ? 1 : pinScale})`,
             boxShadow: `0 0 30px ${accentColor}`,
             zIndex: 20,
           }}
