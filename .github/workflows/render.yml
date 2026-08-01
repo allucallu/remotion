@@ -29,16 +29,16 @@ jobs:
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "LowerThird-01-SpatialOrigamiFold"
-            "LowerThird-02-DepthSlateDrop"
-            "LowerThird-03-ShardPolygonFusion"
-            "LowerThird-04-TectonicBlockShift"
-            "LowerThird-05-CrosshairGridExpand"
-            "LowerThird-06-ModularStackingRatio"
-            "LowerThird-07-ViscousElastomerTear"
-            "LowerThird-08-AlgorithmicNoiseSweep"
-            "LowerThird-09-ScanlineFracture"
-            "LowerThird-10-SlitScanCascade"
+            "LowerThird-01-HexPrismOrigamiFold"
+            "LowerThird-02-TrapezoidPedestalDrop"
+            "LowerThird-03-RazorCrystalShardFusion"
+            "LowerThird-04-DiagonalChevronTectonicShift"
+            "LowerThird-05-ReticleSwissGridExpand"
+            "LowerThird-06-GoldenRatioModularStack"
+            "LowerThird-07-OrganicLiquidPodTear"
+            "LowerThird-08-TornEdgeNoiseSweep"
+            "LowerThird-09-DualScannerCyberMatrix"
+            "LowerThird-10-SlantedParallelogramCascade"
           )
           for comp in "${COMPOSITIONS[@]}"; do
             echo "=== Rendering $comp (ProRes 4444 Alpha) ==="

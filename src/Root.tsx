@@ -14,16 +14,16 @@ import { LowerThirdScanlineFracture } from './LowerThirdScanlineFracture';
 import { LowerThirdSlitScanCascade } from './LowerThirdSlitScanCascade';
 
 const compositions = [
-  { id: 'LowerThird-01-SpatialOrigamiFold', component: LowerThirdSpatialOrigamiFold, dur: 180 },
-  { id: 'LowerThird-02-DepthSlateDrop', component: LowerThirdDepthSlateDrop, dur: 180 },
-  { id: 'LowerThird-03-ShardPolygonFusion', component: LowerThirdShardPolygonFusion, dur: 180 },
-  { id: 'LowerThird-04-TectonicBlockShift', component: LowerThirdTectonicBlockShift, dur: 180 },
-  { id: 'LowerThird-05-CrosshairGridExpand', component: LowerThirdCrosshairGridExpand, dur: 180 },
-  { id: 'LowerThird-06-ModularStackingRatio', component: LowerThirdModularStackingRatio, dur: 180 },
-  { id: 'LowerThird-07-ViscousElastomerTear', component: LowerThirdViscousElastomerTear, dur: 180 },
-  { id: 'LowerThird-08-AlgorithmicNoiseSweep', component: LowerThirdAlgorithmicNoiseSweep, dur: 180 },
-  { id: 'LowerThird-09-ScanlineFracture', component: LowerThirdScanlineFracture, dur: 180 },
-  { id: 'LowerThird-10-SlitScanCascade', component: LowerThirdSlitScanCascade, dur: 180 },
+  { id: 'LowerThird-01-HexPrismOrigamiFold', component: LowerThirdSpatialOrigamiFold, dur: 180 },
+  { id: 'LowerThird-02-TrapezoidPedestalDrop', component: LowerThirdDepthSlateDrop, dur: 180 },
+  { id: 'LowerThird-03-RazorCrystalShardFusion', component: LowerThirdShardPolygonFusion, dur: 180 },
+  { id: 'LowerThird-04-DiagonalChevronTectonicShift', component: LowerThirdTectonicBlockShift, dur: 180 },
+  { id: 'LowerThird-05-ReticleSwissGridExpand', component: LowerThirdCrosshairGridExpand, dur: 180 },
+  { id: 'LowerThird-06-GoldenRatioModularStack', component: LowerThirdModularStackingRatio, dur: 180 },
+  { id: 'LowerThird-07-OrganicLiquidPodTear', component: LowerThirdViscousElastomerTear, dur: 180 },
+  { id: 'LowerThird-08-TornEdgeNoiseSweep', component: LowerThirdAlgorithmicNoiseSweep, dur: 180 },
+  { id: 'LowerThird-09-DualScannerCyberMatrix', component: LowerThirdScanlineFracture, dur: 180 },
+  { id: 'LowerThird-10-SlantedParallelogramCascade', component: LowerThirdSlitScanCascade, dur: 180 },
 ];
 
 export const RemotionRoot: React.FC = () => {
