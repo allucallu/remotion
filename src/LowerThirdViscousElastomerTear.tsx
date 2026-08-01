@@ -3,10 +3,10 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 4: ORGANIC & NOISE DISTORTION
- * Konsep 7: LowerThirdViscousElastomerTear
+ * Konsep 7: LowerThirdViscousElastomerTear (Bentuk Visual Kapsul Cair Organic Liquid Pod)
  *
  * MEKANISME REVEAL UTAMA:
- * Membran clip-path robek/tertarik dari tengah secara elastis dengan overshoot sebelum settle stabil menjadi kontainer cair organis.
+ * Membran kapsul cair organis (borderRadius 40% 70% 30% 60%) robek/tertarik dari tengah secara elastis dengan wobble overshoot sebelum settle stabil menjadi kontainer cair.
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
@@ -83,7 +83,7 @@ export const LowerThirdViscousElastomerTear: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Main Viscous Elastomer Container */}
+        {/* Main Viscous Organic Liquid Pod Container */}
         <div
           style={{
             position: 'absolute',
@@ -92,7 +92,7 @@ export const LowerThirdViscousElastomerTear: React.FC<LowerThirdProps> = ({
             width: 2200,
             height: 145,
             backgroundColor: primaryColor,
-            borderRadius: '60px 25px 40px 60px',
+            borderRadius: '40% 70% 30% 60% / 60% 30% 70% 40%',
             transformOrigin: 'center center',
             transform: `scaleX(${scaleX})`,
             boxShadow: '0 30px 70px rgba(0,0,0,0.8)',
@@ -100,7 +100,7 @@ export const LowerThirdViscousElastomerTear: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Subtier Liquid Membrane */}
+        {/* Subtier Liquid Membrane Pod */}
         <div
           style={{
             position: 'absolute',
@@ -109,7 +109,7 @@ export const LowerThirdViscousElastomerTear: React.FC<LowerThirdProps> = ({
             width: 1800,
             height: 90,
             backgroundColor: '#115E59',
-            borderRadius: '15px 40px 40px 15px',
+            borderRadius: '30% 60% 40% 50% / 50% 40% 60% 30%',
             transformOrigin: 'center center',
             transform: `scaleX(${scaleX})`,
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',

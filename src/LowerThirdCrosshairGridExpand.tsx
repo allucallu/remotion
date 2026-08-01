@@ -3,14 +3,14 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 3: KINETIC GRID & SWISS DESIGN
- * Konsep 5: LowerThirdCrosshairGridExpand
+ * Konsep 5: LowerThirdCrosshairGridExpand (Bentuk Visual Target Reticle Crosshair Swiss Grid)
  *
  * MEKANISME REVEAL UTAMA:
- * Dimulai dari titik silang aksen (crosshair) kecil yang meledak mekar membentuk kisi geometris asimetris (grid Swiss).
+ * Dimulai dari titik silang aksen target reticle crosshair (+) yang meledak mekar membentuk kisi geometris asimetris bertingkat (grid Swiss).
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
- * Bracket HUD aksen sudut mekar menancap di sudut kisi (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Bracket HUD aksen L-corner mekar menancap di sudut kisi (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
  * Kisi-kisi geometris menyusut cepat kembali ke titik silang crosshair dan menghilang sempurna.
@@ -86,7 +86,7 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Main Asymmetrical Swiss Grid Slate */}
+        {/* Main Target Reticle Swiss Grid Slate */}
         <div
           style={{
             position: 'absolute',
@@ -104,7 +104,7 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Subtier Grid Slate */}
+        {/* Subtier Swiss Grid Slate */}
         <div
           style={{
             position: 'absolute',
@@ -120,7 +120,7 @@ export const LowerThirdCrosshairGridExpand: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Corner HUD Crosshair Bracket */}
+        {/* SECONDARY MOTION: Micro Snap Corner L-Bracket HUD Crosshair */}
         <div
           style={{
             position: 'absolute',

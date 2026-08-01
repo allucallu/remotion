@@ -3,17 +3,17 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 2: DESTRUCTIVE & FRACTURED
- * Konsep 3: LowerThirdShardPolygonFusion
+ * Konsep 3: LowerThirdShardPolygonFusion (Bentuk Visual Mahkota Kristal 6 Pecahan Tajam)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari koordinat & rotasi acak di luar frame (-2800px top-left, +3500px top-right, -2800px bottom-left), 5 pecahan polygon custom clip-path meluncur dan mengunci (snap) menjadi satu kesatuan spanduk padat.
+ * Berawal dari 6 vektor luar frame (-2800px top-left, +3500px top-right, -2800px bottom-left, +3500px bottom-right), 6 pecahan polygon kristal tajam (razor-edged shards) meluncur dan mengunci (snap) menjadi mahkota kristal bersudut tajam.
  * Menggunakan fisika spring Snap/Micro: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * GERAKAN SEKUNDER:
  * Garis laser neon menyala di sepanjang retakan garis sambungan polygon (frame 28) dengan fisika Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * EXIT ANIMATION:
- * Seluruh 5 pecahan polygon retak kembali dan terpental berhamburan ke 5 sudut luar frame.
+ * Seluruh 6 pecahan polygon retak kembali dan terpental berhamburan ke 6 sudut luar frame.
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 240px, Top = 1550px, Width = 2200px, Height = 100px
@@ -60,7 +60,7 @@ export const LowerThirdShardPolygonFusion: React.FC<LowerThirdProps> = ({
     config: { mass: 0.1, damping: 8, stiffness: 300 },
   });
 
-  // Offscreen Interpolations (5 Shards coming from outer vectors)
+  // Offscreen Interpolations (6 Razor Shards coming from outer vectors)
   const getShardX = (startPos: number) => {
     return isExiting
       ? interpolate(exitSpring, [0, 1], [0, startPos])
@@ -90,59 +90,59 @@ export const LowerThirdShardPolygonFusion: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Shard 1 (Top Left Polygon) */}
+        {/* Razor Shard 1 (Top Left Peak) */}
         <div
           style={{
             position: 'absolute',
             left: 0,
             top: 0,
-            width: 750,
+            width: 550,
             height: 145,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(0 0, 100% 15%, 85% 100%, 0 100%)',
+            clipPath: 'polygon(0 0, 100% 25%, 75% 100%, 0 100%)',
             transform: `translate3d(${getShardX(-2800)}px, ${getShardY(-1800)}px, 0)`,
             boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
             borderLeft: `8px solid ${accentColor}`,
           }}
         />
 
-        {/* Shard 2 (Top Mid Polygon) */}
+        {/* Razor Shard 2 (Top Mid Slope) */}
         <div
           style={{
             position: 'absolute',
-            left: 745,
+            left: 545,
             top: 0,
-            width: 700,
+            width: 600,
             height: 145,
             backgroundColor: '#831843',
-            clipPath: 'polygon(0 15%, 100% 0, 92% 100%, 0 100%)',
+            clipPath: 'polygon(0 25%, 100% 0, 85% 100%, 0 100%)',
             transform: `translate3d(${getShardX(0)}px, ${getShardY(-2200)}px, 0)`,
             boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
           }}
         />
 
-        {/* Shard 3 (Top Right Polygon) */}
+        {/* Razor Shard 3 (Top Right Ridge) */}
         <div
           style={{
             position: 'absolute',
-            left: 1440,
+            left: 1140,
             top: 0,
-            width: 760,
+            width: 1060,
             height: 145,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(8% 0, 100% 0, 94% 100%, 0 100%)',
+            clipPath: 'polygon(15% 0, 100% 0, 94% 100%, 0 100%)',
             transform: `translate3d(${getShardX(3500)}px, ${getShardY(-1800)}px, 0)`,
             boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
           }}
         />
 
-        {/* Shard 4 (Subtier Left Base) */}
+        {/* Razor Shard 4 (Subtier Left Base) */}
         <div
           style={{
             position: 'absolute',
             left: 40,
             top: 145,
-            width: 950,
+            width: 750,
             height: 90,
             backgroundColor: '#BE185D',
             clipPath: 'polygon(0 0, 95% 0, 88% 100%, 0 100%)',
@@ -151,16 +151,31 @@ export const LowerThirdShardPolygonFusion: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Shard 5 (Subtier Right Base) */}
+        {/* Razor Shard 5 (Subtier Mid Base) */}
         <div
           style={{
             position: 'absolute',
-            left: 985,
+            left: 785,
             top: 145,
-            width: 1180,
+            width: 700,
             height: 90,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(3% 0, 100% 0, 94% 100%, 0 100%)',
+            clipPath: 'polygon(5% 0, 95% 0, 90% 100%, 0 100%)',
+            transform: `translate3d(${getShardX(0)}px, ${getShardY(2200)}px, 0)`,
+            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
+          }}
+        />
+
+        {/* Razor Shard 6 (Subtier Right Base) */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 1480,
+            top: 145,
+            width: 680,
+            height: 90,
+            backgroundColor: '#831843',
+            clipPath: 'polygon(6% 0, 100% 0, 94% 100%, 0 100%)',
             transform: `translate3d(${getShardX(3500)}px, ${getShardY(1800)}px, 0)`,
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}

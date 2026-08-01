@@ -3,14 +3,14 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 4: ORGANIC & NOISE DISTORTION
- * Konsep 8: LowerThirdAlgorithmicNoiseSweep
+ * Konsep 8: LowerThirdAlgorithmicNoiseSweep (Bentuk Visual Tepi Robek Gerigi Noise Torn Edge Polygon)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame (-2800px kiri), efek tepi robek/tererosi tidak beraturan menyapu frame menggunakan kalkulasi math/noise hingga membentuk kontainer solid.
+ * Berawal dari luar frame (-2800px kiri), pola polygon bertepi gerigi noise robek (torn edge) menyapu frame menggunakan kalkulasi math/noise hingga membentuk kontainer solid.
  * Menggunakan fisika spring Elegant/Dramatic: { mass: 2, damping: 20, stiffness: 80 }.
  *
  * GERAKAN SEKUNDER:
- * Balok aksen neon menyala di sepanjang garis kontur robekan (frame 35) dengan fisika Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
+ * Balok aksen neon menyala di sepanjang garis kontur gerigi robekan (frame 35) dengan fisika Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * EXIT ANIMATION:
  * Sapuan robekan noise bergerak membalik menghapus kontainer dan meluncur keluar melintasi batas frame kanan (+3840px).
@@ -83,7 +83,7 @@ export const LowerThirdAlgorithmicNoiseSweep: React.FC<LowerThirdProps> = ({
           transform: `translate3d(${translateX}px, 0, 0)`,
         }}
       >
-        {/* Main Noise Eroded Container */}
+        {/* Main Noise Eroded Torn-Edge Container */}
         <div
           style={{
             position: 'absolute',
@@ -92,13 +92,13 @@ export const LowerThirdAlgorithmicNoiseSweep: React.FC<LowerThirdProps> = ({
             width: 2200,
             height: 140,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)',
+            clipPath: 'polygon(0 0, 95% 0, 100% 35%, 92% 65%, 98% 100%, 0 100%)',
             boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
             borderLeft: `8px solid ${accentColor}`,
           }}
         />
 
-        {/* Subtier Eroded Plate */}
+        {/* Subtier Eroded Torn-Edge Plate */}
         <div
           style={{
             position: 'absolute',
@@ -107,7 +107,7 @@ export const LowerThirdAlgorithmicNoiseSweep: React.FC<LowerThirdProps> = ({
             width: 1850,
             height: 90,
             backgroundColor: '#581C87',
-            clipPath: 'polygon(0 0, 95% 0, 88% 100%, 0 100%)',
+            clipPath: 'polygon(0 0, 92% 0, 97% 40%, 90% 100%, 0 100%)',
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}
         />

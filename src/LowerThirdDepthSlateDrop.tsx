@@ -3,14 +3,14 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 1: ARCHITECTURAL & SPATIAL 3D
- * Konsep 2: LowerThirdDepthSlateDrop
+ * Konsep 2: LowerThirdDepthSlateDrop (Bentuk Visual Trapezoidal Pedestal 3D)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame bawah (+2200px), plat geometris berdiri tegak lurus dari posisi rebah 90 derajat dengan efek ketebalan & shadow 3D dinamis saat mendarat.
+ * Berawal dari luar frame bawah (+2200px), plat trapesium alas 3D dua tingkat berdiri tegak lurus dari posisi rebah 90 derajat dengan efek ketebalan & shadow 3D dinamis saat mendarat.
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
- * Cap aksen penutup sudut mendarat menancap di sudut kanan (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Pilar aksen vertikal ganda mendarat menancap di sudut kanan (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
  * Rebah memutar 90 derajat mundur ke posisi datar dan meluncur jatuh keluar melintasi batas frame bawah (+2200px).
@@ -48,7 +48,7 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
 
-  const springMicroCap = spring({
+  const springMicroPillar = spring({
     frame: Math.max(0, localFrame - 32),
     fps,
     config: { mass: 0.1, damping: 8, stiffness: 300 },
@@ -70,8 +70,8 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
     : interpolate(springSnappy, [0, 1], [-90, 0]);
 
   const shadowBlur = interpolate(springSnappy, [0, 1], [0, 60]);
-  const capScale = interpolate(springMicroCap, [0, 1], [0, 1]);
-  const capExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3500]) : 0;
+  const pillarScale = interpolate(springMicroPillar, [0, 1], [0, 1]);
+  const pillarExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3500]) : 0;
 
   const baseLeft = 200;
   const baseTop = 1530;
@@ -89,7 +89,7 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
           transform: `translate3d(0, ${translateY}px, 0)`,
         }}
       >
-        {/* Main Standing 3D Slate */}
+        {/* Main 3D Trapezoidal Pedestal Slate */}
         <div
           style={{
             position: 'absolute',
@@ -98,7 +98,7 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
             width: 2200,
             height: 145,
             backgroundColor: primaryColor,
-            borderRadius: 12,
+            clipPath: 'polygon(0 0, 94% 0, 100% 100%, 6% 100%)',
             transformOrigin: 'bottom center',
             transform: `rotateX(${rotateX}deg)`,
             transformStyle: 'preserve-3d',
@@ -107,7 +107,7 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Subtier 3D Slate Base */}
+        {/* Subtier Trapezoidal Pedestal Slate */}
         <div
           style={{
             position: 'absolute',
@@ -116,7 +116,7 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
             width: 1850,
             height: 85,
             backgroundColor: '#065F46',
-            borderRadius: '0 0 12px 12px',
+            clipPath: 'polygon(4% 0, 96% 0, 100% 100%, 0% 100%)',
             transformOrigin: 'top center',
             transform: `rotateX(${-rotateX}deg)`,
             transformStyle: 'preserve-3d',
@@ -124,18 +124,18 @@ export const LowerThirdDepthSlateDrop: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Corner Cap */}
+        {/* SECONDARY MOTION: Micro Snap Dual Accent Pillars */}
         <div
           style={{
             position: 'absolute',
-            left: 2160,
-            top: -10,
-            width: 55,
-            height: 55,
+            left: 2150,
+            top: -15,
+            width: 28,
+            height: 240,
             backgroundColor: accentColor,
-            borderRadius: 8,
+            borderRadius: 6,
             transformOrigin: 'center center',
-            transform: `translate3d(${capExitX}px, 0, 0) scale(${isExiting ? 1 : capScale})`,
+            transform: `translate3d(${pillarExitX}px, 0, 0) scale(${isExiting ? 1 : pillarScale})`,
             boxShadow: `0 0 30px ${accentColor}`,
             zIndex: 20,
           }}

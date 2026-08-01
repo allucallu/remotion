@@ -3,10 +3,10 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 3: KINETIC GRID & SWISS DESIGN
- * Konsep 6: LowerThirdModularStackingRatio
+ * Konsep 6: LowerThirdModularStackingRatio (Bentuk Visual Komposisi 4 Balok Rasio Emas Golden Ratio 1:1.618)
  *
  * MEKANISME REVEAL UTAMA:
- * Urutan balok-balok ukuran rasio presisi yang muncul secara staggered (bertahap cepat) membentuk ruang komposisi modular Swiss.
+ * Urutan 4 balok-balok ukuran Rasio Emas (Golden Ratio 1:1.618) yang muncul secara staggered (bertahap cepat) membentuk ruang komposisi modular Swiss.
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
@@ -41,19 +41,24 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
   const exitLocalFrame = frame - exitStartFrame;
   const isExiting = frame >= exitStartFrame;
 
-  // Staggered Springs for 3 Modular Blocks
+  // Staggered Springs for 4 Golden Ratio Blocks
   const b1Spring = spring({
     frame: localFrame,
     fps,
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
   const b2Spring = spring({
-    frame: Math.max(0, localFrame - 4),
+    frame: Math.max(0, localFrame - 3),
     fps,
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
   const b3Spring = spring({
-    frame: Math.max(0, localFrame - 8),
+    frame: Math.max(0, localFrame - 6),
+    fps,
+    config: { mass: 0.5, damping: 12, stiffness: 200 },
+  });
+  const b4Spring = spring({
+    frame: Math.max(0, localFrame - 9),
     fps,
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
@@ -94,13 +99,13 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Modular Block 1 (Ratio 60% Left Primary) */}
+        {/* Golden Ratio Block 1 (61.8% Main Left) */}
         <div
           style={{
             position: 'absolute',
             left: 0,
             top: 0,
-            width: 1350,
+            width: 1360,
             height: 140,
             backgroundColor: primaryColor,
             borderRadius: '12px 0 0 0',
@@ -110,13 +115,13 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Modular Block 2 (Ratio 40% Right Complementary) */}
+        {/* Golden Ratio Block 2 (38.2% Right Complementary) */}
         <div
           style={{
             position: 'absolute',
-            left: 1355,
+            left: 1365,
             top: 0,
-            width: 845,
+            width: 835,
             height: 140,
             backgroundColor: '#27272A',
             borderRadius: '0 12px 0 0',
@@ -125,17 +130,32 @@ export const LowerThirdModularStackingRatio: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Modular Block 3 (Subtier Ratio Base) */}
+        {/* Golden Ratio Block 3 (Subtier Left Base) */}
         <div
           style={{
             position: 'absolute',
             left: 40,
             top: 145,
-            width: 1850,
+            width: 1140,
             height: 90,
             backgroundColor: '#78350F',
-            borderRadius: '0 0 12px 12px',
+            borderRadius: '0 0 0 12px',
             transform: `translate3d(0, ${getBlockY(b3Spring)}px, 0)`,
+            boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
+          }}
+        />
+
+        {/* Golden Ratio Block 4 (Subtier Right Base) */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 1185,
+            top: 145,
+            width: 705,
+            height: 90,
+            backgroundColor: primaryColor,
+            borderRadius: '0 0 12px 0',
+            transform: `translate3d(0, ${getBlockY(b4Spring)}px, 0)`,
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}
         />

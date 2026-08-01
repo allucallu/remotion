@@ -3,17 +3,17 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 5: TEMPORAL & GLITCH DATA
- * Konsep 10: LowerThirdSlitScanCascade
+ * Konsep 10: LowerThirdSlitScanCascade (Bentuk Visual 5 Tirai Jajaran Genjang Miring Slanted Parallelogram)
  *
  * MEKANISME REVEAL UTAMA:
- * Bidang utama terbagi menjadi 5 tirai horizontal tipis yang masuk berurutan dari luar frame (-2800px kiri) dengan delay milidetik (staggered cascade).
+ * Bidang utama terbagi menjadi 5 tirai jajaran genjang miring (slanted parallelograms) yang masuk berurutan dari luar frame (-2800px kiri) dengan delay milidetik (staggered cascade).
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
- * Cap aksen penutup sudut menancap di sudut kanan (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Cap aksen penutup sudut miring menancap di sudut kanan (frame 32) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
- * 5 tirai horizontal meluncur keluar berurutan ke kanan (+3840px) secara staggered cascade.
+ * 5 tirai jajaran genjang miring meluncur keluar berurutan ke kanan (+3840px) secara staggered cascade.
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 250px, Top = 1570px, Width = 2200px, Height = 100px
@@ -41,7 +41,7 @@ export const LowerThirdSlitScanCascade: React.FC<LowerThirdProps> = ({
   const exitLocalFrame = frame - exitStartFrame;
   const isExiting = frame >= exitStartFrame;
 
-  // Staggered Springs for 5 Horizontal Slit-Scan Blinds
+  // Staggered Springs for 5 Slanted Parallelogram Blinds
   const blindSprings = [0, 1, 2, 3, 4].map((idx) =>
     spring({
       frame: Math.max(0, localFrame - idx * 3),
@@ -87,7 +87,7 @@ export const LowerThirdSlitScanCascade: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* 5 Horizontal Slit-Scan Cascade Blinds (Main Slate) */}
+        {/* 5 Slanted Parallelogram Cascade Blinds (Main Slate) */}
         {[0, 1, 2, 3, 4].map((idx) => (
           <div
             key={idx}
@@ -98,6 +98,7 @@ export const LowerThirdSlitScanCascade: React.FC<LowerThirdProps> = ({
               width: 2200,
               height: 29,
               backgroundColor: idx % 2 === 0 ? primaryColor : '#1E293B',
+              clipPath: 'polygon(2% 0, 100% 0, 98% 100%, 0 100%)',
               transform: `translateX(${getBlindX(idx)}px)`,
               boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
               borderLeft: idx === 0 ? `8px solid ${accentColor}` : 'none',
@@ -105,7 +106,7 @@ export const LowerThirdSlitScanCascade: React.FC<LowerThirdProps> = ({
           />
         ))}
 
-        {/* Subtier Slit-Scan Plate */}
+        {/* Subtier Slanted Parallelogram Plate */}
         <div
           style={{
             position: 'absolute',
@@ -114,13 +115,13 @@ export const LowerThirdSlitScanCascade: React.FC<LowerThirdProps> = ({
             width: 1850,
             height: 85,
             backgroundColor: '#881337',
-            borderRadius: '0 0 12px 12px',
+            clipPath: 'polygon(3% 0, 97% 0, 94% 100%, 0 100%)',
             transform: `translateX(${getBlindX(2)}px)`,
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Accent Cap */}
+        {/* SECONDARY MOTION: Micro Snap Slanted Accent Cap */}
         <div
           style={{
             position: 'absolute',
@@ -129,7 +130,7 @@ export const LowerThirdSlitScanCascade: React.FC<LowerThirdProps> = ({
             width: 55,
             height: 55,
             backgroundColor: accentColor,
-            borderRadius: 8,
+            clipPath: 'polygon(20% 0, 100% 0, 80% 100%, 0 100%)',
             transformOrigin: 'center center',
             transform: `translate3d(${capExitX}px, 0, 0) scale(${isExiting ? 1 : capScale})`,
             boxShadow: `0 0 30px ${accentColor}`,

@@ -3,17 +3,17 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 2: DESTRUCTIVE & FRACTURED
- * Konsep 4: LowerThirdTectonicBlockShift
+ * Konsep 4: LowerThirdTectonicBlockShift (Bentuk Visual Plat Tektonik Chevron Miring 45 Derajat)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame (-3000px kiri & +3840px kanan), dua blok warna berlawanan bergeser saling memotong dan mengunci di tengah dengan dampak gesekan tektonik.
+ * Berawal dari luar frame (-2800px, -1800px top-left & +3500px, +1800px bottom-right), dua plat tektonik chevron miring bergeser saling memotong dan mengunci di tengah sepanjang garis patahan 45 derajat.
  * Menggunakan fisika spring Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
  *
  * GERAKAN SEKUNDER:
- * Garis aksen kejutan menembak menyusuri patahan sambungan (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
+ * Garis aksen magma menembak menyusuri patahan miring 45 derajat (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
- * Dua blok bergeser membelah dan meluncur cepat keluar melintasi frame kiri (-3000px) & kanan (+3840px).
+ * Dua plat bergeser membelah secara diagonal dan meluncur keluar ke arah asal (top-left & bottom-right).
  *
  * TEXT-SAFE ZONE (AREA KOSONG TANPA TEKS / TRANSPARAN):
  *   - Nama Utama (Baris 1): Left = 250px, Top = 1580px, Width = 2100px, Height = 100px
@@ -48,7 +48,7 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
 
-  const springMicroShock = spring({
+  const springMicroMagma = spring({
     frame: Math.max(0, localFrame - 30),
     fps,
     config: { mass: 0.1, damping: 8, stiffness: 300 },
@@ -60,17 +60,23 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
     config: { mass: 0.5, damping: 12, stiffness: 200 },
   });
 
-  // Offscreen Interpolations (-3000px Left & +3840px Right)
-  const blockLeftX = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, -3000])
-    : interpolate(springSnappy, [0, 1], [-3000, 0]);
+  // Diagonal 45-degree Vector Interpolations
+  const block1X = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, -2800])
+    : interpolate(springSnappy, [0, 1], [-2800, 0]);
+  const block1Y = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, -1800])
+    : interpolate(springSnappy, [0, 1], [-1800, 0]);
 
-  const blockRightX = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, 3840])
-    : interpolate(springSnappy, [0, 1], [3840, 0]);
+  const block2X = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, 3500])
+    : interpolate(springSnappy, [0, 1], [3500, 0]);
+  const block2Y = isExiting
+    ? interpolate(exitSpring, [0, 1], [0, 1800])
+    : interpolate(springSnappy, [0, 1], [1800, 0]);
 
-  const shockScaleX = interpolate(springMicroShock, [0, 1], [0, 1]);
-  const shockExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
+  const magmaScaleX = interpolate(springMicroMagma, [0, 1], [0, 1]);
+  const magmaExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
 
   const baseLeft = 200;
   const baseTop = 1540;
@@ -86,7 +92,7 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
           height: 250,
         }}
       >
-        {/* Tectonic Block 1 (Sliding from LEFT -3000px) */}
+        {/* Tectonic Chevron Plate 1 (from Top-Left) */}
         <div
           style={{
             position: 'absolute',
@@ -95,14 +101,14 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
             width: 1300,
             height: 140,
             backgroundColor: primaryColor,
-            clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0 100%)',
-            transform: `translateX(${blockLeftX}px)`,
+            clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0 100%)',
+            transform: `translate3d(${block1X}px, ${block1Y}px, 0)`,
             boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
             borderLeft: `8px solid ${accentColor}`,
           }}
         />
 
-        {/* Tectonic Block 2 (Sliding from RIGHT +3840px) */}
+        {/* Tectonic Chevron Plate 2 (from Bottom-Right) */}
         <div
           style={{
             position: 'absolute',
@@ -111,13 +117,13 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
             width: 960,
             height: 140,
             backgroundColor: '#991B1B',
-            clipPath: 'polygon(8% 0, 100% 0, 94% 100%, 0 100%)',
-            transform: `translateX(${blockRightX}px)`,
+            clipPath: 'polygon(12% 0, 100% 0, 92% 100%, 0 100%)',
+            transform: `translate3d(${block2X}px, ${block2Y}px, 0)`,
             boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
           }}
         />
 
-        {/* Tectonic Subtier Block (Sliding from LEFT -3000px) */}
+        {/* Tectonic Subtier Plate */}
         <div
           style={{
             position: 'absolute',
@@ -126,13 +132,13 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
             width: 1850,
             height: 90,
             backgroundColor: '#27272A',
-            clipPath: 'polygon(0 0, 95% 0, 90% 100%, 0 100%)',
-            transform: `translateX(${blockLeftX}px)`,
+            clipPath: 'polygon(0 0, 96% 0, 88% 100%, 0 100%)',
+            transform: `translate3d(${block1X}px, ${block1Y}px, 0)`,
             boxShadow: '0 15px 35px rgba(0,0,0,0.5)',
           }}
         />
 
-        {/* SECONDARY MOTION: Micro Snap Shockwave Accent Bar */}
+        {/* SECONDARY MOTION: Micro Snap Magma Accent Line */}
         <div
           style={{
             position: 'absolute',
@@ -142,7 +148,7 @@ export const LowerThirdTectonicBlockShift: React.FC<LowerThirdProps> = ({
             height: 5,
             backgroundColor: accentColor,
             transformOrigin: 'left center',
-            transform: `translate3d(${shockExitX}px, 0, 0) scaleX(${isExiting ? 1 : shockScaleX})`,
+            transform: `translate3d(${magmaExitX}px, 0, 0) scaleX(${isExiting ? 1 : magmaScaleX})`,
             borderRadius: 3,
             boxShadow: `0 0 20px ${accentColor}, 0 0 40px ${accentColor}`,
             zIndex: 15,

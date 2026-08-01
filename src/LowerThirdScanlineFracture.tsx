@@ -3,10 +3,10 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 5: TEMPORAL & GLITCH DATA
- * Konsep 9: LowerThirdScanlineFracture
+ * Konsep 9: LowerThirdScanlineFracture (Bentuk Visual Dual Scanner Lines Matrix Cyber Block)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari luar frame (-2800px kiri), garis pemindai ultra-cepat meluncur dan meninggalkan jejak blok geometris solid yang mengendap presisi.
+ * Berawal dari luar frame (-2800px kiri), pemindai laser ganda meluncur cepat meninggalkan jejak matriks blok cyber solid yang mengendap presisi.
  * Menggunakan fisika spring Snap/Micro: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * GERAKAN SEKUNDER:

@@ -3,14 +3,14 @@ import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } fr
 
 /**
  * TEMA 1: ARCHITECTURAL & SPATIAL 3D
- * Konsep 1: LowerThirdSpatialOrigamiFold
+ * Konsep 1: LowerThirdSpatialOrigamiFold (Bentuk Visual Hexagonal Prism Asimetris)
  *
  * MEKANISME REVEAL UTAMA:
- * Berawal dari garis tipis 1px di pusat area (-2200px dari luar frame atas), bidang terlipat mekar secara 3D (perspective 1400px + rotateX/rotateY) hingga membentang menjadi plat datar solid.
+ * Berawal dari garis tipis 1px di pusat area (-2200px dari luar frame atas), lembaran prisma heksagonal asimetris mekar secara 3D (perspective 1600px + rotateX/rotateY) hingga membentang menjadi plat datar berlapis.
  * Menggunakan fisika spring Elegant/Dramatic: { mass: 2, damping: 20, stiffness: 80 }.
  *
  * GERAKAN SEKUNDER:
- * Line aksen neon sudut meluncur snap mekar di sepanjang garis batas lipatan (frame 30) dengan fisika Fast/Snappy: { mass: 0.5, damping: 12, stiffness: 200 }.
+ * Pin aksen chevron sudut meluncur snap mekar di sepanjang garis lipatan diagonal (frame 30) dengan fisika Micro/Snap: { mass: 0.1, damping: 8, stiffness: 300 }.
  *
  * EXIT ANIMATION:
  * Terlipat kembali di ruang 3D menyusut ke garis 1px dan terpental naik keluar melintasi batas frame atas (-2200px).
@@ -48,10 +48,10 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
     config: { mass: 2, damping: 20, stiffness: 80 },
   });
 
-  const springSnappySecondary = spring({
+  const springMicroChevron = spring({
     frame: Math.max(0, localFrame - 30),
     fps,
-    config: { mass: 0.5, damping: 12, stiffness: 200 },
+    config: { mass: 0.1, damping: 8, stiffness: 300 },
   });
 
   const exitSpring = spring({
@@ -70,15 +70,15 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
     : interpolate(springDramatic, [0, 1], [90, 0]);
 
   const rotateY = isExiting
-    ? interpolate(exitSpring, [0, 1], [0, -45])
-    : interpolate(springDramatic, [0, 1], [-45, 0]);
+    ? interpolate(exitSpring, [0, 1], [0, -55])
+    : interpolate(springDramatic, [0, 1], [-55, 0]);
 
   const scaleX = isExiting
     ? interpolate(exitSpring, [0, 1], [1, 0.005])
     : interpolate(springDramatic, [0, 1], [0.005, 1]);
 
-  const borderScaleX = interpolate(springSnappySecondary, [0, 1], [0, 1]);
-  const borderExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
+  const chevronScale = interpolate(springMicroChevron, [0, 1], [0, 1]);
+  const chevronExitX = isExiting ? interpolate(exitSpring, [0, 1], [0, 3840]) : 0;
 
   const baseLeft = 200;
   const baseTop = 1530;
@@ -92,11 +92,11 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
           top: baseTop,
           width: 2250,
           height: 250,
-          perspective: 1400,
+          perspective: 1600,
           transform: `translate3d(0, ${translateY}px, 0)`,
         }}
       >
-        {/* Main 3D Origami Unfolding Plane */}
+        {/* Main 3D Hexagonal Prism Unfolding Slate */}
         <div
           style={{
             position: 'absolute',
@@ -105,7 +105,7 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
             width: 2200,
             height: 145,
             backgroundColor: primaryColor,
-            borderRadius: 12,
+            clipPath: 'polygon(0 20%, 30% 0, 100% 10%, 90% 100%, 10% 90%)',
             transformOrigin: 'left center',
             transform: `scaleX(${scaleX}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
             transformStyle: 'preserve-3d',
@@ -114,16 +114,16 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* Subtier Origami Face */}
+        {/* Subtier Hexagonal Prism Face */}
         <div
           style={{
             position: 'absolute',
             left: 40,
-            top: 145,
+            top: 140,
             width: 1850,
-            height: 85,
+            height: 90,
             backgroundColor: '#1E293B',
-            borderRadius: '0 0 12px 12px',
+            clipPath: 'polygon(5% 0, 100% 0, 92% 100%, 0 100%)',
             transformOrigin: 'left center',
             transform: `scaleX(${scaleX}) rotateX(${-rotateX}deg)`,
             transformStyle: 'preserve-3d',
@@ -131,19 +131,19 @@ export const LowerThirdSpatialOrigamiFold: React.FC<LowerThirdProps> = ({
           }}
         />
 
-        {/* SECONDARY MOTION: Snappy Accent Border Edge Ignition */}
+        {/* SECONDARY MOTION: Micro Snap Corner Chevron Pin */}
         <div
           style={{
             position: 'absolute',
-            left: 0,
-            top: 140,
-            width: 2100,
-            height: 5,
+            left: 2160,
+            top: -10,
+            width: 55,
+            height: 55,
             backgroundColor: accentColor,
-            transformOrigin: 'left center',
-            transform: `translate3d(${borderExitX}px, 0, 0) scaleX(${isExiting ? 1 : borderScaleX})`,
-            borderRadius: 3,
-            boxShadow: `0 0 20px ${accentColor}, 0 0 40px ${accentColor}`,
+            clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+            transformOrigin: 'center center',
+            transform: `translate3d(${chevronExitX}px, 0, 0) scale(${isExiting ? 1 : chevronScale})`,
+            boxShadow: `0 0 30px ${accentColor}`,
             zIndex: 20,
           }}
         />
