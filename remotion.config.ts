@@ -1,11 +1,11 @@
-// See all configuration options: https://remotion.dev/docs/config
-// Each option also is available as a CLI flag: https://remotion.dev/docs/cli
+import { Config } from '@remotion/cli/config';
 
-// Note: When using the Node.JS APIs, the config file doesn't apply. Instead, pass options directly to the APIs
+Config.setVideoImageFormat('jpeg');
+Config.setCodec('h264');
 
-import { Config } from "@remotion/cli/config";
-import { enableTailwind } from '@remotion/tailwind-v4';
-
-Config.setVideoImageFormat("jpeg");
-Config.setOverwriteOutput(true);
-Config.overrideWebpackConfig(enableTailwind);
+// Stock Footage CLI Render Commands Reference:
+// For ProRes 4444 Transparent Alpha Stock Footage:
+// npx remotion render 01-CodeTyping-Alpha out/01-CodeTyping-Alpha.mov --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le
+//
+// For H.264 MP4 4K Stock Footage:
+// npx remotion render 01-CodeTyping-Solid out/01-CodeTyping-Solid.mp4 --codec=h264

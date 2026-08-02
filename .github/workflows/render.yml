@@ -1,4 +1,4 @@
-name: Render All 4K Revised Broadcast Lower Thirds (ProRes 4444 Alpha Zip Bundle)
+name: Render All 4K DevTech & SaaS Terminal Visuals Stock Assets
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-all:
-    name: Render All 10 Revised Broadcast Lower Thirds (ProRes 4444 Alpha) & Bundle to Zip
+    name: Render 10 DevTech Visuals (ProRes 4444 Alpha MOV & H.264 Solid MP4) & Zip Bundle
     runs-on: ubuntu-latest
 
     steps:
@@ -25,35 +25,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All 10 Compositions (4K ProRes 4444 Alpha)
+      - name: Render All 10 Compositions (Solid MP4 & Alpha MOV)
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "LowerThird-01-ViscousVectorWave"
-            "LowerThird-02-SplineExpansion"
-            "LowerThird-03-AsymmetricalRibbonFold"
-            "LowerThird-04-DiagonalSlateShear"
-            "LowerThird-05-DeconstructedVectorSlice"
-            "LowerThird-06-FluidMaskReveal"
-            "LowerThird-07-BezierPathTracer"
-            "LowerThird-08-PolygonalMeshUnfold"
-            "LowerThird-09-MetallicLiquidRibbon"
-            "LowerThird-10-ChiseledPrismUnravel"
+            "01-CodeTyping"
+            "02-ApiJsonStream"
+            "03-CicdPipeline"
+            "04-TerminalAutocomplete"
+            "05-SqlQueryTable"
+            "06-ServerPing"
+            "07-AiModelTraining"
+            "08-GitCommitLog"
+            "09-KubernetesPods"
+            "10-BuildSuccessBadge"
           )
           for comp in "${COMPOSITIONS[@]}"; do
-            echo "=== Rendering $comp (ProRes 4444 Alpha) ==="
-            npx remotion render "$comp" "out/$comp.mov" --codec=prores --prores-profile=4444
+            echo "=== Rendering $comp-Solid (H.264 MP4) ==="
+            npx remotion render "$comp-Solid" "out/$comp-Solid.mp4" --codec=h264
+
+            echo "=== Rendering $comp-Alpha (ProRes 4444 Alpha MOV) ==="
+            npx remotion render "$comp-Alpha" "out/$comp-Alpha.mov" --codec=prores --prores-profile=4444
           done
 
-      - name: Zip Rendered Videos
+      - name: Bundle Metadata & Zip Video Outputs
         run: |
+          cp metadata.csv out/
           cd out
-          zip -r ../revised-broadcast-lower-thirds-prores-4k.zip *.mov
+          zip -r ../devtech-saas-terminal-visuals-4k.zip *
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: revised-broadcast-lower-thirds-prores-4k
-          path: revised-broadcast-lower-thirds-prores-4k.zip
+          name: devtech-saas-terminal-visuals-4k
+          path: devtech-saas-terminal-visuals-4k.zip
           retention-days: 14
