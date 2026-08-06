@@ -1,4 +1,4 @@
-name: Upload Rendered Artifact to Google Drive (Manual Trigger)
+name: Upload Rendered Artifact to Google Drive (OAuth 2.0 Rclone)
 
 on:
   workflow_dispatch:
@@ -9,8 +9,8 @@ on:
         default: 'tech-framing-target-reticles-20pack-alpha-4k'
 
 jobs:
-  upload-gdrive:
-    name: Upload Zip Artifact to Google Drive
+  upload-gdrive-oauth:
+    name: Upload Zip Artifact to Google Drive via OAuth 2.0
     runs-on: ubuntu-latest
 
     steps:
@@ -28,17 +28,25 @@ jobs:
         run: |
           ls -la ./downloaded-artifact
 
-      - name: Prepare Base64 Credentials
+      - name: Install Rclone
         run: |
-          # Convert raw JSON credentials to base64 required by google-drive-upload action
-          ENCODED=$(echo "$GDRIVE_RAW_JSON" | base64 -w 0)
-          echo "ENCODED_GDRIVE_CREDS=$ENCODED" >> $GITHUB_ENV
-        env:
-          GDRIVE_RAW_JSON: ${{ secrets.GDRIVE_CREDENTIALS }}
+          sudo apt-get update
+          sudo apt-get install -y rclone
 
-      - name: Upload Zip File to Google Drive
-        uses: adityak74/google-drive-upload-git-action@v0.1
-        with:
-          credentials: ${{ env.ENCODED_GDRIVE_CREDS }}
-          filename: './downloaded-artifact/${{ github.event.inputs.artifact_name }}.zip'
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+      - name: Configure Rclone with OAuth 2.0 User Token
+        run: |
+          mkdir -p ~/.config/rclone
+          cat <<EOF > ~/.config/rclone/rclone.conf
+          [gdrive]
+          type = drive
+          client_id = ${{ secrets.GDRIVE_CLIENT_ID }}
+          client_secret = ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          scope = drive
+          token = {"access_token":"","token_type":"Bearer","refresh_token":"${{ secrets.GDRIVE_REFRESH_TOKEN }}","expiry":"0001-01-01T00:00:00Z"}
+          EOF
+
+      - name: Upload Zip File directly to Personal Google Drive Folder
+        run: |
+          ZIP_FILE=$(find ./downloaded-artifact -name "*.zip" | head -n 1)
+          echo "Uploading $ZIP_FILE to Google Drive folder ${{ secrets.GDRIVE_FOLDER_ID }}..."
+          rclone copy "$ZIP_FILE" "gdrive:${{ secrets.GDRIVE_FOLDER_ID }}" --progress
