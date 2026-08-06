@@ -33,20 +33,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y rclone
 
-      - name: Configure Rclone with OAuth 2.0 User Token
-        run: |
-          mkdir -p ~/.config/rclone
-          cat <<EOF > ~/.config/rclone/rclone.conf
-          [gdrive]
-          type = drive
-          client_id = ${{ secrets.GDRIVE_CLIENT_ID }}
-          client_secret = ${{ secrets.GDRIVE_CLIENT_SECRET }}
-          scope = drive
-          token = {"access_token":"","token_type":"Bearer","refresh_token":"${{ secrets.GDRIVE_REFRESH_TOKEN }}","expiry":"0001-01-01T00:00:00Z"}
-          EOF
-
       - name: Upload Zip File directly to Personal Google Drive Folder
         run: |
           ZIP_FILE=$(find ./downloaded-artifact -name "*.zip" | head -n 1)
-          echo "Uploading $ZIP_FILE to Google Drive folder ${{ secrets.GDRIVE_FOLDER_ID }}..."
-          rclone copy "$ZIP_FILE" "gdrive:${{ secrets.GDRIVE_FOLDER_ID }}" --progress
+          echo "Uploading $ZIP_FILE to Google Drive folder ID: ${{ secrets.GDRIVE_FOLDER_ID }}..."
+          rclone copy "$ZIP_FILE" "gdrive:${{ secrets.GDRIVE_FOLDER_ID }}" -v
+        env:
+          RCLONE_CONFIG_GDRIVE_TYPE: drive
+          RCLONE_CONFIG_GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+          RCLONE_CONFIG_GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          RCLONE_CONFIG_GDRIVE_TOKEN: '{"access_token":"","token_type":"Bearer","refresh_token":"${{ secrets.GDRIVE_REFRESH_TOKEN }}","expiry":"0001-01-01T00:00:00Z"}'
