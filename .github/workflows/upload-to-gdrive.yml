@@ -28,10 +28,18 @@ jobs:
         run: |
           ls -la ./downloaded-artifact
 
+      - name: Prepare Base64 Credentials
+        run: |
+          # Convert raw JSON credentials to base64 required by google-drive-upload action
+          ENCODED=$(echo "$GDRIVE_RAW_JSON" | base64 -w 0)
+          echo "ENCODED_GDRIVE_CREDS=$ENCODED" >> $GITHUB_ENV
+        env:
+          GDRIVE_RAW_JSON: ${{ secrets.GDRIVE_CREDENTIALS }}
+
       - name: Upload Zip File to Google Drive
         uses: adityak74/google-drive-upload-git-action@v0.1
         with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          credentials: ${{ env.ENCODED_GDRIVE_CREDS }}
           filename: './downloaded-artifact/${{ github.event.inputs.artifact_name }}.zip'
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
           overwrite: 'true'
