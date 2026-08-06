@@ -1,0 +1,36 @@
+name: Upload Rendered Artifact to Google Drive (Manual Trigger)
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_name:
+        description: 'Nama Artifact Zip yang akan di-upload'
+        required: true
+        default: 'tech-framing-target-reticles-20pack-alpha-4k'
+
+jobs:
+  upload-gdrive:
+    name: Upload Zip Artifact to Google Drive
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Rendered Zip Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event.inputs.artifact_name }}
+          path: ./downloaded-artifact
+
+      - name: Verify Downloaded Zip File
+        run: |
+          ls -la ./downloaded-artifact
+
+      - name: Upload Zip File to Google Drive
+        uses: adityak74/google-drive-upload-git-action@v0.1
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          filename: './downloaded-artifact/${{ github.event.inputs.artifact_name }}.zip'
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: 'true'
