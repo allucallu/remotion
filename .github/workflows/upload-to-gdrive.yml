@@ -42,4 +42,3 @@ jobs:
           credentials: ${{ env.ENCODED_GDRIVE_CREDS }}
           filename: './downloaded-artifact/${{ github.event.inputs.artifact_name }}.zip'
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: 'true'
