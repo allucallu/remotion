@@ -17,11 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download Rendered Zip Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ github.event.inputs.artifact_name }}
-          path: ./downloaded-artifact
+      - name: Download Latest Rendered Zip Artifact Across Workflows
+        run: |
+          mkdir -p ./downloaded-artifact
+          gh run download --name "${{ github.event.inputs.artifact_name }}" --dir ./downloaded-artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify Downloaded Zip File
         run: |
