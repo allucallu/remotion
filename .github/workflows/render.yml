@@ -1,4 +1,4 @@
-name: Render All 4K DevTech & SaaS Terminal Visuals Stock Assets
+name: Render All 20 4K Tech Framing & Target Reticles (Alpha ProRes 4444)
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  render-all:
-    name: Render 10 DevTech Visuals (ProRes 4444 Alpha MOV & H.264 Solid MP4) & Zip Bundle
+  render-hud-alpha-20pack:
+    name: Render Tech Framing & Target Reticles (20 ProRes 4444 Alpha MOV Videos)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,39 +25,46 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All 10 Compositions (Solid MP4 & Alpha MOV)
+      - name: Render All 20 HUD Alpha Compositions (ProRes 4444 Alpha MOV)
         run: |
           mkdir -p out
           COMPOSITIONS=(
-            "01-CodeTyping"
-            "02-ApiJsonStream"
-            "03-CicdPipeline"
-            "04-TerminalAutocomplete"
-            "05-SqlQueryTable"
-            "06-ServerPing"
-            "07-AiModelTraining"
-            "08-GitCommitLog"
-            "09-KubernetesPods"
-            "10-BuildSuccessBadge"
+            "01-TargetLockReticle-Alpha"
+            "02-RotatingTechFrame-Alpha"
+            "03-IronmanStyleHUD-Alpha"
+            "04-ScanningGridFrame-Alpha"
+            "05-CyberpunkCornerFrame-Alpha"
+            "06-RadarSweepTracking-Alpha"
+            "07-SatelliteOrbitalLock-Alpha"
+            "08-DroneTrackingBox-Alpha"
+            "09-HolographicWireframePanel-Alpha"
+            "10-SystemChargeUpRing-Alpha"
+            "11-MultiLayerDataStream-Alpha"
+            "12-ParticleEnergyField-Alpha"
+            "13-CommandConsoleFrame-Alpha"
+            "14-NeuralNetworkFrame-Alpha"
+            "15-ARMultiTagFrame-Alpha"
+            "16-GlitchDistortionFrame-Alpha"
+            "17-CircuitBoardFrame-Alpha"
+            "18-EnvironmentalScanHUD-Alpha"
+            "19-LaunchSequenceCountdown-Alpha"
+            "20-KineticDataTicker-Alpha"
           )
           for comp in "${COMPOSITIONS[@]}"; do
-            echo "=== Rendering $comp-Solid (H.264 MP4) ==="
-            npx remotion render "$comp-Solid" "out/$comp-Solid.mp4" --codec=h264
-
-            echo "=== Rendering $comp-Alpha (ProRes 4444 Alpha MOV) ==="
-            npx remotion render "$comp-Alpha" "out/$comp-Alpha.mov" --codec=prores --prores-profile=4444
+            echo "=== Rendering $comp (ProRes 4444 Alpha MOV) ==="
+            npx remotion render "$comp" "out/$comp.mov" --codec=prores --prores-profile=4444
           done
 
       - name: Bundle Metadata & Zip Video Outputs
         run: |
           cp metadata.csv out/
           cd out
-          zip -r ../devtech-saas-terminal-visuals-4k.zip *
+          zip -r ../tech-framing-target-reticles-20pack-alpha-4k.zip *
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: devtech-saas-terminal-visuals-4k
-          path: devtech-saas-terminal-visuals-4k.zip
+          name: tech-framing-target-reticles-20pack-alpha-4k
+          path: tech-framing-target-reticles-20pack-alpha-4k.zip
           retention-days: 14
