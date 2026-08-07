@@ -2,251 +2,176 @@ import React from 'react';
 import { Composition } from 'remotion';
 import './index.css';
 
-import { TargetLockReticle } from './compositions/01-TargetLockReticle';
-import { RotatingTechFrame } from './compositions/02-RotatingTechFrame';
-import { IronmanStyleHUD } from './compositions/03-IronmanStyleHUD';
-import { ScanningGridFrame } from './compositions/04-ScanningGridFrame';
-import { CyberpunkCornerFrame } from './compositions/05-CyberpunkCornerFrame';
-
-import { RadarSweepTracking } from './compositions/06-RadarSweepTracking';
-import { SatelliteOrbitalLock } from './compositions/07-SatelliteOrbitalLock';
-import { DroneTrackingBox } from './compositions/08-DroneTrackingBox';
-import { HolographicWireframePanel } from './compositions/09-HolographicWireframePanel';
-import { SystemChargeUpRing } from './compositions/10-SystemChargeUpRing';
-
-import { MultiLayerDataStream } from './compositions/11-MultiLayerDataStream';
-import { ParticleEnergyField } from './compositions/12-ParticleEnergyField';
-import { CommandConsoleFrame } from './compositions/13-CommandConsoleFrame';
-import { NeuralNetworkFrame } from './compositions/14-NeuralNetworkFrame';
-import { ARMultiTagFrame } from './compositions/15-ARMultiTagFrame';
-
-import { GlitchDistortionFrame } from './compositions/16-GlitchDistortionFrame';
-import { CircuitBoardFrame } from './compositions/17-CircuitBoardFrame';
-import { EnvironmentalScanHUD } from './compositions/18-EnvironmentalScanHUD';
-import { LaunchSequenceCountdown } from './compositions/19-LaunchSequenceCountdown';
-import { KineticDataTicker } from './compositions/20-KineticDataTicker';
+import { SecurityToastStack } from './compositions/SecurityToastStack';
+import { PasswordStrengthMeter } from './compositions/PasswordStrengthMeter';
+import { VulnerabilityScanSweep } from './compositions/VulnerabilityScanSweep';
+import { EncryptedDataTransfer } from './compositions/EncryptedDataTransfer';
+import { TwoFactorAuthFlow } from './compositions/TwoFactorAuthFlow';
+import { FirewallNetworkBlock } from './compositions/FirewallNetworkBlock';
+import { PrivacyToggleSwitcher } from './compositions/PrivacyToggleSwitcher';
+import { DataBreachAlertBanner } from './compositions/DataBreachAlertBanner';
+import { ComplianceBadgeReveal } from './compositions/ComplianceBadgeReveal';
+import { LiveThreatCounterTicker } from './compositions/LiveThreatCounterTicker';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      {/* 01. Target Lock Reticle (Full Alpha, 30 FPS, 5s / 150f) */}
+      {/* 1. Security Toast Stack Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="01-TargetLockReticle-Alpha"
-        component={TargetLockReticle}
-        durationInFrames={150}
-        fps={30}
+        id="SecurityToastStack"
+        component={SecurityToastStack}
+        durationInFrames={480}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#FF3300' }}
+        defaultProps={{
+          position: 'top-right',
+          accentColor: '#2563EB',
+        }}
       />
 
-      {/* 02. Rotating Tech Frame (Full Alpha, 30 FPS, 10s / 300f) */}
+      {/* 2. Password Strength Meter Composition (4K UHD @ 60fps, 360 frames / 6s, Full Alpha) */}
       <Composition
-        id="02-RotatingTechFrame-Alpha"
-        component={RotatingTechFrame}
-        durationInFrames={300}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#00F0FF' }}
-      />
-
-      {/* 03. Iron Man Style HUD Overlay (Full Alpha, 30 FPS, 12s / 360f) */}
-      <Composition
-        id="03-IronmanStyleHUD-Alpha"
-        component={IronmanStyleHUD}
+        id="PasswordStrengthMeter"
+        component={PasswordStrengthMeter}
         durationInFrames={360}
-        fps={30}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#00F0FF', accentColor: '#FFB700' }}
+        defaultProps={{
+          showInputField: true,
+          labelTexts: {
+            weak: 'Weak Password',
+            fair: 'Fair Password',
+            strong: 'Strong Password',
+            veryStrong: 'Very Strong Password',
+          },
+        }}
       />
 
-      {/* 04. Scanning Grid Frame (Full Alpha, 30 FPS, 8s / 240f) */}
+      {/* 3. Vulnerability Scan Sweep Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="04-ScanningGridFrame-Alpha"
-        component={ScanningGridFrame}
-        durationInFrames={240}
-        fps={30}
+        id="VulnerabilityScanSweep"
+        component={VulnerabilityScanSweep}
+        durationInFrames={480}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#00FF66' }}
+        defaultProps={{
+          scanDirection: 'vertical',
+          accentColor: '#2563EB',
+        }}
       />
 
-      {/* 05. Cyberpunk Corner Frame (Full Alpha, 30 FPS, 7s / 210f) */}
+      {/* 4. Encrypted Data Transfer Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="05-CyberpunkCornerFrame-Alpha"
-        component={CyberpunkCornerFrame}
-        durationInFrames={210}
-        fps={30}
+        id="EncryptedDataTransfer"
+        component={EncryptedDataTransfer}
+        durationInFrames={480}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#FF007F', accentColor: '#00F0FF' }}
+        defaultProps={{
+          packetCount: 6,
+          gateLabel: 'AES-256 Encryption',
+          accentColor: '#2563EB',
+          direction: 'left-to-right',
+        }}
       />
 
-      {/* 06. Radar Sweep Tracking (Full Alpha, 30 FPS, 9s / 270f) */}
+      {/* 5. Two-Factor Authentication Flow Composition (4K UHD @ 60fps, 360 frames / 6s, Full Alpha) */}
       <Composition
-        id="06-RadarSweepTracking-Alpha"
-        component={RadarSweepTracking}
-        durationInFrames={270}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#00FF66' }}
-      />
-
-      {/* 07. Satellite Orbital Lock (Full Alpha, 30 FPS, 8s / 240f) */}
-      <Composition
-        id="07-SatelliteOrbitalLock-Alpha"
-        component={SatelliteOrbitalLock}
-        durationInFrames={240}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#00F0FF', accentColor: '#FFB700' }}
-      />
-
-      {/* 08. Drone Tracking Box (Full Alpha, 30 FPS, 10s / 300f) */}
-      <Composition
-        id="08-DroneTrackingBox-Alpha"
-        component={DroneTrackingBox}
-        durationInFrames={300}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#CCFF00' }}
-      />
-
-      {/* 09. Holographic Wireframe Panel (Full Alpha, 30 FPS, 11s / 330f) */}
-      <Composition
-        id="09-HolographicWireframePanel-Alpha"
-        component={HolographicWireframePanel}
-        durationInFrames={330}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#00F0FF' }}
-      />
-
-      {/* 10. System Charge-Up Ring (Full Alpha, 30 FPS, 7s / 210f) */}
-      <Composition
-        id="10-SystemChargeUpRing-Alpha"
-        component={SystemChargeUpRing}
-        durationInFrames={210}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#FF9900' }}
-      />
-
-      {/* 11. Multi-Layer Data Stream (Full Alpha, 30 FPS, 10s / 300f) */}
-      <Composition
-        id="11-MultiLayerDataStream-Alpha"
-        component={MultiLayerDataStream}
-        durationInFrames={300}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#00F0FF' }}
-      />
-
-      {/* 12. Particle Energy Field (Full Alpha, 30 FPS, 10s / 300f) */}
-      <Composition
-        id="12-ParticleEnergyField-Alpha"
-        component={ParticleEnergyField}
-        durationInFrames={300}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#FF007F', accentColor: '#00F0FF' }}
-      />
-
-      {/* 13. Command Console Frame (Full Alpha, 30 FPS, 12s / 360f) */}
-      <Composition
-        id="13-CommandConsoleFrame-Alpha"
-        component={CommandConsoleFrame}
+        id="TwoFactorAuthFlow"
+        component={TwoFactorAuthFlow}
         durationInFrames={360}
-        fps={30}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#00F0FF', accentColor: '#FFB700' }}
+        defaultProps={{
+          otpLength: 6,
+          successMessage: 'Verified',
+          accentColor: '#2563EB',
+        }}
       />
 
-      {/* 14. Neural Network Frame (Full Alpha, 30 FPS, 11s / 330f) */}
+      {/* 6. Firewall Network Block Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="14-NeuralNetworkFrame-Alpha"
-        component={NeuralNetworkFrame}
-        durationInFrames={330}
-        fps={30}
+        id="FirewallNetworkBlock"
+        component={FirewallNetworkBlock}
+        durationInFrames={480}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#0088FF', accentColor: '#00F0FF' }}
+        defaultProps={{
+          nodeLabels: {
+            user: 'User Endpoint',
+            firewall: 'Firewall Shield',
+            server: 'App Server',
+            cloud: 'Cloud Storage',
+          },
+          threatCount: 3,
+          accentColor: '#2563EB',
+          dangerColor: '#DC2626',
+        }}
       />
 
-      {/* 15. AR Multi-Tag Frame (Full Alpha, 30 FPS, 10s / 300f) */}
+      {/* 7. Privacy Toggle Switcher Composition (4K UHD @ 60fps, 420 frames / 7s, Full Alpha) */}
       <Composition
-        id="15-ARMultiTagFrame-Alpha"
-        component={ARMultiTagFrame}
-        durationInFrames={300}
-        fps={30}
+        id="PrivacyToggleSwitcher"
+        component={PrivacyToggleSwitcher}
+        durationInFrames={420}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#00F0FF', accentColor: '#FF6B00' }}
+        defaultProps={{
+          accentColor: '#2563EB',
+          panelTitle: 'Privacy Settings',
+        }}
       />
 
-      {/* 16. Glitch Distortion Frame (Full Alpha, 30 FPS, 8s / 240f) */}
+      {/* 8. Data Breach Alert Banner Composition (4K UHD @ 60fps, 420 frames / 7s, Full Alpha) */}
       <Composition
-        id="16-GlitchDistortionFrame-Alpha"
-        component={GlitchDistortionFrame}
-        durationInFrames={240}
-        fps={30}
+        id="DataBreachAlertBanner"
+        component={DataBreachAlertBanner}
+        durationInFrames={420}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#00F0FF', accentColor: '#FF0055' }}
+        defaultProps={{
+          alertMessage: 'Suspicious Login Detected',
+          resolvedMessage: 'Threat Neutralized',
+          dangerColor: '#DC2626',
+          safeColor: '#16A34A',
+        }}
       />
 
-      {/* 17. Circuit Board Frame (Full Alpha, 30 FPS, 10s / 300f) */}
+      {/* 9. Compliance Badge Reveal Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="17-CircuitBoardFrame-Alpha"
-        component={CircuitBoardFrame}
-        durationInFrames={300}
-        fps={30}
+        id="ComplianceBadgeReveal"
+        component={ComplianceBadgeReveal}
+        durationInFrames={480}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#00FF66' }}
+        defaultProps={{
+          layout: 'horizontal-row',
+          accentColor: '#2563EB',
+          titleText: 'TRUSTED & COMPLIANT ENTERPRISE SECURITY',
+        }}
       />
 
-      {/* 18. Environmental Scan HUD (Full Alpha, 30 FPS, 10s / 300f) */}
+      {/* 10. Live Threat Counter Ticker Composition (4K UHD @ 60fps, 600 frames / 10s, Full Alpha Seamless Loop) */}
       <Composition
-        id="18-EnvironmentalScanHUD-Alpha"
-        component={EnvironmentalScanHUD}
-        durationInFrames={300}
-        fps={30}
+        id="LiveThreatCounterTicker"
+        component={LiveThreatCounterTicker}
+        durationInFrames={600}
+        fps={60}
         width={3840}
         height={2160}
-        defaultProps={{ color: '#38BDF8' }}
-      />
-
-      {/* 19. Launch Sequence Countdown (Full Alpha, 30 FPS, 8s / 240f) */}
-      <Composition
-        id="19-LaunchSequenceCountdown-Alpha"
-        component={LaunchSequenceCountdown}
-        durationInFrames={240}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#FF3300', accentColor: '#FF9900' }}
-      />
-
-      {/* 20. Kinetic Data Ticker (Full Alpha, 30 FPS, 10s / 300f) */}
-      <Composition
-        id="20-KineticDataTicker-Alpha"
-        component={KineticDataTicker}
-        durationInFrames={300}
-        fps={30}
-        width={3840}
-        height={2160}
-        defaultProps={{ color: '#00FF66', accentColor: '#FFB700' }}
+        defaultProps={{
+          accentColor: '#2563EB',
+          showMiniChart: true,
+        }}
       />
     </>
   );

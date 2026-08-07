@@ -1,7 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Butcherman&family=Creepster&family=Nosifer&display=swap');
 
 * {
   box-sizing: border-box;
+}
+
+body {
   margin: 0;
   padding: 0;
+  background-color: transparent;
 }

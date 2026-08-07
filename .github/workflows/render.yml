@@ -1,4 +1,4 @@
-name: Render All 20 4K Tech Framing & Target Reticles (Alpha ProRes 4444)
+name: Render 4K Cybersecurity UI Stock Assets (VP9 Alpha WebM)
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  render-hud-alpha-20pack:
-    name: Render Tech Framing & Target Reticles (20 ProRes 4444 Alpha MOV Videos)
+  render-cybersecurity-pack:
+    name: Render Cybersecurity Stock Assets (VP9 Alpha 4K WebM)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,46 +25,49 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All 20 HUD Alpha Compositions (ProRes 4444 Alpha MOV)
+      - name: Render All Cybersecurity Compositions (VP9 Alpha 4K WebM)
         run: |
           mkdir -p out
-          COMPOSITIONS=(
-            "01-TargetLockReticle-Alpha"
-            "02-RotatingTechFrame-Alpha"
-            "03-IronmanStyleHUD-Alpha"
-            "04-ScanningGridFrame-Alpha"
-            "05-CyberpunkCornerFrame-Alpha"
-            "06-RadarSweepTracking-Alpha"
-            "07-SatelliteOrbitalLock-Alpha"
-            "08-DroneTrackingBox-Alpha"
-            "09-HolographicWireframePanel-Alpha"
-            "10-SystemChargeUpRing-Alpha"
-            "11-MultiLayerDataStream-Alpha"
-            "12-ParticleEnergyField-Alpha"
-            "13-CommandConsoleFrame-Alpha"
-            "14-NeuralNetworkFrame-Alpha"
-            "15-ARMultiTagFrame-Alpha"
-            "16-GlitchDistortionFrame-Alpha"
-            "17-CircuitBoardFrame-Alpha"
-            "18-EnvironmentalScanHUD-Alpha"
-            "19-LaunchSequenceCountdown-Alpha"
-            "20-KineticDataTicker-Alpha"
-          )
-          for comp in "${COMPOSITIONS[@]}"; do
-            echo "=== Rendering $comp (ProRes 4444 Alpha MOV) ==="
-            npx remotion render "$comp" "out/$comp.mov" --codec=prores --prores-profile=4444
-          done
+          echo "=== 1. Rendering SecurityToastStack ==="
+          npm run render:toast
+          
+          echo "=== 2. Rendering PasswordStrengthMeter ==="
+          npm run render:password
 
-      - name: Bundle Metadata & Zip Video Outputs
+          echo "=== 3. Rendering VulnerabilityScanSweep ==="
+          npm run render:scan
+
+          echo "=== 4. Rendering EncryptedDataTransfer ==="
+          npm run render:transfer
+
+          echo "=== 5. Rendering TwoFactorAuthFlow ==="
+          npm run render:2fa
+
+          echo "=== 6. Rendering FirewallNetworkBlock ==="
+          npm run render:firewall
+
+          echo "=== 7. Rendering PrivacyToggleSwitcher ==="
+          npm run render:privacy
+
+          echo "=== 8. Rendering DataBreachAlertBanner ==="
+          npm run render:alert
+
+          echo "=== 9. Rendering ComplianceBadgeReveal ==="
+          npm run render:compliance
+
+          echo "=== 10. Rendering LiveThreatCounterTicker ==="
+          npm run render:ticker
+
+      - name: Bundle Metadata & Zip Output
         run: |
           cp metadata.csv out/
           cd out
-          zip -r ../tech-framing-target-reticles-20pack-alpha-4k.zip *
+          zip -r ../cybersecurity-stock-assets-alpha-4k.zip *
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: tech-framing-target-reticles-20pack-alpha-4k
-          path: tech-framing-target-reticles-20pack-alpha-4k.zip
+          name: cybersecurity-stock-assets-alpha-4k
+          path: cybersecurity-stock-assets-alpha-4k.zip
           retention-days: 14

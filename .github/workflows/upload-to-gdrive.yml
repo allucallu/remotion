@@ -6,7 +6,7 @@ on:
       artifact_name:
         description: 'Nama Artifact Zip yang akan di-upload'
         required: true
-        default: 'tech-framing-target-reticles-20pack-alpha-4k'
+        default: 'cybersecurity-stock-assets-alpha-4k'
 
 jobs:
   upload-gdrive-oauth:

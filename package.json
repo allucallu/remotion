@@ -7,7 +7,8 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.465",
-    "@remotion/noise": "^4.0.465",
+    "@remotion/google-fonts": "4.0.465",
+    "@remotion/noise": "4.0.465",
     "@remotion/tailwind-v4": "4.0.465",
     "@remotion/zod-types": "4.0.465",
     "lucide-react": "^1.25.0",
@@ -29,7 +30,18 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint script && tsc",
+    "render:toast": "remotion render SecurityToastStack out/SecurityToastStack_4K_Alpha.webm --codec=vp9",
+    "render:password": "remotion render PasswordStrengthMeter out/PasswordStrengthMeter_4K_Alpha.webm --codec=vp9",
+    "render:scan": "remotion render VulnerabilityScanSweep out/VulnerabilityScanSweep_4K_Alpha.webm --codec=vp9",
+    "render:transfer": "remotion render EncryptedDataTransfer out/EncryptedDataTransfer_4K_Alpha.webm --codec=vp9",
+    "render:2fa": "remotion render TwoFactorAuthFlow out/TwoFactorAuthFlow_4K_Alpha.webm --codec=vp9",
+    "render:firewall": "remotion render FirewallNetworkBlock out/FirewallNetworkBlock_4K_Alpha.webm --codec=vp9",
+    "render:privacy": "remotion render PrivacyToggleSwitcher out/PrivacyToggleSwitcher_4K_Alpha.webm --codec=vp9",
+    "render:alert": "remotion render DataBreachAlertBanner out/DataBreachAlertBanner_4K_Alpha.webm --codec=vp9",
+    "render:compliance": "remotion render ComplianceBadgeReveal out/ComplianceBadgeReveal_4K_Alpha.webm --codec=vp9",
+    "render:ticker": "remotion render LiveThreatCounterTicker out/LiveThreatCounterTicker_4K_Alpha.webm --codec=vp9",
+    "render:ticker-mov": "remotion render LiveThreatCounterTicker out/LiveThreatCounterTicker_4K_Alpha.mov --codec=prores --prores-profile=4444"
   },
   "sideEffects": [
     "*.css"

@@ -1,27 +1,27 @@
 /**
- * Deterministic pseudo-random number generator (0 to 1) based on integer seed.
- * Ensures 100% reproducible frame rendering without raw Math.random().
+ * Seeded pseudo-random number generator (PRNG).
+ * Ensures deterministic rendering across frame executions.
+ * Returns a float between 0 (inclusive) and 1 (exclusive).
  */
 export function seededRandom(seed: number): number {
-  const x = Math.sin(seed * 9999 + 12345) * 43758.5453123;
+  const x = Math.sin(seed * 9999 + 1) * 10000;
   return x - Math.floor(x);
 }
 
-const HEX_CHARS = '0123456789ABCDEF';
-const TECH_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ#@$%&*<>[]{}';
-
 /**
- * Generates a deterministic scrambled text string based on frame index and seed.
+ * Multi-frequency sinusoidal oscillation generator.
+ * Combines 3 irrational sine waves to produce organic micro-flickers
+ * and natural floating sways without linear repetition.
  */
-export function scrambleText(length: number, frame: number, seed: number = 42, charset: string = TECH_CHARS): string {
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    const charIndex = Math.floor(seededRandom(frame * 100 + i * 17 + seed) * charset.length);
-    result += charset[charIndex];
-  }
-  return result;
-}
-
-export function scrambleHex(length: number, frame: number, seed: number = 99): string {
-  return scrambleText(length, frame, seed, HEX_CHARS);
+export function multiSine(
+  frame: number,
+  baseFrequency: number = 0.05,
+  seedOffset: number = 0,
+  amplitude: number = 1
+): number {
+  const f = frame * baseFrequency + seedOffset;
+  const sin1 = Math.sin(f);
+  const sin2 = Math.sin(f * 1.618033) * 0.5; // Golden ratio frequency multiplier
+  const sin3 = Math.sin(f * 2.414213) * 0.25; // Silver ratio frequency multiplier
+  return ((sin1 + sin2 + sin3) / 1.75) * amplitude;
 }
