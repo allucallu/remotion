@@ -1,4 +1,4 @@
-name: Render 4K Cybersecurity UI Stock Assets (VP9 Alpha WebM)
+name: Render 4K Cybersecurity UI Stock Assets (ProRes 4444 Alpha MOV)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-cybersecurity-pack:
-    name: Render Cybersecurity Stock Assets (VP9 Alpha 4K WebM)
+    name: Render Cybersecurity Stock Assets (ProRes 4444 Alpha MOV)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All Cybersecurity Compositions (VP9 Alpha 4K WebM)
+      - name: Render All Cybersecurity Compositions (ProRes 4444 Alpha MOV)
         run: |
           mkdir -p out
           echo "=== 1. Rendering SecurityToastStack ==="
