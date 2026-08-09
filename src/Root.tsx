@@ -1,178 +1,224 @@
 import React from 'react';
 import { Composition } from 'remotion';
 import './index.css';
-
-import { SecurityToastStack } from './compositions/SecurityToastStack';
-import { PasswordStrengthMeter } from './compositions/PasswordStrengthMeter';
-import { VulnerabilityScanSweep } from './compositions/VulnerabilityScanSweep';
-import { EncryptedDataTransfer } from './compositions/EncryptedDataTransfer';
-import { TwoFactorAuthFlow } from './compositions/TwoFactorAuthFlow';
-import { FirewallNetworkBlock } from './compositions/FirewallNetworkBlock';
-import { PrivacyToggleSwitcher } from './compositions/PrivacyToggleSwitcher';
-import { DataBreachAlertBanner } from './compositions/DataBreachAlertBanner';
-import { ComplianceBadgeReveal } from './compositions/ComplianceBadgeReveal';
-import { LiveThreatCounterTicker } from './compositions/LiveThreatCounterTicker';
+import { ScanningGridOverlay } from './compositions/ScanningGridOverlay';
+import { RotatingCipherLockRings } from './compositions/RotatingCipherLockRings';
+import { CircuitBoardPulseLines } from './compositions/CircuitBoardPulseLines';
+import { BinaryCodeCascade } from './compositions/BinaryCodeCascade';
+import { LockAssemblyAnimation } from './compositions/LockAssemblyAnimation';
+import { VPNConnectionStatusWidget } from './compositions/VPNConnectionStatusWidget';
+import { SecureFileTransferCard } from './compositions/SecureFileTransferCard';
+import { NewLoginAlertCard } from './compositions/NewLoginAlertCard';
+import { AntivirusScanResultCard } from './compositions/AntivirusScanResultCard';
+import { E2EEncryptionToggleCard } from './compositions/E2EEncryptionToggleCard';
+import { SessionTimeoutCountdownCard } from './compositions/SessionTimeoutCountdownCard';
+import { TrustedDevicesListCard } from './compositions/TrustedDevicesListCard';
+import { PasswordManagerAutofillPopup } from './compositions/PasswordManagerAutofillPopup';
+import { SecurityHealthScoreCard } from './compositions/SecurityHealthScoreCard';
+import { DataAccessPermissionCard } from './compositions/DataAccessPermissionCard';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      {/* 1. Security Toast Stack Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="SecurityToastStack"
-        component={SecurityToastStack}
-        durationInFrames={480}
-        fps={60}
+        id="ScanningGridOverlay"
+        component={ScanningGridOverlay}
+        durationInFrames={300}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          position: 'top-right',
-          accentColor: '#2563EB',
+          gridSize: { cols: 12, rows: 7 },
+          accentColor: '#3B82F6',
+          nodeCount: 5,
         }}
       />
-
-      {/* 2. Password Strength Meter Composition (4K UHD @ 60fps, 360 frames / 6s, Full Alpha) */}
       <Composition
-        id="PasswordStrengthMeter"
-        component={PasswordStrengthMeter}
-        durationInFrames={360}
-        fps={60}
+        id="RotatingCipherLockRings"
+        component={RotatingCipherLockRings}
+        durationInFrames={300}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          showInputField: true,
-          labelTexts: {
-            weak: 'Weak Password',
-            fair: 'Fair Password',
-            strong: 'Strong Password',
-            veryStrong: 'Very Strong Password',
-          },
+          ringCount: 4,
+          accentColor: '#22D3EE',
+          segmentPerRing: 16,
+          lockState: 'locking',
         }}
       />
-
-      {/* 3. Vulnerability Scan Sweep Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="VulnerabilityScanSweep"
-        component={VulnerabilityScanSweep}
-        durationInFrames={480}
-        fps={60}
+        id="CircuitBoardPulseLines"
+        component={CircuitBoardPulseLines}
+        durationInFrames={300}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          scanDirection: 'vertical',
-          accentColor: '#2563EB',
+          pathCount: 8,
+          accentColor: '#22D3EE',
+          pulseSpeed: 'medium',
         }}
       />
-
-      {/* 4. Encrypted Data Transfer Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="EncryptedDataTransfer"
-        component={EncryptedDataTransfer}
-        durationInFrames={480}
-        fps={60}
+        id="BinaryCodeCascade"
+        component={BinaryCodeCascade}
+        durationInFrames={240}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          packetCount: 6,
-          gateLabel: 'AES-256 Encryption',
-          accentColor: '#2563EB',
-          direction: 'left-to-right',
+          columnCount: 24,
+          rowCount: 14,
+          accentColor: '#22D3EE',
+          highlightRatio: 0.08,
         }}
       />
-
-      {/* 5. Two-Factor Authentication Flow Composition (4K UHD @ 60fps, 360 frames / 6s, Full Alpha) */}
       <Composition
-        id="TwoFactorAuthFlow"
-        component={TwoFactorAuthFlow}
-        durationInFrames={360}
-        fps={60}
+        id="LockAssemblyAnimation"
+        component={LockAssemblyAnimation}
+        durationInFrames={240}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          otpLength: 6,
-          successMessage: 'Verified',
-          accentColor: '#2563EB',
+          accentColor: '#22D3EE',
+          particleCount: 60,
+          lockShapeSize: 400,
         }}
       />
-
-      {/* 6. Firewall Network Block Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="FirewallNetworkBlock"
-        component={FirewallNetworkBlock}
-        durationInFrames={480}
-        fps={60}
+        id="VPNConnectionStatusWidget"
+        component={VPNConnectionStatusWidget}
+        durationInFrames={240}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          nodeLabels: {
-            user: 'User Endpoint',
-            firewall: 'Firewall Shield',
-            server: 'App Server',
-            cloud: 'Cloud Storage',
-          },
-          threatCount: 3,
-          accentColor: '#2563EB',
-          dangerColor: '#DC2626',
+          locationLabel: 'Singapore',
+          accentColor: '#22D3EE',
+          connectDuration: 60,
         }}
       />
-
-      {/* 7. Privacy Toggle Switcher Composition (4K UHD @ 60fps, 420 frames / 7s, Full Alpha) */}
       <Composition
-        id="PrivacyToggleSwitcher"
-        component={PrivacyToggleSwitcher}
-        durationInFrames={420}
-        fps={60}
+        id="SecureFileTransferCard"
+        component={SecureFileTransferCard}
+        durationInFrames={240}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          accentColor: '#2563EB',
-          panelTitle: 'Privacy Settings',
+          fileName: 'financial_report.pdf',
+          fileSize: '24.6 MB',
+          accentColor: '#22D3EE',
         }}
       />
-
-      {/* 8. Data Breach Alert Banner Composition (4K UHD @ 60fps, 420 frames / 7s, Full Alpha) */}
       <Composition
-        id="DataBreachAlertBanner"
-        component={DataBreachAlertBanner}
-        durationInFrames={420}
-        fps={60}
+        id="NewLoginAlertCard"
+        component={NewLoginAlertCard}
+        durationInFrames={270}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          alertMessage: 'Suspicious Login Detected',
-          resolvedMessage: 'Threat Neutralized',
-          dangerColor: '#DC2626',
-          safeColor: '#16A34A',
+          deviceType: 'laptop',
+          locationLabel: 'Jakarta, Indonesia',
+          timeLabel: 'Today, 14:32',
+          accentColor: '#22D3EE',
         }}
       />
-
-      {/* 9. Compliance Badge Reveal Composition (4K UHD @ 60fps, 480 frames / 8s, Full Alpha) */}
       <Composition
-        id="ComplianceBadgeReveal"
-        component={ComplianceBadgeReveal}
-        durationInFrames={480}
-        fps={60}
+        id="AntivirusScanResultCard"
+        component={AntivirusScanResultCard}
+        durationInFrames={240}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          layout: 'horizontal-row',
-          accentColor: '#2563EB',
-          titleText: 'TRUSTED & COMPLIANT ENTERPRISE SECURITY',
+          filesScanned: 1204,
+          threatsFound: 0,
+          scanDuration: '2m 14s',
+          accentColor: '#22D3EE',
         }}
       />
-
-      {/* 10. Live Threat Counter Ticker Composition (4K UHD @ 60fps, 600 frames / 10s, Full Alpha Seamless Loop) */}
       <Composition
-        id="LiveThreatCounterTicker"
-        component={LiveThreatCounterTicker}
-        durationInFrames={600}
-        fps={60}
+        id="E2EEncryptionToggleCard"
+        component={E2EEncryptionToggleCard}
+        durationInFrames={210}
+        fps={30}
         width={3840}
         height={2160}
         defaultProps={{
-          accentColor: '#2563EB',
-          showMiniChart: true,
+          accentColor: '#22D3EE',
+        }}
+      />
+      <Composition
+        id="SessionTimeoutCountdownCard"
+        component={SessionTimeoutCountdownCard}
+        durationInFrames={300}
+        fps={30}
+        width={3840}
+        height={2160}
+        defaultProps={{
+          startSeconds: 30,
+          warningThreshold: 10,
+          accentColor: '#22D3EE',
+        }}
+      />
+      <Composition
+        id="TrustedDevicesListCard"
+        component={TrustedDevicesListCard}
+        durationInFrames={270}
+        fps={30}
+        width={3840}
+        height={2160}
+        defaultProps={{
+          accentColor: '#22D3EE',
+        }}
+      />
+      <Composition
+        id="PasswordManagerAutofillPopup"
+        component={PasswordManagerAutofillPopup}
+        durationInFrames={210}
+        fps={30}
+        width={3840}
+        height={2160}
+        defaultProps={{
+          siteLabel: 'example.com',
+          accentColor: '#22D3EE',
+        }}
+      />
+      <Composition
+        id="SecurityHealthScoreCard"
+        component={SecurityHealthScoreCard}
+        durationInFrames={240}
+        fps={30}
+        width={3840}
+        height={2160}
+        defaultProps={{
+          score: 92,
+          recommendationCount: 3,
+          accentColor: '#22D3EE',
+        }}
+      />
+      <Composition
+        id="DataAccessPermissionCard"
+        component={DataAccessPermissionCard}
+        durationInFrames={210}
+        fps={30}
+        width={3840}
+        height={2160}
+        defaultProps={{
+          appName: 'PhotoEditor Pro',
+          dataCategory: 'contacts',
+          accentColor: '#22D3EE',
         }}
       />
     </>
   );
 };
+
+
+
+
+

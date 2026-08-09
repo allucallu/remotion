@@ -1,4 +1,4 @@
-name: Render 4K Cybersecurity UI Stock Assets (ProRes 4444 Alpha MOV)
+name: Render 4K Cybersecurity UI Stock Assets (H.264 MP4 4K)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   render-cybersecurity-pack:
-    name: Render Cybersecurity Stock Assets (ProRes 4444 Alpha MOV)
+    name: Render 4K Cybersecurity Stock Pack
     runs-on: ubuntu-latest
 
     steps:
@@ -25,49 +25,64 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All Cybersecurity Compositions (ProRes 4444 Alpha MOV)
+      - name: Render All 15 Cybersecurity Compositions (H.264 MP4 4K)
         run: |
           mkdir -p out
-          echo "=== 1. Rendering SecurityToastStack ==="
-          npm run render:toast
-          
-          echo "=== 2. Rendering PasswordStrengthMeter ==="
-          npm run render:password
+          echo "=== 1. Rendering ScanningGridOverlay ==="
+          npm run render:scan-grid
 
-          echo "=== 3. Rendering VulnerabilityScanSweep ==="
-          npm run render:scan
+          echo "=== 2. Rendering RotatingCipherLockRings ==="
+          npm run render:cipher-lock
 
-          echo "=== 4. Rendering EncryptedDataTransfer ==="
-          npm run render:transfer
+          echo "=== 3. Rendering CircuitBoardPulseLines ==="
+          npm run render:pcb-pulse
 
-          echo "=== 5. Rendering TwoFactorAuthFlow ==="
-          npm run render:2fa
+          echo "=== 4. Rendering BinaryCodeCascade ==="
+          npm run render:binary-code
 
-          echo "=== 6. Rendering FirewallNetworkBlock ==="
-          npm run render:firewall
+          echo "=== 5. Rendering LockAssemblyAnimation ==="
+          npm run render:lock-assembly
 
-          echo "=== 7. Rendering PrivacyToggleSwitcher ==="
-          npm run render:privacy
+          echo "=== 6. Rendering VPNConnectionStatusWidget ==="
+          npm run render:vpn-widget
 
-          echo "=== 8. Rendering DataBreachAlertBanner ==="
-          npm run render:alert
+          echo "=== 7. Rendering SecureFileTransferCard ==="
+          npm run render:file-transfer
 
-          echo "=== 9. Rendering ComplianceBadgeReveal ==="
-          npm run render:compliance
+          echo "=== 8. Rendering NewLoginAlertCard ==="
+          npm run render:login-alert
 
-          echo "=== 10. Rendering LiveThreatCounterTicker ==="
-          npm run render:ticker
+          echo "=== 9. Rendering AntivirusScanResultCard ==="
+          npm run render:antivirus-card
+
+          echo "=== 10. Rendering E2EEncryptionToggleCard ==="
+          npm run render:e2e-toggle
+
+          echo "=== 11. Rendering SessionTimeoutCountdownCard ==="
+          npm run render:session-timeout
+
+          echo "=== 12. Rendering TrustedDevicesListCard ==="
+          npm run render:trusted-devices
+
+          echo "=== 13. Rendering PasswordManagerAutofillPopup ==="
+          npm run render:autofill-popup
+
+          echo "=== 14. Rendering SecurityHealthScoreCard ==="
+          npm run render:health-score
+
+          echo "=== 15. Rendering DataAccessPermissionCard ==="
+          npm run render:permission-card
 
       - name: Bundle Metadata & Zip Output
         run: |
           cp metadata.csv out/
           cd out
-          zip -r ../cybersecurity-stock-assets-alpha-4k.zip *
+          zip -r ../cybersecurity-stock-assets-4k.zip *
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cybersecurity-stock-assets-alpha-4k
-          path: cybersecurity-stock-assets-alpha-4k.zip
+          name: cybersecurity-stock-assets-4k
+          path: cybersecurity-stock-assets-4k.zip
           retention-days: 14
