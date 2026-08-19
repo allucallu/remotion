@@ -1,4 +1,4 @@
-name: Render 4K UHD Lower Third Motion Graphics Stock Master Pack (H.264 MP4 4K)
+name: Render 4K UHD Motion Graphics Stock Assets (H.264 MP4 4K)
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  render-lower-third-pack:
-    name: Render 4K Lower Third Stock Assets
+  render-stock-pack:
+    name: Render 4K Stock Assets
     runs-on: ubuntu-latest
 
     steps:
@@ -25,79 +25,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Render All 20 Lower Third Compositions (H.264 MP4 4K)
+      - name: Render Compositions (H.264 MP4 4K)
         run: |
           mkdir -p out
-          echo "=== 1. Rendering LowerThirdBroadcast (V1) ==="
-          npm run render:lower-third-v1
-
-          echo "=== 2. Rendering LowerThirdMinimal (V2) ==="
-          npm run render:lower-third-v2
-
-          echo "=== 3. Rendering LowerThirdBold (V3) ==="
-          npm run render:lower-third-v3
-
-          echo "=== 4. Rendering LowerThirdFluid (V4) ==="
-          npm run render:lower-third-v4
-
-          echo "=== 5. Rendering LowerThirdRetro (V5) ==="
-          npm run render:lower-third-v5
-
-          echo "=== 6. Rendering LowerThirdAsymmetric (V6) ==="
-          npm run render:lower-third-v6
-
-          echo "=== 7. Rendering LowerThirdViewfinder (V7) ==="
-          npm run render:lower-third-v7
-
-          echo "=== 8. Rendering LowerThirdAnchor (V8) ==="
-          npm run render:lower-third-v8
-
-          echo "=== 9. Rendering LowerThirdStack (V9) ==="
-          npm run render:lower-third-v9
-
-          echo "=== 10. Rendering LowerThirdMonolith (V10) ==="
-          npm run render:lower-third-v10
-
-          echo "=== 11. Rendering LowerThirdHexagon (V11) ==="
-          npm run render:lower-third-v11
-
-          echo "=== 12. Rendering LowerThirdGaming (V12) ==="
-          npm run render:lower-third-v12
-
-          echo "=== 13. Rendering LowerThirdCorporate (V13) ==="
-          npm run render:lower-third-v13
-
-          echo "=== 14. Rendering LowerThirdModularIDCard (V14) ==="
-          npm run render:modular-id-card
-
-          echo "=== 15. Rendering LowerThirdHUDBracket (V15) ==="
-          npm run render:hud-bracket
-
-          echo "=== 16. Rendering LowerThirdHUDHexGrid (V16) ==="
-          npm run render:hud-hex-grid
-
-          echo "=== 17. Rendering LowerThirdGlassPill (V17) ==="
-          npm run render:glass-pill
-
-          echo "=== 18. Rendering LowerThirdTypewriterLedger (V18) ==="
-          npm run render:typewriter-ledger
-
-          echo "=== 19. Rendering LowerThirdWaveformPulse (V19) ==="
-          npm run render:waveform-pulse
-
-          echo "=== 20. Rendering LowerThirdAudioSpectrum (V20) ==="
-          npm run render:audio-spectrum
+          npx remotion render CountdownTimerFilmLeader out/CountdownTimer_FilmLeader_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerCyberHUD out/CountdownTimer_CyberHUD_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerMinimalLuxury out/CountdownTimer_MinimalLuxury_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerSwissEditorial out/CountdownTimer_SwissEditorial_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerFluidOrganic out/CountdownTimer_FluidOrganic_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerTerminalBoot out/CountdownTimer_TerminalBoot_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerChronometerVintage out/CountdownTimer_ChronometerVintage_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerTerminalSplitGrid out/CountdownTimer_TerminalSplitGrid_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerFlipClock out/CountdownTimer_FlipClock_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerFlipClockAviation out/CountdownTimer_FlipClockAviation_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerRadialEnergy out/CountdownTimer_RadialEnergy_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerPortalEnergy out/CountdownTimer_PortalEnergy_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerTitaniumCore out/CountdownTimer_TitaniumCore_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerSolarLoom out/CountdownTimer_SolarLoom_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerPaperCutout out/CountdownTimer_PaperCutout_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerInkWash out/CountdownTimer_InkWash_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerShatterGrid out/CountdownTimer_ShatterGrid_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerCrystalShard out/CountdownTimer_CrystalShard_4K.mp4 --codec=h264
+          npx remotion render CountdownTimerSundialShadow out/CountdownTimer_SundialShadow_4K.mp4 --codec=h264
 
       - name: Bundle Metadata & Zip Output
         run: |
           cp metadata.csv out/
           cd out
-          zip -r ../lower-third-stock-pack-4k.zip *
+          zip -r ../stock-assets-4k.zip *
           cd ..
 
       - name: Upload Zip Bundle Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lower-third-stock-pack-4k
-          path: lower-third-stock-pack-4k.zip
+          name: stock-assets-4k
+          path: stock-assets-4k.zip
           retention-days: 14
